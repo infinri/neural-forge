@@ -19,7 +19,7 @@ Transforms AI systems into autonomous senior engineering partners by encoding en
 3. **Activate**: Use global_rules integration (see below) by copying gist and adding contents into your global_rules.md file
 
 ### For Windsurf Users
-Add this to your `~/.codeium/windsurf/memories/global_rules.md`:
+Add this to your `~/.codeium/windsurf/memories/global_rules.md` (Not Copy Paste Ready): https://gist.github.com/infinri/2a50e6b0dc79865a1737c3cfe7562316
 
 **Framework Path:** `.codeium/windsurf/memories/neural-forge/`
 **Behavior:** Silent, autonomous, always-on application of 63 engineering rules + 10 fractal MCP patterns
