@@ -1,0 +1,35 @@
+tag: AuthBypassPrevention
+description: >
+  Prevent authentication and authorization bypass vulnerabilities.
+appliesTo:
+  - API endpoints
+  - Web applications
+  - Microservices
+  - Database access
+  - File system operations
+vulnerabilities:
+  - Missing authentication checks
+  - Privilege escalation
+  - Session fixation
+  - Token manipulation
+  - Direct object references
+  - Path traversal
+bestPractices:
+  - Authenticate every request
+  - Validate authorization for each resource
+  - Use secure session management
+  - Implement proper logout
+  - Validate JWT tokens properly
+  - Use principle of least privilege
+  - Check permissions at data layer
+implementation:
+  - Middleware for authentication
+  - Role-based access control (RBAC)
+  - Attribute-based access control (ABAC)
+  - OAuth 2.0 / OpenID Connect
+  - Multi-factor authentication
+  - Session timeout mechanisms
+linkedTags:
+  - ThreatModel
+  - InputSanitization
+  - RateLimitGuard

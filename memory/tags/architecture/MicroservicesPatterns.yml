@@ -1,0 +1,82 @@
+tagName: MicroservicesPatterns
+description: "Microservices architecture patterns and best practices"
+appliesTo:
+  - "Service decomposition strategies"
+  - "Inter-service communication"
+  - "Data management in microservices"
+  - "Service mesh implementation"
+  - "API gateway patterns"
+patterns:
+  - "Decompose by business capability and domain boundaries"
+  - "Implement service mesh for service-to-service communication"
+  - "Use API gateways for external client access"
+  - "Implement distributed data management with eventual consistency"
+  - "Use event-driven architecture for loose coupling"
+bestPractices:
+  - "Start with a monolith and decompose gradually"
+  - "Design services around business capabilities, not technical layers"
+  - "Implement proper service boundaries with clear contracts"
+  - "Use asynchronous communication where possible"
+  - "Implement comprehensive monitoring and observability"
+  - "Design for failure with circuit breakers and retries"
+  - "Maintain service autonomy and independent deployability"
+serviceDecomposition:
+  - "Domain-driven design: Align services with business domains"
+  - "Single responsibility: Each service has one clear purpose"
+  - "Data ownership: Each service owns its data exclusively"
+  - "Team ownership: Align service boundaries with team boundaries"
+  - "Bounded contexts: Use DDD bounded contexts as service boundaries"
+communicationPatterns:
+  - "Synchronous: REST APIs, GraphQL for real-time interactions"
+  - "Asynchronous: Message queues, event streams for loose coupling"
+  - "Request-response: Direct service-to-service calls"
+  - "Publish-subscribe: Event-driven communication patterns"
+  - "Saga pattern: Distributed transaction management"
+dataManagement:
+  - "Database per service: Each service has its own database"
+  - "Shared nothing: No shared databases between services"
+  - "Event sourcing: Store events instead of current state"
+  - "CQRS: Separate read and write models"
+  - "Data consistency: Eventual consistency over strong consistency"
+serviceMesh:
+  - "Traffic management: Load balancing, routing, traffic splitting"
+  - "Security: mTLS, authentication, authorization"
+  - "Observability: Metrics, logging, tracing"
+  - "Policy enforcement: Rate limiting, access control"
+  - "Service discovery: Automatic service registration and discovery"
+apiGateway:
+  - "Request routing: Route requests to appropriate services"
+  - "Authentication/authorization: Centralized security enforcement"
+  - "Rate limiting: Protect services from overload"
+  - "Request/response transformation: Protocol translation"
+  - "API versioning: Manage multiple API versions"
+deploymentPatterns:
+  - "Independent deployability: Deploy services independently"
+  - "Blue-green deployment: Zero-downtime deployments"
+  - "Canary releases: Gradual rollout of new versions"
+  - "Feature flags: Control feature rollout independently"
+  - "Container orchestration: Use Kubernetes or similar platforms"
+monitoringAndObservability:
+  - "Distributed tracing: Track requests across service boundaries"
+  - "Centralized logging: Aggregate logs from all services"
+  - "Service metrics: Monitor service health and performance"
+  - "Business metrics: Track business KPIs across services"
+  - "Alerting: Service-specific and system-wide alerts"
+securityPatterns:
+  - "Zero trust: Verify every service-to-service communication"
+  - "mTLS: Mutual TLS for service authentication"
+  - "JWT tokens: Stateless authentication across services"
+  - "API keys: Service-to-service authentication"
+  - "Network segmentation: Isolate services at network level"
+testingStrategies:
+  - "Unit testing: Test individual service logic"
+  - "Integration testing: Test service interactions"
+  - "Contract testing: Verify service contracts"
+  - "End-to-end testing: Test complete user journeys"
+  - "Chaos testing: Test system resilience"
+linkedTags:
+  - EventSourcingCQRS
+  - MessageQueuePatterns
+  - CloudNativePatterns
+  - ZeroTrustArchitecture
+tokenBudget: 95

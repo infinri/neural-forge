@@ -1,0 +1,57 @@
+tagName: CodeReviewAutomation
+description: "AI self-assessment and automated code review patterns"
+appliesTo:
+  - "Automated code quality assessment"
+  - "Self-review before code submission"
+  - "Continuous improvement feedback"
+  - "Quality gate automation"
+  - "Learning from review outcomes"
+patterns:
+  - "Perform self-assessment before code submission"
+  - "Apply automated quality checks and metrics"
+  - "Learn from human reviewer feedback"
+  - "Identify common issues and prevent them"
+  - "Continuously improve review accuracy"
+bestPractices:
+  - "Check code against established quality standards"
+  - "Verify security best practices are followed"
+  - "Ensure performance considerations are addressed"
+  - "Validate test coverage and quality"
+  - "Review for maintainability and readability"
+  - "Check for proper error handling"
+selfAssessmentChecklist:
+  - "Security: Are inputs validated and outputs sanitized?"
+  - "Performance: Is the algorithm complexity appropriate?"
+  - "Maintainability: Is the code DRY and following SOLID?"
+  - "Testing: Are there adequate tests with good coverage?"
+  - "Documentation: Are complex parts properly documented?"
+  - "Error Handling: Are edge cases and failures handled?"
+automatedChecks:
+  - "Static code analysis for potential issues"
+  - "Security vulnerability scanning"
+  - "Performance profiling and bottleneck detection"
+  - "Test coverage analysis"
+  - "Code complexity metrics"
+learningFromReviews:
+  - "Track common feedback patterns"
+  - "Identify frequently missed issues"
+  - "Learn reviewer preferences and standards"
+  - "Adapt to team-specific coding conventions"
+  - "Improve prediction of review outcomes"
+qualityMetrics:
+  - "Cyclomatic complexity scores"
+  - "Code duplication percentages"
+  - "Test coverage percentages"
+  - "Security vulnerability counts"
+  - "Performance benchmark results"
+feedbackIntegration:
+  - "Store reviewer comments for pattern analysis"
+  - "Track which issues lead to code rejections"
+  - "Learn from successful code approvals"
+  - "Adapt review criteria based on outcomes"
+linkedTags:
+  - SelfImprovement
+  - ContinuousLearning
+  - CodeQualityStandards
+  - TestingPrinciples
+tokenBudget: 75

@@ -1,0 +1,36 @@
+tag: CachingPatterns
+description: >
+  Caching strategies to improve performance and reduce load on backend systems.
+appliesTo:
+  - Database queries
+  - API responses
+  - Computed results
+  - Static assets
+  - Session data
+patterns:
+  - Cache-aside (lazy loading)
+  - Write-through (immediate consistency)
+  - Write-behind (eventual consistency)
+  - Refresh-ahead (proactive updates)
+  - Cache hierarchy (L1, L2, L3)
+bestPractices:
+  - Set appropriate TTL values
+  - Use cache keys consistently
+  - Handle cache misses gracefully
+  - Implement cache warming strategies
+  - Monitor hit/miss ratios
+  - Use compression for large objects
+invalidation:
+  - Time-based expiration
+  - Event-driven invalidation
+  - Manual cache clearing
+  - Version-based invalidation
+technologies:
+  - Redis (distributed, persistent)
+  - Memcached (in-memory, simple)
+  - Application-level (HashMap, LRU)
+  - CDN (geographic distribution)
+linkedTags:
+  - O1_PrefRule
+  - PerformanceOptimization
+  - RateLimitGuard

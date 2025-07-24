@@ -1,0 +1,70 @@
+tagName: TestDataManagement
+description: "Test data management patterns for reliable and maintainable testing"
+appliesTo:
+  - "Test data creation and lifecycle management"
+  - "Data isolation between test runs"
+  - "Synthetic and anonymized data generation"
+  - "Test database setup and teardown"
+  - "Cross-environment data consistency"
+patterns:
+  - "Use test data builders for flexible data creation"
+  - "Implement proper test data isolation and cleanup"
+  - "Generate synthetic data that mimics production characteristics"
+  - "Use database transactions for test isolation"
+  - "Implement data factories for complex object creation"
+bestPractices:
+  - "Create minimal test data required for each test"
+  - "Use deterministic data generation for reproducible tests"
+  - "Implement proper cleanup after each test"
+  - "Use realistic data that represents production scenarios"
+  - "Avoid shared test data that creates dependencies between tests"
+  - "Version test data schemas alongside application schemas"
+  - "Implement data privacy protection in test environments"
+testDataCreation:
+  - "Object mothers: Pre-configured objects for common scenarios"
+  - "Test data builders: Fluent APIs for flexible data creation"
+  - "Data factories: Generate objects with realistic relationships"
+  - "Fixtures: Static test data files for consistent scenarios"
+  - "Synthetic generators: Programmatically create realistic data"
+dataIsolation:
+  - "Database transactions: Rollback changes after each test"
+  - "Test databases: Separate databases for each test run"
+  - "Data partitioning: Logical separation of test data"
+  - "Cleanup strategies: Explicit cleanup of test data"
+  - "Containerized databases: Fresh database instances for tests"
+syntheticDataGeneration:
+  - "Faker libraries: Generate realistic fake data"
+  - "Data relationships: Maintain referential integrity"
+  - "Realistic distributions: Match production data patterns"
+  - "Localization: Generate data for different locales"
+  - "Volume scaling: Generate appropriate data volumes"
+testEnvironmentManagement:
+  - "Environment parity: Consistent data across environments"
+  - "Data refresh: Regular updates from production (anonymized)"
+  - "Schema migration: Keep test schemas synchronized"
+  - "Seed data: Essential data for application functionality"
+  - "Configuration management: Environment-specific settings"
+dataPrivacyAndSecurity:
+  - "Data anonymization: Remove or mask personal information"
+  - "Data pseudonymization: Replace identifiers with fake values"
+  - "Access controls: Restrict access to sensitive test data"
+  - "Data retention: Manage lifecycle of test data"
+  - "Compliance: Ensure test data meets regulatory requirements"
+performanceConsiderations:
+  - "Data volume optimization: Use appropriate data sizes"
+  - "Database indexing: Optimize test database performance"
+  - "Parallel execution: Handle concurrent test data access"
+  - "Caching strategies: Cache frequently used test data"
+  - "Resource cleanup: Free resources after test completion"
+toolsAndFrameworks:
+  - "Factory libraries: FactoryBot, Factory Boy, ObjectMother"
+  - "Faker libraries: Faker.js, Python Faker, Java Faker"
+  - "Database tools: Testcontainers, H2, SQLite"
+  - "Data generation: Mockaroo, GenerateData, Bogus"
+  - "Migration tools: Flyway, Liquibase, Alembic"
+linkedTags:
+  - AdvancedTestingPatterns
+  - PerformanceTestingPatterns
+  - ContinuousTestingPatterns
+  - DataPrivacyCompliance
+tokenBudget: 85

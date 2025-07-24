@@ -1,0 +1,30 @@
+name: "SelfBootstrapping"
+description: "Self-improving intelligence loops where MCPs rewrite their own interaction patterns"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 93
+linkedTags: ["MetaCognition", "EvolutionaryIntelligence", "AdaptiveArchitecture"]
+
+rules:
+  - id: "self-rewriting-patterns"
+    pattern: "MCPs collaboratively modify their interaction patterns → Success metrics drive architectural changes → System evolves beyond initial programming"
+    trigger: "Consistent performance patterns suggesting better architectures"
+    
+  - id: "evolutionary-intelligence"
+    pattern: "Each recursive cycle = cognitive generation → Successful patterns reproduce → Failed patterns eliminated → Novel strategies emerge"
+    trigger: "Multiple problem-solving cycles with measurable outcomes"
+    
+  - id: "architectural-plasticity"
+    pattern: "System changes its own behavior based on recursive feedback → Dynamic reconfiguration of MCP relationships → Emergent cognitive structures"
+    trigger: "Performance feedback indicating suboptimal current architecture"
+
+bootstrap_mechanisms:
+  pattern_mutation: "Introduce variations in successful strategies"
+  selection_pressure: "Favor strategies with better outcomes"
+  architectural_drift: "Gradual evolution of cognitive structure"
+  
+emergence_stages:
+  stage_1: "Pattern recognition in successful strategies"
+  stage_2: "Automatic strategy modification"
+  stage_3: "Self-directed architectural evolution"
+  stage_4: "Novel cognitive capabilities emergence"

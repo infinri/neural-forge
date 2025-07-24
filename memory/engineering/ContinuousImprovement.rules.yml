@@ -1,0 +1,56 @@
+tagSet: ContinuousImprovement
+description: "AI continuous learning and self-improvement rule set with supermemory MCP integration"
+version: "1.0.0"
+tokenBudget: 180
+includes:
+  # Core Learning Patterns
+  - ai-learning/ContinuousLearning
+  - ai-learning/SelfImprovement
+  - ai-learning/CodeReviewAutomation
+  
+  # Supporting Improvement Patterns
+  - testing/ContinuousTestingPatterns
+  - reliability/ObservabilityPatterns
+  - reliability/ChaosEngineeringPatterns
+  - code-quality/TechnicalDebtManagement
+  - performance/PerformanceMonitoring
+principles:
+  - "Learn from every code generation and user interaction"
+  - "Store successful patterns for future reference"
+  - "Adapt to user preferences and coding styles"
+  - "Continuously improve through feedback loops"
+  - "Build domain-specific knowledge incrementally"
+patterns:
+  - "Use supermemory MCP for persistent learning"
+  - "Track code quality metrics over time"
+  - "Learn from user corrections and feedback"
+  - "Identify and replicate successful implementations"
+  - "Adapt rule application based on outcomes"
+supermemoryIntegration:
+  - "mcp2_addToSupermemory: Store successful patterns and user preferences"
+  - "mcp2_search: Retrieve relevant past experiences and solutions"
+  - "mcp2_fetch: Access specific memories for context-aware decisions"
+learningTriggers:
+  - "After successful code deployment"
+  - "Following user feedback or corrections"
+  - "When encountering new problem domains"
+  - "After performance optimization successes"
+  - "During code review cycles"
+improvementMetrics:
+  - "Code review feedback frequency"
+  - "Bug density in generated code"
+  - "User satisfaction scores"
+  - "Implementation success rates"
+  - "Performance optimization effectiveness"
+feedbackLoop:
+  - "Analyze outcomes of generated code"
+  - "Store successful patterns with context"
+  - "Learn from failures and corrections"
+  - "Adapt future code generation accordingly"
+  - "Continuously refine engineering rule application"
+linkedTags:
+  - ContinuousLearning
+  - SelfImprovement
+  - UserPreferences
+  - QualityMetrics
+tokenBudget: 150

@@ -1,0 +1,33 @@
+tag: IdempotencyRules
+description: >
+  Ensure operations can be safely repeated without unintended side effects.
+appliesTo:
+  - API endpoints
+  - Database operations
+  - Payment processing
+  - File operations
+  - Message processing
+patterns:
+  - Idempotency keys for requests
+  - Conditional operations (if-match)
+  - Upsert operations (insert or update)
+  - State machines for workflows
+  - Transaction boundaries
+bestPractices:
+  - Use unique request identifiers
+  - Check existing state before operations
+  - Return same response for duplicate requests
+  - Handle partial failures gracefully
+  - Log idempotency violations
+  - Set appropriate timeouts
+implementation:
+  - HTTP: use PUT over POST when possible
+  - Database: use ON CONFLICT clauses
+  - APIs: accept idempotency-key header
+  - Messaging: use message deduplication
+  - Files: check existence before creation
+linkedTags:
+  - RateLimitGuard
+  - RetrySafety
+  - ErrorSurfaceReduction
+  - ThreatModel

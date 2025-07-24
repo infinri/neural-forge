@@ -1,0 +1,29 @@
+name: "AdaptiveDepth"
+description: "Dynamic depth control for recursive reasoning with confidence-based termination"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 87
+linkedTags: ["RecursiveThinking", "ConfidenceCalibration", "ResourceOptimization"]
+
+rules:
+  - id: "confidence-based-termination"
+    pattern: "Monitor confidence at each recursive level → Continue until threshold met → Naturally adaptive depth based on problem complexity"
+    trigger: "Recursive reasoning with uncertain stopping points"
+    
+  - id: "depth-prediction-modeling"
+    pattern: "Analyze problem characteristics → Predict optimal depth before starting → Allocate resources accordingly"
+    trigger: "Resource-constrained recursive reasoning tasks"
+    
+  - id: "dynamic-depth-adjustment"
+    pattern: "Real-time depth modification based on intermediate results → Expand when promising → Contract when diminishing returns"
+    trigger: "Recursive processes showing unexpected complexity patterns"
+
+depth_strategies:
+  breadth_first: "Explore all atoms at current level before going deeper"
+  depth_first: "Pursue most promising paths to maximum depth"
+  hybrid_adaptive: "Switch strategies based on problem characteristics"
+  
+termination_signals:
+  confidence_plateau: "No improvement in confidence over N iterations"
+  resource_exhaustion: "Approaching computational or time limits"
+  convergence_detection: "Similar conclusions from multiple paths"

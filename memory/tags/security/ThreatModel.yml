@@ -1,0 +1,34 @@
+tag: ThreatModel
+description: >
+  Systematic approach to identifying and mitigating security threats.
+appliesTo:
+  - System architecture
+  - API design
+  - Data flow analysis
+  - Access control
+  - Input validation
+methodology:
+  - STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation)
+  - Attack trees and threat scenarios
+  - Risk assessment (likelihood × impact)
+  - Mitigation strategies
+  - Regular threat reviews
+threats:
+  - Authentication bypass
+  - Data injection attacks
+  - Privilege escalation
+  - Information leakage
+  - Denial of service
+  - Man-in-the-middle
+mitigations:
+  - Input validation and sanitization
+  - Authentication and authorization
+  - Encryption in transit and at rest
+  - Rate limiting and monitoring
+  - Secure coding practices
+  - Regular security audits
+linkedTags:
+  - InputSanitization
+  - AuthBypassPrevention
+  - RateLimitGuard
+  - SecurityPrinciples

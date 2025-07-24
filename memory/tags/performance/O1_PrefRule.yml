@@ -1,0 +1,31 @@
+tag: O1_PrefRule
+description: >
+  Prefer O(1) constant time operations over higher complexity alternatives.
+appliesTo:
+  - Algorithm selection
+  - Data structure choice
+  - Database queries
+  - Cache lookups
+  - Hash table operations
+strategies:
+  - Use hash maps for key-value lookups
+  - Implement LRU cache with HashMap + DoublyLinkedList
+  - Choose arrays over linked lists for random access
+  - Use sets for membership testing
+  - Implement circular buffers for fixed-size queues
+bestPractices:
+  - Profile before optimizing
+  - Consider space-time tradeoffs
+  - Use appropriate data structures
+  - Avoid nested loops when possible
+  - Cache computed results
+  - Use indexes for database queries
+examples:
+  - HashMap.get() vs Array.find()
+  - Set.has() vs Array.includes()
+  - Direct array access vs linear search
+  - Hash-based routing vs sequential matching
+linkedTags:
+  - CachingPatterns
+  - PerformanceOptimization
+  - DRY

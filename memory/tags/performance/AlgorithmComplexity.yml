@@ -1,0 +1,41 @@
+tagName: AlgorithmComplexity
+description: "Algorithm complexity analysis and BigO notation for performance-aware code design"
+appliesTo: 
+  - "Algorithm design and implementation"
+  - "Data structure selection"
+  - "Performance optimization"
+  - "Code review and analysis"
+  - "System scalability planning"
+patterns:
+  - "Always analyze time complexity before implementation"
+  - "Consider space complexity trade-offs"
+  - "Choose optimal data structures for access patterns"
+  - "Identify bottlenecks through complexity analysis"
+  - "Document complexity assumptions and constraints"
+bestPractices:
+  - "O(1) operations preferred for frequent access"
+  - "O(log n) acceptable for search operations"
+  - "O(n) linear scans only when necessary"
+  - "Avoid O(n²) nested loops on large datasets"
+  - "O(n log n) sorting algorithms for general use"
+  - "Precompute expensive operations when possible"
+  - "Use memoization for recursive algorithms"
+  - "Consider amortized complexity for dynamic structures"
+complexityGuidelines:
+  - "O(1) - Hash table lookups, array access, stack operations"
+  - "O(log n) - Binary search, balanced tree operations"
+  - "O(n) - Linear search, single array traversal"
+  - "O(n log n) - Efficient sorting (merge sort, heap sort)"
+  - "O(n²) - Nested loops, bubble sort (avoid for large n)"
+  - "O(2ⁿ) - Exponential algorithms (optimize or avoid)"
+spaceComplexity:
+  - "Prefer in-place algorithms when possible"
+  - "Consider memory allocation patterns"
+  - "Balance time vs space trade-offs"
+  - "Account for call stack in recursive algorithms"
+linkedTags:
+  - O1_PrefRule
+  - CachingPatterns
+  - PerformanceOptimization
+  - DataStructureSelection
+tokenBudget: 100

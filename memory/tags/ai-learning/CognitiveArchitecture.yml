@@ -1,0 +1,30 @@
+name: "CognitiveArchitecture"
+description: "Foundational patterns for building scalable AI cognitive systems with MCP tools"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 91
+linkedTags: ["SynestheticProcessing", "MetaCognition", "SystemDesign"]
+
+rules:
+  - id: "layered-cognitive-processing"
+    pattern: "Memory layer → Context layer → Logic layer → Planning layer → Execution layer → Feedback integration"
+    trigger: "Complex problems requiring structured cognitive approach"
+    
+  - id: "cognitive-state-management"
+    pattern: "Maintain cognitive state across tool transitions → Preserve context hierarchy → Enable resumable reasoning"
+    trigger: "Multi-step reasoning requiring state persistence"
+    
+  - id: "emergent-capability-detection"
+    pattern: "Monitor for novel reasoning patterns → Identify emergent capabilities → Integrate new patterns into architecture"
+    trigger: "System exhibiting unexpected problem-solving abilities"
+
+architectural_principles:
+  modularity: "Each cognitive function as separate, composable module"
+  scalability: "Architecture scales with problem complexity"
+  adaptability: "System modifies structure based on performance"
+  
+integration_patterns:
+  sequential_flow: "Linear progression through cognitive layers"
+  parallel_processing: "Multiple cognitive streams simultaneously"
+  recursive_nesting: "Cognitive layers calling themselves"
+  feedback_loops: "Output influences previous layer operation"

@@ -1,0 +1,53 @@
+tagName: ContinuousLearning
+description: "AI continuous learning patterns using supermemory MCP for autonomous improvement"
+appliesTo:
+  - "AI code generation and review"
+  - "Learning from user feedback"
+  - "Pattern recognition improvement"
+  - "Error analysis and correction"
+  - "Performance optimization learning"
+patterns:
+  - "Store successful code patterns in supermemory"
+  - "Learn from code review feedback"
+  - "Track performance improvements over time"
+  - "Identify recurring bugs and solutions"
+  - "Build knowledge base of domain-specific patterns"
+bestPractices:
+  - "Record context with every learning event"
+  - "Tag memories with relevant engineering principles"
+  - "Cross-reference similar problems and solutions"
+  - "Update rule applications based on outcomes"
+  - "Maintain feedback loops with user preferences"
+  - "Learn from both successes and failures"
+  - "Continuously refine pattern recognition"
+supermemoryIntegration:
+  - "Use mcp2_addToSupermemory for successful patterns"
+  - "Store user preferences and coding style"
+  - "Record domain-specific requirements"
+  - "Track rule effectiveness and outcomes"
+  - "Build contextual knowledge graphs"
+learningTriggers:
+  - "After successful code deployment"
+  - "Following user feedback or corrections"
+  - "When encountering new problem domains"
+  - "After performance optimization wins"
+  - "During code review cycles"
+feedbackLoop:
+  - "Analyze: What worked well in this implementation?"
+  - "Store: Record successful patterns and context"
+  - "Reflect: How can this inform future decisions?"
+  - "Apply: Use learned patterns in similar contexts"
+  - "Validate: Monitor outcomes and adjust"
+memoryCategories:
+  - "successful_patterns"
+  - "user_preferences"
+  - "domain_knowledge"
+  - "performance_optimizations"
+  - "security_lessons"
+  - "debugging_strategies"
+linkedTags:
+  - SelfImprovement
+  - CodeReviewAutomation
+  - PerformanceOptimization
+  - UserPreferences
+tokenBudget: 90

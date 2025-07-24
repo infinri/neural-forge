@@ -1,0 +1,54 @@
+tagName: TestingPrinciples
+description: "Test-driven development and comprehensive testing methodologies"
+appliesTo:
+  - "Unit test design and implementation"
+  - "Integration testing strategies"
+  - "Test-driven development (TDD)"
+  - "Code quality assurance"
+  - "Continuous integration pipelines"
+patterns:
+  - "Red-Green-Refactor TDD cycle"
+  - "Arrange-Act-Assert test structure"
+  - "Given-When-Then behavior specification"
+  - "Test pyramid: unit > integration > e2e"
+  - "Fail fast with meaningful error messages"
+bestPractices:
+  - "Write tests before implementation (TDD)"
+  - "Keep tests simple, focused, and independent"
+  - "Use descriptive test names that explain intent"
+  - "Test edge cases and error conditions"
+  - "Mock external dependencies appropriately"
+  - "Maintain high test coverage (>80%)"
+  - "Run tests frequently and automatically"
+testTypes:
+  - "Unit tests: Test individual functions/methods"
+  - "Integration tests: Test component interactions"
+  - "End-to-end tests: Test complete user workflows"
+  - "Performance tests: Validate speed and scalability"
+  - "Security tests: Verify protection against threats"
+tddCycle:
+  - "Red: Write failing test for desired functionality"
+  - "Green: Write minimal code to make test pass"
+  - "Refactor: Improve code while keeping tests green"
+  - "Repeat: Continue cycle for next requirement"
+testStructure:
+  - "Arrange: Set up test data and conditions"
+  - "Act: Execute the code under test"
+  - "Assert: Verify expected outcomes"
+  - "Cleanup: Reset state for next test"
+mockingStrategies:
+  - "Mock external APIs and services"
+  - "Stub database connections and file systems"
+  - "Use test doubles for complex dependencies"
+  - "Verify interactions with mocked objects"
+testMaintenance:
+  - "Keep tests up-to-date with code changes"
+  - "Remove or fix flaky tests immediately"
+  - "Refactor tests when code structure changes"
+  - "Document complex test scenarios"
+linkedTags:
+  - CodeQualityStandards
+  - ErrorHandlingPatterns
+  - ContinuousIntegration
+  - MockingPatterns
+tokenBudget: 80

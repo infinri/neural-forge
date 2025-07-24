@@ -1,0 +1,35 @@
+tagSet: CodeQualityStandards
+description: Standards for maintainable, readable, and robust code.
+version: "1.0.0"
+tokenBudget: 160
+includes:
+  # Core Quality Patterns
+  - code-quality/DRY
+  - code-quality/SOLID
+  - code-quality/CodeCommentsGuideline
+  - code-quality/YAGNI
+  - code-quality/OOPPrinciples
+  - code-quality/CodeQualityMetrics
+  - code-quality/RefactoringPatterns
+  - code-quality/NamingConventions
+  - code-quality/TechnicalDebtManagement
+  
+  # Related Patterns
+  - testing/TestingPrinciples
+  - ai-learning/CodeReviewAutomation
+standards:
+  - "Functions should do one thing well"
+  - "Use meaningful names for variables and functions"
+  - "Keep functions small (< 20 lines preferred)"
+  - "Avoid deep nesting (max 3 levels)"
+  - "Write self-documenting code with strategic comments"
+metrics:
+  - Cyclomatic complexity < 10
+  - Test coverage > 80%
+  - No code duplication > 6 lines
+  - Max function parameters: 4
+refactoring:
+  - Extract method for repeated code
+  - Replace magic numbers with constants
+  - Use polymorphism over conditionals
+  - Eliminate dead code regularly

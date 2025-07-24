@@ -1,0 +1,29 @@
+name: "RecursiveThinking"
+description: "Self-modifying recursive reasoning patterns with infinite depth scaling"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 90
+linkedTags: ["FractalMCPPatterns", "MetaCognition", "AdaptiveDepth"]
+
+rules:
+  - id: "adaptive-depth-control"
+    pattern: "Monitor confidence levels → Continue recursion until threshold → Auto-adjust depth based on problem complexity"
+    trigger: "Uncertain or incomplete reasoning at current depth"
+    
+  - id: "self-modifying-architecture"
+    pattern: "Track reasoning success patterns → Modify own recursive strategies → Update decomposition methods based on outcomes"
+    trigger: "Performance feedback from completed recursive cycles"
+    
+  - id: "fractal-state-preservation"
+    pattern: "Store complete recursive state at each level → Enable cross-session resume → Maintain context hierarchy"
+    trigger: "Complex multi-session reasoning tasks"
+
+termination_conditions:
+  confidence_threshold: 0.85
+  max_depth: 10
+  time_budget: "30min"
+  
+optimization:
+  pattern_learning: "Extract successful recursion strategies"
+  depth_prediction: "Estimate optimal depth before starting"
+  resource_allocation: "Balance depth vs computational cost"

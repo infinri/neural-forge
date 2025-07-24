@@ -1,0 +1,32 @@
+tag: RetrySafety
+description: >
+  Safe retry patterns to handle transient failures without causing cascading issues.
+appliesTo:
+  - Network requests
+  - Database operations
+  - External API calls
+  - File I/O operations
+  - Message processing
+patterns:
+  - Exponential backoff with jitter
+  - Circuit breaker pattern
+  - Bulkhead isolation
+  - Timeout mechanisms
+  - Dead letter queues
+bestPractices:
+  - Limit retry attempts (3-5 max)
+  - Use exponential backoff: 1s, 2s, 4s, 8s
+  - Add jitter to prevent thundering herd
+  - Check idempotency before retry
+  - Log retry attempts and failures
+  - Implement circuit breaker thresholds
+implementation:
+  - Retry only on transient errors (5xx, timeouts)
+  - Don't retry on client errors (4xx)
+  - Use different strategies per error type
+  - Monitor retry rates and success
+  - Set maximum total retry time
+linkedTags:
+  - IdempotencyRules
+  - RateLimitGuard
+  - ErrorSurfaceReduction

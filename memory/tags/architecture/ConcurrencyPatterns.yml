@@ -1,0 +1,57 @@
+tagName: ConcurrencyPatterns
+description: "Threading, async/await, race conditions, and parallel processing patterns"
+appliesTo:
+  - "Multi-threaded application design"
+  - "Asynchronous programming"
+  - "Parallel processing and performance"
+  - "Race condition prevention"
+  - "Resource synchronization"
+patterns:
+  - "Use immutable objects to avoid synchronization"
+  - "Prefer async/await over raw threading"
+  - "Apply producer-consumer patterns for data processing"
+  - "Use thread-safe collections and data structures"
+  - "Implement proper resource cleanup and disposal"
+bestPractices:
+  - "Avoid shared mutable state when possible"
+  - "Use locks sparingly and consistently"
+  - "Prefer atomic operations over synchronization"
+  - "Design for thread safety from the beginning"
+  - "Use thread pools instead of creating threads manually"
+  - "Handle cancellation tokens properly in async operations"
+threadSafety:
+  - "Use concurrent collections (ConcurrentHashMap, etc.)"
+  - "Apply synchronization primitives (locks, semaphores)"
+  - "Implement thread-local storage for per-thread data"
+  - "Use volatile keywords for visibility guarantees"
+  - "Apply memory barriers for ordering guarantees"
+asyncPatterns:
+  - "Use async/await for I/O-bound operations"
+  - "Implement proper exception handling in async code"
+  - "Avoid blocking async operations with .Wait() or .Result"
+  - "Use ConfigureAwait(false) in library code"
+  - "Handle task cancellation gracefully"
+raceConditionPrevention:
+  - "Identify critical sections and protect them"
+  - "Use atomic operations for simple state changes"
+  - "Implement proper initialization patterns"
+  - "Avoid double-checked locking antipatterns"
+  - "Use immutable objects for shared data"
+performanceOptimization:
+  - "Use parallel processing for CPU-intensive tasks"
+  - "Implement work-stealing algorithms"
+  - "Balance thread pool sizes for optimal throughput"
+  - "Use lock-free data structures when appropriate"
+  - "Profile and measure concurrent performance"
+commonPitfalls:
+  - "Deadlocks from improper lock ordering"
+  - "Race conditions in initialization code"
+  - "Memory leaks from unclosed resources"
+  - "Performance degradation from excessive locking"
+  - "Starvation from unfair synchronization"
+linkedTags:
+  - PerformanceOptimization
+  - ThreadSafety
+  - AsyncProgramming
+  - ResourceManagement
+tokenBudget: 85

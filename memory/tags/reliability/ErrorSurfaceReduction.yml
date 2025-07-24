@@ -1,0 +1,33 @@
+tag: ErrorSurfaceReduction
+description: >
+  Minimize potential failure points and improve system reliability through defensive programming.
+appliesTo:
+  - Error handling
+  - Input validation
+  - API design
+  - Resource management
+  - State management
+strategies:
+  - Fail fast with clear error messages
+  - Use type systems to catch errors early
+  - Implement circuit breakers
+  - Graceful degradation patterns
+  - Defensive copying of mutable data
+  - Null/undefined checks
+bestPractices:
+  - Return errors, don't throw exceptions for expected failures
+  - Use Result/Option types where available
+  - Validate preconditions early
+  - Clean up resources in finally blocks
+  - Log errors with sufficient context
+  - Avoid silent failures
+patterns:
+  - Try-catch-finally blocks
+  - Error boundaries in UI components
+  - Bulkhead pattern for isolation
+  - Timeout mechanisms
+  - Retry with exponential backoff
+linkedTags:
+  - IdempotencyRules
+  - RetrySafety
+  - InputSanitization

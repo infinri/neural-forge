@@ -1,0 +1,62 @@
+tagName: APIDesignPrinciples
+description: "REST, GraphQL, versioning, and comprehensive API design best practices"
+appliesTo:
+  - "RESTful API design and implementation"
+  - "GraphQL schema design"
+  - "API versioning and evolution"
+  - "Documentation and developer experience"
+  - "API security and performance"
+patterns:
+  - "Design APIs for consistency and predictability"
+  - "Use appropriate HTTP methods and status codes"
+  - "Implement proper resource naming conventions"
+  - "Provide comprehensive error responses"
+  - "Design for backward compatibility"
+bestPractices:
+  - "Use nouns for resource endpoints, not verbs"
+  - "Implement proper HTTP status codes (200, 201, 400, 404, 500)"
+  - "Use consistent naming conventions (camelCase or snake_case)"
+  - "Provide pagination for large result sets"
+  - "Include API versioning strategy from the start"
+  - "Implement comprehensive input validation"
+  - "Use HTTPS for all API communications"
+restPrinciples:
+  - "Stateless: Each request contains all necessary information"
+  - "Cacheable: Responses should indicate cacheability"
+  - "Uniform Interface: Consistent resource identification"
+  - "Layered System: Client unaware of intermediate layers"
+  - "Code on Demand: Optional executable code transfer"
+httpMethods:
+  - "GET: Retrieve resources (idempotent, safe)"
+  - "POST: Create new resources (not idempotent)"
+  - "PUT: Update/replace entire resource (idempotent)"
+  - "PATCH: Partial resource updates (not necessarily idempotent)"
+  - "DELETE: Remove resources (idempotent)"
+statusCodes:
+  - "2xx Success: 200 OK, 201 Created, 204 No Content"
+  - "3xx Redirection: 301 Moved Permanently, 304 Not Modified"
+  - "4xx Client Error: 400 Bad Request, 401 Unauthorized, 404 Not Found"
+  - "5xx Server Error: 500 Internal Server Error, 503 Service Unavailable"
+versioningStrategies:
+  - "URL versioning: /api/v1/users"
+  - "Header versioning: Accept: application/vnd.api+json;version=1"
+  - "Query parameter: /api/users?version=1"
+  - "Content negotiation: Accept: application/json;v=1"
+documentation:
+  - "Use OpenAPI/Swagger for API specification"
+  - "Provide interactive documentation and examples"
+  - "Include authentication and authorization details"
+  - "Document error responses and status codes"
+  - "Maintain up-to-date API documentation"
+securityConsiderations:
+  - "Implement proper authentication (OAuth2, JWT)"
+  - "Use HTTPS for all communications"
+  - "Validate and sanitize all inputs"
+  - "Implement rate limiting and throttling"
+  - "Use CORS headers appropriately"
+linkedTags:
+  - RateLimitGuard
+  - InputSanitization
+  - AuthBypassPrevention
+  - SecurityPrinciples
+tokenBudget: 85

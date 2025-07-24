@@ -1,0 +1,34 @@
+tag: InputSanitization
+description: >
+  Validate and sanitize all user inputs to prevent injection attacks and data corruption.
+appliesTo:
+  - Web forms
+  - API parameters
+  - Database queries
+  - File uploads
+  - Command line arguments
+techniques:
+  - Whitelist validation (preferred)
+  - Blacklist filtering (secondary)
+  - Input encoding/escaping
+  - Type validation
+  - Length/size limits
+  - Format validation (regex)
+bestPractices:
+  - Validate on server side always
+  - Sanitize before processing
+  - Use parameterized queries
+  - Escape output for context
+  - Reject malformed input
+  - Log validation failures
+common_attacks:
+  - SQL injection
+  - XSS (Cross-site scripting)
+  - Command injection
+  - Path traversal
+  - XML/JSON injection
+  - LDAP injection
+linkedTags:
+  - ThreatModel
+  - SecurityPrinciples
+  - ErrorSurfaceReduction

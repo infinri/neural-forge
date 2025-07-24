@@ -1,0 +1,55 @@
+tagName: DatabaseDesign
+description: "Database design principles, normalization, and optimization strategies"
+appliesTo:
+  - "Database schema design"
+  - "Query optimization"
+  - "Data modeling and relationships"
+  - "Performance tuning"
+  - "Data integrity and consistency"
+patterns:
+  - "Design for data integrity first, optimize second"
+  - "Normalize to eliminate redundancy, denormalize for performance"
+  - "Use appropriate indexes for query patterns"
+  - "Design with ACID properties in mind"
+  - "Plan for scalability and growth"
+bestPractices:
+  - "Follow normalization rules (1NF, 2NF, 3NF)"
+  - "Use foreign keys to enforce referential integrity"
+  - "Index frequently queried columns"
+  - "Avoid premature optimization"
+  - "Use appropriate data types for storage efficiency"
+  - "Implement proper backup and recovery strategies"
+acidProperties:
+  - "Atomicity: All operations in transaction succeed or fail together"
+  - "Consistency: Database remains in valid state after transactions"
+  - "Isolation: Concurrent transactions don't interfere"
+  - "Durability: Committed changes survive system failures"
+normalizationRules:
+  - "1NF: Eliminate repeating groups, atomic values only"
+  - "2NF: Remove partial dependencies on composite keys"
+  - "3NF: Eliminate transitive dependencies"
+  - "BCNF: Every determinant is a candidate key"
+indexingStrategies:
+  - "Primary indexes on unique identifiers"
+  - "Secondary indexes on frequently searched columns"
+  - "Composite indexes for multi-column queries"
+  - "Partial indexes for filtered queries"
+  - "Avoid over-indexing (impacts write performance)"
+queryOptimization:
+  - "Use EXPLAIN to analyze query execution plans"
+  - "Avoid SELECT * in production queries"
+  - "Use appropriate JOIN types and conditions"
+  - "Limit result sets with WHERE clauses"
+  - "Consider query caching for repeated operations"
+scalabilityPatterns:
+  - "Vertical scaling: Increase server resources"
+  - "Horizontal scaling: Distribute across servers"
+  - "Read replicas for read-heavy workloads"
+  - "Sharding for large datasets"
+  - "Connection pooling for efficiency"
+linkedTags:
+  - PerformanceOptimization
+  - CachingPatterns
+  - DataIntegrity
+  - ScalabilityPatterns
+tokenBudget: 90

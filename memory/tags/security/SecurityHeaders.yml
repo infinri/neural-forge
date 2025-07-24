@@ -1,0 +1,60 @@
+tagName: SecurityHeaders
+description: "HTTP security headers for web application protection"
+appliesTo:
+  - "Web application security"
+  - "API endpoint protection"
+  - "Cross-origin resource sharing (CORS)"
+  - "Content security policy (CSP)"
+  - "Browser security mechanisms"
+patterns:
+  - "Implement comprehensive security headers on all responses"
+  - "Use Content Security Policy to prevent XSS attacks"
+  - "Configure CORS policies restrictively"
+  - "Enable HSTS for HTTPS enforcement"
+  - "Implement proper frame options to prevent clickjacking"
+bestPractices:
+  - "Set security headers at the web server or application level"
+  - "Test security headers with online scanners"
+  - "Monitor CSP violations for security insights"
+  - "Use nonce or hash-based CSP for inline scripts"
+  - "Implement proper CORS preflight handling"
+  - "Set secure cookie attributes (Secure, HttpOnly, SameSite)"
+  - "Use HTTPS everywhere with proper certificate validation"
+essentialHeaders:
+  - "Content-Security-Policy: Prevent XSS and injection attacks"
+  - "Strict-Transport-Security: Enforce HTTPS connections"
+  - "X-Frame-Options: Prevent clickjacking attacks"
+  - "X-Content-Type-Options: Prevent MIME type sniffing"
+  - "Referrer-Policy: Control referrer information leakage"
+  - "Permissions-Policy: Control browser feature access"
+corsConfiguration:
+  - "Access-Control-Allow-Origin: Specify allowed origins explicitly"
+  - "Access-Control-Allow-Methods: Limit to required HTTP methods"
+  - "Access-Control-Allow-Headers: Whitelist required headers only"
+  - "Access-Control-Allow-Credentials: Use cautiously with specific origins"
+  - "Access-Control-Max-Age: Set appropriate preflight cache duration"
+cspDirectives:
+  - "default-src 'self': Restrict all resources to same origin by default"
+  - "script-src: Control JavaScript execution sources"
+  - "style-src: Control CSS stylesheet sources"
+  - "img-src: Control image loading sources"
+  - "connect-src: Control AJAX, WebSocket, and fetch() sources"
+  - "font-src: Control web font sources"
+cookieSecurity:
+  - "Secure: Only send cookies over HTTPS connections"
+  - "HttpOnly: Prevent JavaScript access to cookies"
+  - "SameSite=Strict: Prevent CSRF attacks"
+  - "Path: Limit cookie scope to specific paths"
+  - "Domain: Set appropriate domain scope for cookies"
+headerValidation:
+  - "Validate all incoming headers for expected values"
+  - "Sanitize user-controlled header values"
+  - "Implement header size limits to prevent DoS"
+  - "Log suspicious header patterns for security analysis"
+  - "Use security header testing tools in CI/CD pipelines"
+linkedTags:
+  - InputSanitization
+  - AuthBypassPrevention
+  - OAuth2JWTPatterns
+  - SecurityMonitoring
+tokenBudget: 85

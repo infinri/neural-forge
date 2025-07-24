@@ -1,0 +1,71 @@
+tagName: CodeMetrics
+description: "Code quality metrics and thresholds for maintainable software"
+appliesTo:
+  - "Code complexity measurement"
+  - "Maintainability assessment"
+  - "Technical debt quantification"
+  - "Code review automation"
+  - "Quality gate enforcement"
+patterns:
+  - "Measure cyclomatic complexity for all functions"
+  - "Track maintainability index across modules"
+  - "Monitor code coverage and test quality metrics"
+  - "Implement automated quality gates in CI/CD"
+  - "Use static analysis tools for consistent measurement"
+bestPractices:
+  - "Set complexity thresholds and enforce them automatically"
+  - "Track metrics trends over time, not just absolute values"
+  - "Combine multiple metrics for comprehensive quality assessment"
+  - "Integrate metrics into code review processes"
+  - "Use metrics to guide refactoring priorities"
+  - "Establish team-wide coding standards based on metrics"
+  - "Regular metric reviews and threshold adjustments"
+complexityMetrics:
+  - "Cyclomatic Complexity: Max 10 per function, 15 for complex algorithms"
+  - "Cognitive Complexity: Max 15 per function for readability"
+  - "Nesting Depth: Max 4 levels to maintain readability"
+  - "Function Length: Max 50 lines, prefer 20-30 lines"
+  - "Class Size: Max 500 lines, prefer smaller focused classes"
+  - "Parameter Count: Max 5 parameters per function"
+maintainabilityMetrics:
+  - "Maintainability Index: Target >70, critical <50"
+  - "Technical Debt Ratio: Keep <5% of total development time"
+  - "Code Duplication: Max 3% duplicate code blocks"
+  - "Coupling: Low coupling between modules (max 7 dependencies)"
+  - "Cohesion: High cohesion within modules (LCOM4 < 1)"
+qualityMetrics:
+  - "Code Coverage: Min 80% line coverage, 70% branch coverage"
+  - "Test Quality: Mutation testing score >75%"
+  - "Documentation Coverage: 100% public API documentation"
+  - "Comment Density: 10-30% comment-to-code ratio"
+  - "Naming Consistency: Automated naming convention checks"
+toolIntegration:
+  - "SonarQube: Comprehensive code quality analysis"
+  - "ESLint/TSLint: JavaScript/TypeScript static analysis"
+  - "PMD/SpotBugs: Java static analysis and bug detection"
+  - "RuboCop: Ruby code style and quality analysis"
+  - "Pylint/Flake8: Python code quality and style checking"
+automatedEnforcement:
+  - "Pre-commit hooks: Run quality checks before code commit"
+  - "CI/CD gates: Block deployments below quality thresholds"
+  - "Pull request checks: Automated quality assessment on PRs"
+  - "Quality dashboards: Real-time visibility into code quality"
+  - "Trend analysis: Track quality improvements over time"
+metricInterpretation:
+  - "High complexity indicates need for refactoring"
+  - "Low coverage suggests insufficient testing"
+  - "High duplication indicates missing abstractions"
+  - "Poor maintainability predicts future bugs"
+  - "Declining trends require immediate attention"
+actionableInsights:
+  - "Prioritize refactoring high-complexity, frequently-changed code"
+  - "Focus testing efforts on low-coverage, high-risk areas"
+  - "Extract common functionality to reduce duplication"
+  - "Break down large classes and functions"
+  - "Improve naming and documentation for clarity"
+linkedTags:
+  - RefactoringPatterns
+  - TechnicalDebtManagement
+  - CodeReviewAutomation
+  - SOLID
+tokenBudget: 95

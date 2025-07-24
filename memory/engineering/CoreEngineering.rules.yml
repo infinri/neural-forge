@@ -1,0 +1,82 @@
+tagSet: CoreEngineering
+description: Foundational principles for all code output across all projects.
+version: "1.0.0"
+tokenBudget: 500
+includes:
+  # Core Quality Principles
+  - code-quality/SOLID
+  - code-quality/DRY
+  - code-quality/YAGNI
+  - code-quality/OOPPrinciples
+  - code-quality/CodeCommentsGuideline
+  - code-quality/CodeQualityMetrics
+  - code-quality/RefactoringPatterns
+  - code-quality/NamingConventions
+  - code-quality/TechnicalDebtManagement
+  
+  # Security Fundamentals
+  - security/RateLimitGuard
+  - security/ThreatModel
+  - security/InputSanitization
+  - security/AuthBypassPrevention
+  - security/OAuth2JWTPatterns
+  - security/SecretsManagement
+  - security/SecurityHeaders
+  - security/EncryptionPatterns
+  - security/SecurityMonitoring
+  - security/ZeroTrustArchitecture
+  
+  # Performance Optimization
+  - performance/CachingPatterns
+  - performance/O1_PrefRule
+  - performance/AlgorithmComplexity
+  - performance/MemoryManagement
+  - performance/IOOptimization
+  - performance/PerformanceMonitoring
+  
+  # Reliability Patterns
+  - reliability/IdempotencyRules
+  - reliability/ErrorSurfaceReduction
+  - reliability/RetrySafety
+  - reliability/ErrorHandlingPatterns
+  - reliability/CircuitBreakerPatterns
+  - reliability/HealthCheckPatterns
+  - reliability/ChaosEngineeringPatterns
+  - reliability/ObservabilityPatterns
+  
+  # Architecture Patterns
+  - architecture/APIDesignPrinciples
+  - architecture/ConcurrencyPatterns
+  - architecture/DesignPatterns
+  - architecture/MicroservicesPatterns
+  - architecture/EventSourcingCQRS
+  - architecture/DomainDrivenDesign
+  - architecture/MessageQueuePatterns
+  - architecture/CloudNativePatterns
+  
+  # Data Management
+  - data/DatabaseDesign
+  - data/DataMigrationPatterns
+  - data/DataPrivacyCompliance
+  - data/DataPipelinePatterns
+  
+  # Testing Excellence
+  - testing/TestingPrinciples
+  - testing/AdvancedTestingPatterns
+  - testing/PerformanceTestingPatterns
+  - testing/TestDataManagement
+  - testing/ContinuousTestingPatterns
+  
+  # AI Learning & Improvement
+  - ai-learning/ContinuousLearning
+  - ai-learning/SelfImprovement
+  - ai-learning/CodeReviewAutomation
+globalPrinciples:
+  - "Code must be readable, maintainable, and secure by default"
+  - "Fail fast, fail safe, with meaningful error messages"
+  - "Performance optimization comes after correctness"
+  - "Always validate inputs and sanitize outputs"
+  - "Design for testability and observability"
+usage: |
+  System Prompt: "You are now operating under the #CoreEngineering rule set. 
+  All code must follow the defined principles. Apply rules by default without reminders."

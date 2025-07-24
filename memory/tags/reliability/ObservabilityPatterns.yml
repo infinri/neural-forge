@@ -1,0 +1,70 @@
+tagName: ObservabilityPatterns
+description: "Comprehensive observability patterns for monitoring, logging, and tracing"
+appliesTo:
+  - "Distributed system monitoring"
+  - "Application performance monitoring"
+  - "Troubleshooting and debugging"
+  - "Service level objective (SLO) tracking"
+  - "Incident response and root cause analysis"
+patterns:
+  - "Implement the three pillars: metrics, logs, and traces"
+  - "Use structured logging with consistent formats"
+  - "Implement distributed tracing across service boundaries"
+  - "Create meaningful dashboards and alerts"
+  - "Use correlation IDs to track requests across services"
+bestPractices:
+  - "Instrument code at development time, not as an afterthought"
+  - "Use consistent naming conventions for metrics and logs"
+  - "Implement proper sampling strategies for high-volume systems"
+  - "Focus on user-centric metrics and business KPIs"
+  - "Create runbooks linking alerts to remediation steps"
+  - "Implement proper data retention policies"
+  - "Use observability data to drive system improvements"
+metricsPatterns:
+  - "RED metrics: Rate, Errors, Duration for services"
+  - "USE metrics: Utilization, Saturation, Errors for resources"
+  - "Golden signals: Latency, traffic, errors, saturation"
+  - "Business metrics: User registrations, revenue, conversions"
+  - "SLI/SLO metrics: Service level indicators and objectives"
+loggingPatterns:
+  - "Structured logging: Use JSON or similar structured formats"
+  - "Log levels: DEBUG, INFO, WARN, ERROR, FATAL with appropriate usage"
+  - "Contextual logging: Include request IDs, user IDs, session info"
+  - "Centralized logging: Aggregate logs from all services"
+  - "Log sampling: Sample high-volume logs to manage costs"
+tracingPatterns:
+  - "Distributed tracing: Track requests across service boundaries"
+  - "Span creation: Create spans for significant operations"
+  - "Trace context propagation: Pass trace context between services"
+  - "Sampling strategies: Head-based and tail-based sampling"
+  - "Trace analysis: Use traces for performance optimization"
+alertingStrategies:
+  - "Symptom-based alerts: Alert on user-visible problems"
+  - "Threshold-based alerts: Static limits for key metrics"
+  - "Anomaly detection: Machine learning-based alerting"
+  - "Alert fatigue prevention: Proper alert tuning and grouping"
+  - "Escalation policies: Progressive notification strategies"
+dashboardDesign:
+  - "Service dashboards: Key metrics for each service"
+  - "Business dashboards: Revenue, user engagement, conversions"
+  - "Infrastructure dashboards: System resource utilization"
+  - "SLO dashboards: Service level objective tracking"
+  - "Incident dashboards: Real-time incident status and impact"
+correlationTechniques:
+  - "Request correlation: Track requests across multiple services"
+  - "User journey tracking: Follow user interactions through the system"
+  - "Error correlation: Link errors to their root causes"
+  - "Performance correlation: Connect performance issues to their sources"
+  - "Business impact correlation: Link technical issues to business metrics"
+toolsAndPlatforms:
+  - "Metrics: Prometheus, Grafana, DataDog, New Relic"
+  - "Logging: ELK stack, Splunk, Fluentd, Loki"
+  - "Tracing: Jaeger, Zipkin, AWS X-Ray, Google Cloud Trace"
+  - "APM: New Relic, DataDog, AppDynamics, Dynatrace"
+  - "Unified platforms: Honeycomb, Lightstep, Observe"
+linkedTags:
+  - PerformanceMonitoring
+  - HealthCheckPatterns
+  - SecurityMonitoring
+  - CircuitBreakerPatterns
+tokenBudget: 85

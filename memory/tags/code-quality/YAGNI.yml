@@ -1,0 +1,32 @@
+tag: YAGNI
+description: >
+  You Aren't Gonna Need It - avoid implementing functionality until it's actually required.
+appliesTo:
+  - Feature development
+  - Architecture decisions
+  - Code abstractions
+  - Infrastructure planning
+  - API design
+principles:
+  - Implement only current requirements
+  - Avoid premature optimization
+  - Don't build for hypothetical future needs
+  - Keep solutions simple and focused
+  - Refactor when requirements actually change
+bestPractices:
+  - Start with minimal viable implementation
+  - Add complexity only when needed
+  - Question every "what if" scenario
+  - Focus on current user stories
+  - Measure before adding features
+  - Delete unused code regularly
+violations:
+  - Over-engineered abstractions
+  - Unused configuration options
+  - Speculative features
+  - Complex inheritance hierarchies
+  - Generic solutions for specific problems
+linkedTags:
+  - DRY
+  - SOLID
+  - CodeQualityStandards

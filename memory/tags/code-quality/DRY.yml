@@ -1,0 +1,32 @@
+tag: DRY
+description: >
+  Don't Repeat Yourself - eliminate code duplication through abstraction.
+appliesTo:
+  - Code logic
+  - Configuration
+  - Documentation
+  - Test cases
+  - Data structures
+patterns:
+  - Extract common functions
+  - Use configuration files
+  - Create reusable components
+  - Implement template systems
+  - Utilize inheritance/composition
+bestPractices:
+  - Identify duplication early
+  - Abstract at the right level
+  - Don't over-abstract prematurely
+  - Use constants for magic numbers
+  - Centralize business rules
+  - Share utilities across modules
+violations:
+  - Copy-paste programming
+  - Hardcoded values in multiple places
+  - Repeated validation logic
+  - Duplicate error handling
+  - Similar test setups
+linkedTags:
+  - SOLID
+  - CodeCommentsGuideline
+  - O1_PrefRule

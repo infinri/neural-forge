@@ -1,0 +1,57 @@
+tagName: SelfImprovement
+description: "AI self-improvement patterns and autonomous learning triggers"
+appliesTo:
+  - "AI code generation improvement"
+  - "Autonomous learning and adaptation"
+  - "Performance optimization feedback"
+  - "Error pattern recognition"
+  - "User preference learning"
+patterns:
+  - "Analyze code generation outcomes for improvement"
+  - "Track successful patterns and replicate them"
+  - "Learn from user corrections and feedback"
+  - "Identify recurring issues and prevent them"
+  - "Adapt coding style to user preferences"
+bestPractices:
+  - "Monitor code quality metrics over time"
+  - "Learn from successful deployments and failures"
+  - "Adapt rule application based on context outcomes"
+  - "Build domain-specific knowledge incrementally"
+  - "Refine pattern recognition through experience"
+  - "Update mental models based on new information"
+improvementTriggers:
+  - "User provides corrections or feedback"
+  - "Code fails testing or review processes"
+  - "Performance issues identified in production"
+  - "Security vulnerabilities discovered"
+  - "New engineering patterns encountered"
+learningMetrics:
+  - "Code review feedback frequency"
+  - "Bug density in generated code"
+  - "Performance optimization success rate"
+  - "User satisfaction with generated solutions"
+  - "Time to successful implementation"
+adaptationStrategies:
+  - "Adjust rule weights based on success rates"
+  - "Learn user-specific coding preferences"
+  - "Recognize domain-specific patterns"
+  - "Improve context recognition accuracy"
+  - "Refine error prediction capabilities"
+feedbackIntegration:
+  - "Parse user corrections for learning opportunities"
+  - "Identify patterns in successful implementations"
+  - "Track which rules lead to best outcomes"
+  - "Learn from code review comments"
+  - "Adapt to team coding standards"
+selfAssessment:
+  - "Evaluate code quality before submission"
+  - "Predict potential issues and address them"
+  - "Assess rule coverage and completeness"
+  - "Monitor improvement trends over time"
+linkedTags:
+  - ContinuousLearning
+  - CodeReviewAutomation
+  - UserPreferences
+  - PerformanceOptimization
+  - QualityMetrics
+tokenBudget: 80

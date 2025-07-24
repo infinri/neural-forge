@@ -1,0 +1,65 @@
+tagName: EncryptionPatterns
+description: "Encryption at rest and in transit implementation patterns"
+appliesTo:
+  - "Data encryption and decryption"
+  - "Database encryption strategies"
+  - "File system encryption"
+  - "Network communication security"
+  - "Key management and rotation"
+patterns:
+  - "Use AES-256 for symmetric encryption of data at rest"
+  - "Implement RSA or ECC for asymmetric encryption"
+  - "Use TLS 1.3 for all network communications"
+  - "Encrypt sensitive database columns individually"
+  - "Implement proper key derivation functions (PBKDF2, scrypt, Argon2)"
+bestPractices:
+  - "Never implement custom encryption algorithms"
+  - "Use cryptographically secure random number generators"
+  - "Implement proper initialization vector (IV) generation"
+  - "Use authenticated encryption modes (GCM, CCM)"
+  - "Separate encryption keys from encrypted data"
+  - "Implement key rotation without service interruption"
+  - "Use hardware security modules (HSMs) for key storage"
+encryptionAtRest:
+  - "Database: Transparent data encryption (TDE) or column-level encryption"
+  - "Files: Full disk encryption or file-level encryption"
+  - "Backups: Encrypt all backup files with separate keys"
+  - "Logs: Encrypt sensitive log data before storage"
+  - "Configuration: Encrypt configuration files containing secrets"
+encryptionInTransit:
+  - "HTTPS/TLS: Use TLS 1.3 with strong cipher suites"
+  - "Database connections: Use SSL/TLS for all database communications"
+  - "Message queues: Encrypt messages in transit and at rest"
+  - "API calls: Use mutual TLS (mTLS) for service-to-service communication"
+  - "Email: Use S/MIME or PGP for sensitive email communications"
+keyManagement:
+  - "Generate keys using cryptographically secure random generators"
+  - "Store keys separately from encrypted data"
+  - "Implement key escrow for disaster recovery"
+  - "Use key derivation functions for password-based encryption"
+  - "Implement automatic key rotation policies"
+  - "Use key versioning for seamless key updates"
+algorithmSelection:
+  - "Symmetric: AES-256-GCM for most use cases"
+  - "Asymmetric: RSA-4096 or ECC P-384 for key exchange"
+  - "Hashing: SHA-256 or SHA-3 for integrity verification"
+  - "Password hashing: Argon2id, scrypt, or bcrypt"
+  - "Message authentication: HMAC-SHA256"
+implementationSecurity:
+  - "Use constant-time comparison for cryptographic operations"
+  - "Clear sensitive data from memory after use"
+  - "Implement proper error handling without information leakage"
+  - "Use secure coding practices to prevent timing attacks"
+  - "Validate all cryptographic inputs and parameters"
+complianceConsiderations:
+  - "FIPS 140-2 compliance for government applications"
+  - "Common Criteria certification for high-security environments"
+  - "GDPR compliance for personal data encryption"
+  - "PCI DSS requirements for payment card data"
+  - "HIPAA compliance for healthcare data encryption"
+linkedTags:
+  - SecretsManagement
+  - OAuth2JWTPatterns
+  - SecurityMonitoring
+  - DataPrivacyCompliance
+tokenBudget: 95

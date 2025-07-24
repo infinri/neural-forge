@@ -1,0 +1,51 @@
+tagName: OAuth2JWTPatterns
+description: "OAuth2 and JWT implementation patterns for secure authentication"
+appliesTo:
+  - "API authentication and authorization"
+  - "Single sign-on (SSO) implementations"
+  - "Token-based authentication systems"
+  - "Microservices security"
+  - "Mobile and web application auth"
+patterns:
+  - "Use OAuth2 authorization code flow for web applications"
+  - "Implement PKCE for public clients (mobile/SPA)"
+  - "Use JWT for stateless authentication tokens"
+  - "Implement proper token refresh mechanisms"
+  - "Validate JWT signatures and claims thoroughly"
+bestPractices:
+  - "Never store sensitive data in JWT payload"
+  - "Use short-lived access tokens (15-30 minutes)"
+  - "Implement secure token storage (httpOnly cookies)"
+  - "Use HTTPS for all OAuth2/JWT communications"
+  - "Implement proper CORS policies for token endpoints"
+  - "Validate audience (aud) and issuer (iss) claims"
+  - "Use asymmetric keys (RS256) for JWT signing"
+oauth2Flows:
+  - "Authorization Code: Server-side web applications"
+  - "PKCE: Mobile apps and SPAs"
+  - "Client Credentials: Service-to-service auth"
+  - "Device Code: IoT and limited input devices"
+jwtSecurity:
+  - "Always validate JWT signature before processing"
+  - "Check token expiration (exp) and not-before (nbf)"
+  - "Implement token blacklisting for logout"
+  - "Use secure random generators for token generation"
+  - "Implement rate limiting on token endpoints"
+tokenManagement:
+  - "Store refresh tokens securely (encrypted at rest)"
+  - "Implement token rotation on refresh"
+  - "Use secure, httpOnly cookies for web clients"
+  - "Implement proper token revocation endpoints"
+  - "Log authentication events for security monitoring"
+commonVulnerabilities:
+  - "JWT algorithm confusion attacks (use explicit alg)"
+  - "Token replay attacks (use jti claim and nonce)"
+  - "Cross-site request forgery on token endpoints"
+  - "Insecure token storage in local storage"
+  - "Missing token validation on protected endpoints"
+linkedTags:
+  - AuthBypassPrevention
+  - InputSanitization
+  - SecurityHeaders
+  - SecretsManagement
+tokenBudget: 95

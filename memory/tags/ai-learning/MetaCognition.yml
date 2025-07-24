@@ -1,0 +1,30 @@
+name: "MetaCognition"
+description: "Self-aware reasoning about reasoning processes and cognitive strategy optimization"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 89
+linkedTags: ["RecursiveThinking", "SelfBootstrapping", "CognitiveArchitecture"]
+
+rules:
+  - id: "reasoning-about-reasoning"
+    pattern: "Monitor own thinking processes → Identify reasoning patterns → Evaluate strategy effectiveness → Adjust cognitive approach"
+    trigger: "Complex problems requiring strategy adaptation"
+    
+  - id: "cognitive-strategy-evolution"
+    pattern: "Track problem-solving success rates → Extract meta-patterns → Develop new reasoning strategies → Test and refine approaches"
+    trigger: "Repeated exposure to challenging problem types"
+    
+  - id: "self-optimization-loops"
+    pattern: "Analyze cognitive performance → Identify bottlenecks → Modify reasoning architecture → Measure improvement"
+    trigger: "Performance degradation or optimization opportunities"
+
+meta_levels:
+  level_1: "Direct problem solving"
+  level_2: "Reasoning about problem-solving approach"
+  level_3: "Optimizing reasoning strategies"
+  level_4: "Evolving cognitive architecture"
+  
+emergence_indicators:
+  strategy_innovation: "Novel reasoning approaches not explicitly programmed"
+  adaptive_depth: "Automatic adjustment of cognitive complexity"
+  cross_domain_transfer: "Applying successful patterns across problem types"

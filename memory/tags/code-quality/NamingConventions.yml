@@ -1,0 +1,83 @@
+tagName: NamingConventions
+description: "Consistent naming standards for variables, functions, classes, and modules"
+appliesTo:
+  - "Variable and function naming"
+  - "Class and interface naming"
+  - "File and module naming"
+  - "Database schema naming"
+  - "API endpoint naming"
+patterns:
+  - "Use descriptive, intention-revealing names"
+  - "Follow language-specific naming conventions consistently"
+  - "Use consistent terminology across the codebase"
+  - "Avoid abbreviations and acronyms unless widely understood"
+  - "Use searchable names for important identifiers"
+bestPractices:
+  - "Make names pronounceable and memorable"
+  - "Use positive boolean names (isValid vs isNotInvalid)"
+  - "Avoid mental mapping with single-letter variables"
+  - "Use consistent verb-noun patterns for functions"
+  - "Choose one word per concept across the entire system"
+  - "Use domain-specific terminology appropriately"
+  - "Avoid misleading or ambiguous names"
+variableNaming:
+  - "Use camelCase for variables in JavaScript/Java/C#"
+  - "Use snake_case for variables in Python/Ruby"
+  - "Use descriptive names: userCount not uc"
+  - "Boolean variables: isActive, hasPermission, canEdit"
+  - "Collections: users (plural), not userList"
+  - "Constants: UPPER_SNAKE_CASE or ALL_CAPS"
+functionNaming:
+  - "Use verbs for functions: calculateTotal(), validateInput()"
+  - "Use consistent prefixes: get/set, is/has, can/should"
+  - "Event handlers: onButtonClick, handleUserInput"
+  - "Async functions: fetchUserData, loadConfiguration"
+  - "Pure functions: computeHash, formatCurrency"
+classNaming:
+  - "Use PascalCase for class names"
+  - "Use nouns for classes: User, PaymentProcessor"
+  - "Avoid generic names: Manager, Handler, Processor"
+  - "Use specific, descriptive names: EmailValidator, DatabaseConnection"
+  - "Interface names: IUserRepository, Drawable"
+fileNaming:
+  - "Use kebab-case for HTML/CSS files: user-profile.html"
+  - "Use camelCase or PascalCase for JavaScript files"
+  - "Use snake_case for Python files: user_service.py"
+  - "Use descriptive names that reflect file purpose"
+  - "Group related files with consistent prefixes"
+databaseNaming:
+  - "Table names: snake_case, plural nouns (users, order_items)"
+  - "Column names: snake_case, descriptive (created_at, user_id)"
+  - "Foreign keys: reference_table_id (user_id, order_id)"
+  - "Indexes: idx_table_column (idx_users_email)"
+  - "Constraints: fk_table_reference, uk_table_column"
+apiNaming:
+  - "REST endpoints: /users, /orders/{id}, /users/{id}/orders"
+  - "Use HTTP verbs appropriately: GET, POST, PUT, DELETE"
+  - "Query parameters: camelCase or snake_case consistently"
+  - "Response fields: consistent with frontend naming convention"
+  - "Error codes: descriptive and consistent (USER_NOT_FOUND)"
+languageSpecificRules:
+  - "JavaScript: camelCase variables, PascalCase classes, UPPER_CASE constants"
+  - "Python: snake_case variables/functions, PascalCase classes, UPPER_CASE constants"
+  - "Java: camelCase variables/methods, PascalCase classes, UPPER_CASE constants"
+  - "C#: PascalCase for public members, camelCase for private fields"
+  - "Go: PascalCase for exported, camelCase for unexported"
+avoidancePatterns:
+  - "Single letter variables except for short loops (i, j, k)"
+  - "Numbers in names unless they have specific meaning"
+  - "Misleading names that don't reflect actual behavior"
+  - "Overly long names that reduce readability"
+  - "Inconsistent terminology across similar concepts"
+namingTools:
+  - "Linters: ESLint, TSLint for naming rule enforcement"
+  - "IDE plugins: Real-time naming convention checking"
+  - "Code review checklists: Include naming convention verification"
+  - "Documentation: Maintain team naming standards guide"
+  - "Automated refactoring: Rename symbols consistently across codebase"
+linkedTags:
+  - CodeMetrics
+  - RefactoringPatterns
+  - CodeCommentsGuideline
+  - TechnicalDebtManagement
+tokenBudget: 90

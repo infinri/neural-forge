@@ -1,0 +1,33 @@
+tagSet: SoftwareArchitecture
+description: Architectural patterns and design principles for scalable systems.
+version: "1.0.0"
+tokenBudget: 200
+includes:
+  # Core Architecture Patterns
+  - architecture/DesignPatterns
+  - architecture/ConcurrencyPatterns
+  - architecture/APIDesignPrinciples
+  - architecture/MicroservicesPatterns
+  - architecture/EventSourcingCQRS
+  - architecture/DomainDrivenDesign
+  - architecture/MessageQueuePatterns
+  - architecture/CloudNativePatterns
+  
+  # Supporting Patterns
+  - code-quality/SOLID
+  - data/DatabaseDesign
+  - reliability/CircuitBreakerPatterns
+  - reliability/ObservabilityPatterns
+  - security/ZeroTrustArchitecture
+principles:
+  - "Loose coupling, high cohesion"
+  - "Separate concerns by domain boundaries"
+  - "Design for failure and recovery"
+  - "Stateless services where possible"
+  - "Data consistency over availability when critical"
+patterns:
+  - Repository pattern for data access
+  - Factory pattern for object creation
+  - Observer pattern for event handling
+  - Circuit breaker for fault tolerance
+  - CQRS for read/write separation

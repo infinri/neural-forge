@@ -1,0 +1,31 @@
+name: "SynestheticProcessing"
+description: "Cross-modal cognitive processing where each MCP operates in different modalities"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 88
+linkedTags: ["MCPOrchestration", "CognitiveArchitecture", "EmergentIntelligence"]
+
+rules:
+  - id: "modal-separation"
+    pattern: "Memory modality (supermemoryai) → Context modality (context7) → Logic modality (atom-of-thoughts) → Temporal modality (sequential-thinking) → Reality modality (puppeteer)"
+    trigger: "Problems requiring multi-dimensional analysis"
+    
+  - id: "cross-modal-feedback"
+    pattern: "Each modality's output reshapes previous modalities' operation → Creates synesthetic reinforcement loops"
+    trigger: "Complex problems where different perspectives reveal new insights"
+    
+  - id: "emergent-specialization"
+    pattern: "MCPs develop specialized modes for nested reasoning → Context7 becomes personalized → Atom-of-thoughts learns problem-specific patterns"
+    trigger: "Repeated exposure to similar problem domains"
+
+modality_types:
+  memory: "Historical patterns and learned experiences"
+  context: "Current technical and domain knowledge"
+  logic: "Structured decomposition and reasoning"
+  temporal: "Sequential planning and execution"
+  reality: "Real-world validation and testing"
+  
+synesthetic_effects:
+  cross_modal_priming: "One modality prepares others for specific processing"
+  modal_interference: "Conflicting modalities create creative tension"
+  emergent_insights: "Novel solutions from modal intersection"

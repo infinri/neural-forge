@@ -1,0 +1,56 @@
+tagName: OOPPrinciples
+description: "Comprehensive object-oriented programming principles beyond SOLID"
+appliesTo:
+  - "Class design and architecture"
+  - "Object modeling and relationships"
+  - "Inheritance hierarchies"
+  - "Interface design"
+  - "Code organization and structure"
+patterns:
+  - "Favor composition over inheritance"
+  - "Program to interfaces, not implementations"
+  - "Encapsulate what varies"
+  - "Use polymorphism to eliminate conditionals"
+  - "Apply the Law of Demeter (don't talk to strangers)"
+coreOOPPrinciples:
+  - "Encapsulation: Hide internal state and implementation details"
+  - "Inheritance: Extend behavior through is-a relationships"
+  - "Polymorphism: One interface, multiple implementations"
+  - "Abstraction: Focus on essential features, hide complexity"
+bestPractices:
+  - "Keep classes focused on single responsibility"
+  - "Use abstract classes for shared implementation"
+  - "Prefer interfaces for contracts and protocols"
+  - "Implement proper equals() and hashCode() methods"
+  - "Override toString() for debugging and logging"
+  - "Use factory methods for complex object creation"
+  - "Apply builder pattern for objects with many parameters"
+compositionPatterns:
+  - "Delegate behavior to composed objects"
+  - "Use strategy pattern for interchangeable algorithms"
+  - "Apply decorator pattern for extending functionality"
+  - "Implement observer pattern for event handling"
+inheritanceGuidelines:
+  - "Use inheritance only for true is-a relationships"
+  - "Keep inheritance hierarchies shallow (max 3-4 levels)"
+  - "Make base classes abstract when appropriate"
+  - "Override methods consistently with Liskov substitution"
+  - "Use final classes/methods to prevent unwanted extension"
+polymorphismTechniques:
+  - "Method overriding for specialized behavior"
+  - "Method overloading for convenience methods"
+  - "Interface implementation for contracts"
+  - "Generic types for type safety and reusability"
+antiPatterns:
+  - "Avoid deep inheritance hierarchies"
+  - "Don't use inheritance for code reuse alone"
+  - "Avoid exposing internal collections directly"
+  - "Don't break encapsulation with public fields"
+  - "Avoid god objects with too many responsibilities"
+linkedTags:
+  - SOLID
+  - DesignPatterns
+  - CodeQualityStandards
+  - Encapsulation
+  - Polymorphism
+tokenBudget: 85

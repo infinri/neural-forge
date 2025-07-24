@@ -1,0 +1,78 @@
+tagName: RefactoringPatterns
+description: "Code refactoring techniques and code smell detection patterns"
+appliesTo:
+  - "Legacy code improvement"
+  - "Code smell elimination"
+  - "Design pattern implementation"
+  - "Performance optimization through refactoring"
+  - "Maintainability enhancement"
+patterns:
+  - "Extract Method: Break down large functions into smaller, focused ones"
+  - "Extract Class: Split large classes with multiple responsibilities"
+  - "Move Method: Relocate methods to more appropriate classes"
+  - "Replace Conditional with Polymorphism: Use inheritance instead of switch statements"
+  - "Introduce Parameter Object: Group related parameters into objects"
+bestPractices:
+  - "Refactor in small, incremental steps with tests"
+  - "Maintain functionality while improving structure"
+  - "Use automated refactoring tools when available"
+  - "Write comprehensive tests before refactoring"
+  - "Review and validate refactored code thoroughly"
+  - "Document refactoring decisions and rationale"
+  - "Prioritize refactoring based on code metrics and change frequency"
+codeSmells:
+  - "Long Method: Functions >50 lines or complex logic"
+  - "Large Class: Classes >500 lines or multiple responsibilities"
+  - "Duplicate Code: Identical or similar code blocks"
+  - "Long Parameter List: Functions with >5 parameters"
+  - "Feature Envy: Methods using more data from other classes"
+  - "Data Clumps: Groups of data items that appear together"
+  - "Primitive Obsession: Overuse of primitive types instead of objects"
+extractionTechniques:
+  - "Extract Method: Create focused, single-purpose functions"
+  - "Extract Variable: Improve readability with meaningful names"
+  - "Extract Class: Separate concerns into distinct classes"
+  - "Extract Interface: Define contracts for better abstraction"
+  - "Extract Superclass: Share common behavior through inheritance"
+compositionPatterns:
+  - "Replace Inheritance with Composition: Favor composition over inheritance"
+  - "Strategy Pattern: Encapsulate algorithms and make them interchangeable"
+  - "Template Method: Define algorithm skeleton with customizable steps"
+  - "Decorator Pattern: Add behavior without modifying existing code"
+  - "Observer Pattern: Implement loose coupling between objects"
+dataRefactoring:
+  - "Encapsulate Field: Replace public fields with getter/setter methods"
+  - "Replace Data Value with Object: Create meaningful domain objects"
+  - "Change Value to Reference: Use references for shared objects"
+  - "Replace Array with Object: Use structured objects instead of arrays"
+  - "Introduce Null Object: Eliminate null checks with default behavior"
+conditionalRefactoring:
+  - "Decompose Conditional: Extract complex conditions into methods"
+  - "Consolidate Conditional Expression: Combine related conditions"
+  - "Replace Nested Conditional with Guard Clauses: Early returns for clarity"
+  - "Replace Conditional with Polymorphism: Use inheritance for type-specific behavior"
+  - "Introduce Assertion: Make assumptions explicit with assertions"
+methodRefactoring:
+  - "Rename Method: Use clear, intention-revealing names"
+  - "Add Parameter: Extend method functionality safely"
+  - "Remove Parameter: Eliminate unused parameters"
+  - "Separate Query from Modifier: Avoid methods that both query and modify"
+  - "Replace Parameter with Method Call: Reduce parameter coupling"
+classRefactoring:
+  - "Move Method: Place methods in classes that use their data most"
+  - "Move Field: Relocate fields to classes that use them most"
+  - "Inline Class: Merge classes that don't justify separate existence"
+  - "Hide Delegate: Reduce coupling by hiding delegation relationships"
+  - "Remove Middle Man: Eliminate unnecessary delegation layers"
+refactoringTools:
+  - "IDE refactoring features: Automated safe transformations"
+  - "Static analysis tools: Identify refactoring opportunities"
+  - "Code coverage tools: Ensure refactoring safety"
+  - "Diff tools: Review refactoring changes"
+  - "Version control: Track refactoring history and rollback if needed"
+linkedTags:
+  - CodeMetrics
+  - TechnicalDebtManagement
+  - SOLID
+  - DesignPatterns
+tokenBudget: 95

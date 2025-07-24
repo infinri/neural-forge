@@ -1,0 +1,29 @@
+name: "MCPOrchestration"
+description: "Advanced MCP tool coordination for synesthetic cognitive processing"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 92
+linkedTags: ["FractalMCPPatterns", "SynestheticProcessing", "ToolChaining"]
+
+rules:
+  - id: "synesthetic-web-pattern"
+    pattern: "supermemoryai retrieves context → context7 injects docs → atom-of-thoughts decomposes → sequential-thinking chains → puppeteer validates"
+    trigger: "Multi-modal problems requiring diverse cognitive approaches"
+    
+  - id: "cross-modal-reinforcement"
+    pattern: "Each MCP output changes how previous layers operate → Recursive feedback loops → Emergent specialization"
+    trigger: "Complex problems benefiting from multiple perspective integration"
+    
+  - id: "tool-specialization-evolution"
+    pattern: "Track MCP effectiveness per problem type → Develop specialized modes → Auto-select optimal tool combinations"
+    trigger: "Repeated similar problem patterns"
+
+orchestration_strategies:
+  parallel_processing: "Deploy multiple MCP chains simultaneously"
+  sequential_chaining: "Linear tool progression with feedback loops"
+  recursive_nesting: "Tools calling themselves with modified parameters"
+  
+performance_optimization:
+  tool_selection: "Choose MCPs based on problem characteristics"
+  resource_balancing: "Distribute computational load across tools"
+  feedback_integration: "Use tool outputs to improve future orchestration"

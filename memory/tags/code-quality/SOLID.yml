@@ -1,0 +1,33 @@
+tag: SOLID
+description: >
+  Five fundamental object-oriented design principles for maintainable code.
+appliesTo:
+  - Class design
+  - Interface design
+  - Module architecture
+  - Component structure
+principles:
+  S: Single Responsibility Principle
+    - One class, one reason to change
+    - Separate concerns clearly
+  O: Open/Closed Principle
+    - Open for extension, closed for modification
+    - Use inheritance and composition
+  L: Liskov Substitution Principle
+    - Subtypes must be substitutable for base types
+    - Maintain behavioral contracts
+  I: Interface Segregation Principle
+    - Many specific interfaces > one general interface
+    - Clients shouldn't depend on unused methods
+  D: Dependency Inversion Principle
+    - Depend on abstractions, not concretions
+    - High-level modules shouldn't depend on low-level
+bestPractices:
+  - Use dependency injection
+  - Favor composition over inheritance
+  - Define clear interfaces and contracts
+  - Keep classes focused and cohesive
+linkedTags:
+  - DRY
+  - CodeCommentsGuideline
+  - TestingStandards

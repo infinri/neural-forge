@@ -1,0 +1,37 @@
+tag: CodeCommentsGuideline
+description: >
+  Strategic commenting practices for maintainable and self-documenting code.
+appliesTo:
+  - Function documentation
+  - Complex algorithms
+  - Business logic
+  - API interfaces
+  - Configuration files
+principles:
+  - Code should be self-documenting first
+  - Comments explain WHY, not WHAT
+  - Keep comments close to relevant code
+  - Update comments when code changes
+  - Avoid obvious comments
+bestPractices:
+  - Document public APIs with examples
+  - Explain complex business rules
+  - Note performance considerations
+  - Document assumptions and constraints
+  - Use TODO/FIXME for technical debt
+  - Include links to external documentation
+formats:
+  - JSDoc for JavaScript
+  - Docstrings for Python
+  - XML docs for C#
+  - Javadoc for Java
+  - Rustdoc for Rust
+avoid:
+  - Commenting every line
+  - Outdated comments
+  - Commented-out code
+  - Redundant explanations
+linkedTags:
+  - DRY
+  - SOLID
+  - CodeQualityStandards

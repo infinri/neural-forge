@@ -1,0 +1,70 @@
+tagName: DataPipelinePatterns
+description: "Data pipeline patterns for ETL, streaming, and real-time data processing"
+appliesTo:
+  - "Extract, transform, load (ETL) processes"
+  - "Real-time data streaming and processing"
+  - "Data warehouse and analytics pipelines"
+  - "Machine learning data preparation"
+  - "Data quality and validation workflows"
+patterns:
+  - "Design idempotent data transformations for reliable processing"
+  - "Implement schema evolution and backward compatibility"
+  - "Use event-driven architectures for real-time data processing"
+  - "Implement proper error handling and dead letter queues"
+  - "Use checkpointing for fault-tolerant stream processing"
+bestPractices:
+  - "Design pipelines to be testable and monitorable"
+  - "Implement data lineage tracking for governance"
+  - "Use appropriate batch sizes for optimal performance"
+  - "Implement data quality checks at each stage"
+  - "Design for horizontal scalability and parallel processing"
+  - "Use immutable data transformations where possible"
+  - "Implement proper backpressure handling"
+etlPatterns:
+  - "Extract: Pull data from various source systems"
+  - "Transform: Clean, validate, and structure data"
+  - "Load: Store processed data in target systems"
+  - "Incremental processing: Process only changed data"
+  - "Full refresh: Complete data reload when necessary"
+streamProcessing:
+  - "Event streaming: Process continuous data streams"
+  - "Windowing: Group events by time or count windows"
+  - "Stateful processing: Maintain state across events"
+  - "Exactly-once processing: Ensure no duplicate processing"
+  - "Late data handling: Process events that arrive out of order"
+dataQuality:
+  - "Schema validation: Ensure data conforms to expected structure"
+  - "Data profiling: Analyze data characteristics and quality"
+  - "Anomaly detection: Identify unusual patterns in data"
+  - "Completeness checks: Verify all required data is present"
+  - "Consistency validation: Ensure data relationships are valid"
+errorHandling:
+  - "Dead letter queues: Handle records that can't be processed"
+  - "Retry mechanisms: Attempt reprocessing of failed records"
+  - "Circuit breakers: Stop processing when downstream systems fail"
+  - "Graceful degradation: Continue processing when possible"
+  - "Error enrichment: Add context to error records for debugging"
+scalabilityPatterns:
+  - "Horizontal partitioning: Distribute data across multiple workers"
+  - "Auto-scaling: Adjust processing capacity based on load"
+  - "Load balancing: Distribute work evenly across processors"
+  - "Caching: Cache frequently accessed data and computations"
+  - "Compression: Reduce data transfer and storage costs"
+monitoringAndObservability:
+  - "Pipeline metrics: Track throughput, latency, and error rates"
+  - "Data lineage: Track data flow from source to destination"
+  - "Data quality metrics: Monitor data quality over time"
+  - "Resource utilization: Monitor CPU, memory, and network usage"
+  - "Business metrics: Track pipeline impact on business outcomes"
+toolsAndFrameworks:
+  - "Apache Airflow: Workflow orchestration platform"
+  - "Apache Kafka: Event streaming platform"
+  - "Apache Spark: Large-scale data processing engine"
+  - "Apache Flink: Stream processing framework"
+  - "dbt: Data transformation tool for analytics"
+linkedTags:
+  - DatabaseDesign
+  - DataMigrationPatterns
+  - PerformanceMonitoring
+  - MessageQueuePatterns
+tokenBudget: 85

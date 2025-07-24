@@ -1,0 +1,31 @@
+tag: RateLimitGuard
+description: >
+  Patterns for enforcing safe API limits to avoid overload, abuse, or cascade failure.
+appliesTo:
+  - REST APIs
+  - Internal service calls
+  - User-triggered loops
+  - Database queries
+  - External API calls
+patterns:
+  - Token bucket (smooth rate limiting)
+  - Leaky bucket (burst handling)
+  - Fixed window (simple time-based)
+  - Sliding window (precise rate control)
+  - Adaptive rate limiting (dynamic adjustment)
+bestPractices:
+  - Apply before authentication if abuse possible
+  - Sync with retry/backoff logic
+  - Don't log failed hits to avoid log overflow
+  - Use distributed counters for scale
+  - Implement graceful degradation
+  - Return 429 status with Retry-After header
+linkedTags:
+  - IdempotencyRules
+  - AuthBypassPrevention
+  - RetrySafety
+  - CachingPatterns
+implementation:
+  - Redis for distributed rate limiting
+  - In-memory for single instance
+  - Headers: X-RateLimit-Limit, X-RateLimit-Remaining

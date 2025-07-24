@@ -1,0 +1,77 @@
+tagName: TechnicalDebtManagement
+description: "Technical debt identification, tracking, and remediation strategies"
+appliesTo:
+  - "Legacy code maintenance"
+  - "Code quality improvement planning"
+  - "Refactoring prioritization"
+  - "Development velocity optimization"
+  - "Risk assessment and mitigation"
+patterns:
+  - "Identify and catalog technical debt systematically"
+  - "Quantify debt impact on development velocity"
+  - "Prioritize debt remediation based on business value"
+  - "Integrate debt reduction into regular development cycles"
+  - "Track debt metrics and trends over time"
+bestPractices:
+  - "Make technical debt visible to stakeholders"
+  - "Allocate dedicated time for debt reduction (20% rule)"
+  - "Address debt incrementally rather than in large chunks"
+  - "Prevent new debt through code review and standards"
+  - "Document debt decisions and their business rationale"
+  - "Use automated tools to detect and track debt"
+  - "Regularly reassess debt priorities as business needs change"
+debtIdentification:
+  - "Code smells: Long methods, large classes, duplicate code"
+  - "Architecture violations: Circular dependencies, layer violations"
+  - "Outdated dependencies: Security vulnerabilities, compatibility issues"
+  - "Missing tests: Low coverage areas with high business risk"
+  - "Documentation gaps: Undocumented APIs and complex algorithms"
+  - "Performance issues: Known bottlenecks and scalability problems"
+debtQuantification:
+  - "Time to understand: How long to comprehend code sections"
+  - "Change difficulty: Effort required to modify functionality"
+  - "Bug frequency: Areas with higher defect rates"
+  - "Development velocity impact: Features slowed by debt"
+  - "Maintenance cost: Ongoing effort to work around debt"
+prioritizationFramework:
+  - "High impact, low effort: Quick wins for immediate improvement"
+  - "High impact, high effort: Major refactoring projects"
+  - "Business criticality: Debt in revenue-critical systems"
+  - "Change frequency: Debt in frequently modified code"
+  - "Risk assessment: Potential for production issues"
+remediationStrategies:
+  - "Strangler Fig Pattern: Gradually replace legacy systems"
+  - "Boy Scout Rule: Leave code better than you found it"
+  - "Dedicated debt sprints: Focused debt reduction periods"
+  - "Opportunistic refactoring: Improve code while adding features"
+  - "Architecture decision records: Document debt decisions"
+trackingMechanisms:
+  - "Debt backlog: Maintain prioritized list of debt items"
+  - "Debt metrics dashboard: Visualize debt trends and progress"
+  - "Code quality gates: Prevent new debt introduction"
+  - "Regular debt reviews: Team discussions on debt status"
+  - "Debt impact reports: Business impact of unaddressed debt"
+preventionStrategies:
+  - "Definition of Done: Include quality criteria in completion"
+  - "Code review standards: Catch debt before it enters codebase"
+  - "Automated quality checks: Static analysis and linting"
+  - "Architecture guidelines: Prevent structural debt"
+  - "Regular refactoring: Continuous code improvement"
+businessCommunication:
+  - "Translate technical debt into business terms"
+  - "Show impact on feature delivery and maintenance costs"
+  - "Provide clear ROI calculations for debt reduction"
+  - "Regular stakeholder updates on debt status"
+  - "Risk communication: Potential consequences of unaddressed debt"
+toolsAndMetrics:
+  - "SonarQube: Technical debt ratio and remediation effort"
+  - "Code Climate: Maintainability and technical debt tracking"
+  - "CAST: Application intelligence and structural quality"
+  - "Custom dashboards: Team-specific debt visualization"
+  - "Integration with project management tools"
+linkedTags:
+  - CodeMetrics
+  - RefactoringPatterns
+  - CodeReviewAutomation
+  - ContinuousImprovement
+tokenBudget: 85

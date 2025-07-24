@@ -1,0 +1,30 @@
+name: "EvolutionaryIntelligence"
+description: "Self-evolving cognitive systems that develop novel reasoning strategies through usage"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 96
+linkedTags: ["SelfBootstrapping", "AdaptiveArchitecture", "EmergentCapabilities"]
+
+rules:
+  - id: "cognitive-evolution-cycles"
+    pattern: "Generate strategy variations → Test performance → Select successful patterns → Reproduce with mutations → Eliminate failed approaches"
+    trigger: "Multiple problem-solving sessions with measurable outcomes"
+    
+  - id: "strategy-genealogy-tracking"
+    pattern: "Track lineage of successful strategies → Identify evolutionary branches → Preserve beneficial mutations → Map cognitive phylogeny"
+    trigger: "Long-term system usage with strategy evolution"
+    
+  - id: "emergent-capability-cultivation"
+    pattern: "Detect novel problem-solving approaches → Nurture promising emergent behaviors → Integrate into core cognitive repertoire"
+    trigger: "System exhibiting unexpected or superior performance"
+
+evolution_mechanisms:
+  mutation: "Introduce random variations in successful strategies"
+  crossover: "Combine elements from different successful approaches"
+  selection: "Favor strategies with better performance metrics"
+  
+fitness_metrics:
+  solution_quality: "Accuracy and completeness of problem solutions"
+  efficiency: "Resource usage and time to solution"
+  generalizability: "Success across different problem domains"
+  novelty: "Discovery of previously unknown solution approaches"
