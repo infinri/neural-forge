@@ -23,7 +23,7 @@ Add this to your `~/.codeium/windsurf/memories/global_rules.md`:
 
 **Framework Path:** `.codeium/windsurf/memories/neural-forge/`
 **Behavior:** Silent, autonomous, always-on application of 63 engineering rules + 10 fractal MCP patterns
-```
+
 
 ## 📁 Framework Structure
 
