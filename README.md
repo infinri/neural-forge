@@ -17,6 +17,7 @@ Transforms AI systems into autonomous senior engineering partners by encoding en
 1. **Clone Repository**: `git clone https://github.com/infinri/neural-forge.git`
 2. **Save Cloned Repository**: Move cloned repository to your AI system's memory/context: `/.codeium/windsurf/memories/`
 3. **Activate**: Use global_rules integration (see below) by copying gist and adding contents into your global_rules.md file
+4. **Vibe Away**: No special prompts needed, you can simply ask for what you need in natural language.
 
 ### For Windsurf Users
 Add this to your `~/.codeium/windsurf/memories/global_rules.md` (Not Copy Paste Ready): https://gist.github.com/infinri/2a50e6b0dc79865a1737c3cfe7562316
