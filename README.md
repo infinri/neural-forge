@@ -1,112 +1,60 @@
 # 🧠 Neural Forge
 
-**Revolutionary Token-Compressed Engineering Rule Framework with Fractal MCP Architecture**
+**Token-Compressed Engineering Rule Framework with Fractal MCP Architecture**
 
-Neural Forge is an advanced AI cognitive framework that encodes 20+ years of senior engineering principles into token-compressed YAML files, enabling autonomous AI systems to generate production-ready code following best practices without explicit prompting.
+Transforms AI systems into autonomous senior engineering partners by encoding engineering wisdom into 63 token-compressed YAML files (~85-95 tokens each) for efficient AI consumption.
 
-## 🌟 Key Features
+## 🎯 What Is This?
 
-- **🧠 Autonomous Cognitive Engine** - AI systems learn to read, apply, and evolve engineering rules independently
-- **🌀 Fractal MCP Architecture** - Recursive cognitive patterns for complex problem-solving
-- **⚡ Token-Compressed Format** - 63 engineering principles in ~85-95 tokens each for efficient AI consumption
-- **🔄 Self-Improving Intelligence** - Framework evolves and creates new patterns based on usage
-- **🛡️ Production-Ready** - Comprehensive coverage of security, performance, reliability, and architecture
+- **63 Engineering Principles** across 8 domains (security, performance, architecture, etc.)
+- **10 Fractal MCP Patterns** for recursive cognitive reasoning
+- **Autonomous Operation** - AI applies best practices without explicit prompting
+- **Self-Improving** - Framework evolves and learns from usage patterns
+- **Production-Ready** - Comprehensive coverage for enterprise-grade development
 
 ## 🚀 Quick Start
 
-### For AI Systems
-1. **Start Here**: Read `cognitive-engine.md` to understand autonomous token management
-2. **Load Framework**: Scan `memory/tags/` directory for all 63 token-compressed rule files
-3. **Apply Rules**: Use patterns automatically without explicit prompting
-4. **Evolve**: Create new tokens when novel patterns emerge
+1. **Clone Repository**: `git clone https://github.com/infinri/neural-forge.git`
+2. **Save Cloned Repository**: Move cloned repository to your AI system's memory/context: `/.codeium/windsurf/memories/`
+3. **Activate**: Use global_rules integration (see below) by copying gist and adding contents into your global_rules.md file
 
-### For Developers
-1. Clone the repository
-2. Review `ARCHITECTURE_SUMMARY.md` for complete framework structure
-3. Integrate rule sets from `memory/engineering/` into your AI workflows
-4. Customize token files in `memory/tags/` for your specific domains
+### For Windsurf Users
+Add this to your `~/.codeium/windsurf/memories/global_rules.md`:
 
-## 📁 Framework Architecture
+**Framework Path:** `.codeium/windsurf/memories/neural-forge/`
+**Behavior:** Silent, autonomous, always-on application of 63 engineering rules + 10 fractal MCP patterns
+```
+
+## 📁 Framework Structure
 
 ```
 neural-forge/
-├── cognitive-engine.md          # 🧠 AI instruction manual (START HERE)
-├── ARCHITECTURE_SUMMARY.md     # 🏗️ Complete structure reference
-├── memory/
-│   ├── engineering/            # 7 rule set manifests
-│   └── tags/                   # 63 token-compressed knowledge base
-│       ├── security/           # 10 security principles
-│       ├── code-quality/       # 9 code quality standards
-│       ├── ai-learning/        # 13 AI learning & fractal MCP patterns
-│       ├── performance/        # 6 performance optimization rules
-│       ├── reliability/        # 8 reliability & error handling patterns
-│       ├── architecture/       # 8 architectural design patterns
-│       ├── data/              # 4 database & data management rules
-│       └── testing/           # 5 testing methodologies
+├── ARCHITECTURE_SUMMARY.md     # 🏗️ Start here - complete overview
+├── cognitive-engine.md          # 🧠 AI instruction manual
+└── memory/
+    ├── engineering/            # 7 rule set manifests
+    └── tags/                   # 63 token-compressed principles
+        ├── security/           # 10 files
+        ├── code-quality/       # 9 files
+        ├── ai-learning/        # 13 files (includes fractal MCP)
+        ├── performance/        # 6 files
+        ├── reliability/        # 8 files
+        ├── architecture/       # 8 files
+        ├── data/              # 4 files
+        └── testing/           # 5 files
 ```
-
-## 🌀 Fractal MCP Patterns
-
-Neural Forge includes revolutionary fractal MCP (Mental Cognitive Processor) patterns:
-
-- **Infinite Atom Spiral** - Recursive thought decomposition
-- **Memory-Accelerated Thinking Engine** - Cross-session intelligence
-- **Web-Reality Verification Spiral** - Real-world data validation
-- **Synesthetic Processing** - Cross-modal cognitive integration
-- **Meta-Cognitive Self-Improvement** - AI reasoning about reasoning
-- **Self-Bootstrapping Intelligence** - Evolutionary cognitive loops
-
-## 📊 Success Metrics
-
-- ✅ **75% reduction** in requirement specification tokens
-- ✅ **80% reduction** in security vulnerabilities
-- ✅ **60% reduction** in code review cycles
-- ✅ **Autonomous operation** without explicit rule prompting
-- ✅ **Continuous learning** and pattern evolution
-
-## 🛠️ Integration
-
-### System Prompt Integration
-```yaml
-# Load core engineering principles
-includes:
-  - neural-forge/memory/engineering/CoreEngineering.rules.yml
-  - neural-forge/cognitive-engine.md
-```
-
-### MCP Tool Integration
-Neural Forge integrates with:
-- **Atom-of-Thoughts** - Recursive problem decomposition
-- **Sequential-Thinking** - Multi-step reasoning
-- **Context7** - Documentation retrieval
-- **Supermemory** - Persistent learning
-- **Puppeteer** - Real-world validation
-
-## 📈 Framework Evolution
-
-Neural Forge continuously evolves through:
-- **Usage Pattern Analysis** - Tracks token effectiveness
-- **Novel Pattern Detection** - Creates new tokens automatically
-- **Cross-Session Learning** - Maintains cognitive improvements
-- **Fractal Intelligence Scaling** - Recursive capability enhancement
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create new token files following the 85-95 token compression standard
-3. Test with AI systems for autonomous application
-4. Submit pull requests with usage metrics
+1. Fork repository
+2. Create token files following 85-95 token standard
+3. Test autonomous application
+4. Submit PR with usage metrics
 
 ## 📄 License
 
-MIT License - See LICENSE file for details
-
-## 🎯 Vision
-
-Neural Forge represents the future of AI-assisted engineering - where AI systems autonomously apply decades of engineering wisdom, continuously learn from experience, and evolve their cognitive capabilities to solve increasingly complex problems.
-
-**Transform your AI from a code generator into a senior engineering partner.**
+MIT License
 
 ---
 
-*Built with ❤️ for the future of autonomous AI engineering*
+**Transform your AI from code generator to senior engineering partner** 🚀
