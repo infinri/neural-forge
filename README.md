@@ -180,8 +180,15 @@ pattern_combinations:
    - Change the AI name to your preferred name
    - Verify all paths point to your actual directories
 
+5. **Connect to your projects (optional):**
+   - Copy the local rules from: https://gist.github.com/infinri/e698ed08f10d8ca8ec9fb99203d7a265
+   - Paste into `.windsurfrules` file in your project root
+   - This enables Neural Forge integration for specific projects
+
 ### **Auto-Activation**
+
 The system automatically activates on every session:
+
 ```bash
 1. LOAD: global_rules.md (governance policies)
 2. READ: Neural Forge/ARCHITECTURE_SUMMARY.md
@@ -191,6 +198,7 @@ The system automatically activates on every session:
 ```
 
 ### **Navigation**
+
 - **Quick Start**: `BIBLE_NAVIGATION.md` - Master navigation system
 - **Concept Search**: `ASSOCIATIVE_INDEX.md` - Human-like memory mapping
 - **Category Browse**: `memory/tags/{category}/README.md` - Category overviews
