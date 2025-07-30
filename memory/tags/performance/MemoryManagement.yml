@@ -1,0 +1,115 @@
+tagName: MemoryManagement
+description: "Memory optimization patterns and garbage collection strategies"
+appliesTo:
+  - "Memory leak prevention"
+  - "Garbage collection optimization"
+  - "Memory-efficient data structures"
+  - "Resource cleanup and disposal"
+  - "Memory profiling and monitoring"
+patterns:
+  - "Implement proper resource disposal with try-with-resources"
+  - "Use object pooling for frequently created/destroyed objects"
+  - "Minimize object allocations in hot code paths"
+  - "Implement weak references for cache-like structures"
+  - "Use memory-efficient data structures for large datasets"
+bestPractices:
+  - "Profile memory usage before optimizing"
+  - "Understand garbage collection behavior in your runtime"
+  - "Avoid premature memory optimization"
+  - "Use appropriate collection types for access patterns"
+  - "Implement proper cleanup in finally blocks or using statements"
+  - "Monitor memory usage in production environments"
+  - "Set appropriate heap sizes and GC parameters"
+memoryLeakPrevention:
+  - "Close resources: Files, database connections, network sockets"
+  - "Unregister event listeners and callbacks"
+  - "Clear references in long-lived collections"
+  - "Avoid static references to short-lived objects"
+  - "Use weak references for observer patterns"
+  - "Implement proper disposal patterns (IDisposable in .NET)"
+gcOptimization:
+  - "Minimize object allocations in frequently called methods"
+  - "Use object pooling for expensive-to-create objects"
+  - "Prefer value types over reference types when appropriate"
+  - "Avoid large object heap allocations (>85KB in .NET)"
+  - "Use generational GC knowledge for object lifetime design"
+  - "Configure GC parameters based on application characteristics"
+dataStructureSelection:
+  - "Arrays: Best for sequential access and known size"
+  - "Lists: Good for dynamic sizing with occasional resizing"
+  - "Sets: Efficient for membership testing and uniqueness"
+  - "Maps/Dictionaries: Fast key-based lookups"
+  - "Specialized collections: BitSet, Bloom filters for specific use cases"
+memoryProfiling:
+  - "Use memory profilers: JProfiler, dotMemory, Valgrind"
+  - "Monitor heap usage and allocation patterns"
+  - "Identify memory hotspots and allocation sources"
+  - "Track object lifecycle and retention"
+  - "Analyze garbage collection frequency and duration"
+resourceManagement:
+  - "RAII (Resource Acquisition Is Initialization) pattern"
+  - "Automatic resource management with language constructs"
+  - "Connection pooling for database and network resources"
+  - "File handle management and proper closing"
+  - "Memory-mapped files for large file processing"
+cachingStrategies:
+  - "LRU (Least Recently Used) eviction for bounded caches"
+  - "Weak references for memory-sensitive caches"
+  - "Time-based expiration to prevent memory growth"
+  - "Size-based limits with appropriate eviction policies"
+  - "Cache warming strategies to optimize performance"
+languageSpecificTips:
+  - "Java: Use StringBuilder for string concatenation, tune JVM heap"
+  - "C#: Implement IDisposable, use using statements, avoid boxing"
+  - "Python: Use __slots__ for memory-efficient classes, del references"
+  - "JavaScript: Avoid closures over large objects, use WeakMap/WeakSet"
+  - "C++: Use smart pointers, RAII, avoid raw pointers"
+monitoringMetrics:
+  - "Heap utilization and growth trends"
+  - "Garbage collection frequency and pause times"
+  - "Memory allocation rate and patterns"
+  - "Memory leaks and retention analysis"
+  - "Peak memory usage and memory pressure events"
+performanceImpact:
+  - "Memory pressure can cause increased GC frequency"
+  - "Large heaps can lead to longer GC pause times"
+  - "Memory fragmentation can reduce allocation efficiency"
+  - "Cache misses due to poor memory locality"
+  - "Swapping to disk when physical memory is exhausted"
+linkedTags:
+  direct_links: ["AlgorithmComplexity", "CachingPatterns", "IOOptimization"]
+  cross_category: ["PerformanceMonitoring", "ConcurrencyPatterns", "ErrorSurfaceReduction"]
+  context_triggers: ["memory_management", "garbage_collection", "resource_cleanup", "memory_leaks"]
+  semantic_clusters: ["resource_management", "performance_optimization", "system_efficiency"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["AlgorithmComplexity+MemoryManagement", "CachingPatterns+MemoryManagement", "IOOptimization+MemoryManagement"]
+  activation_triggers: ["memory_optimization", "resource_leaks", "gc_tuning", "heap_management", "object_pooling"]
+associative_strength:
+  AlgorithmComplexity: 0.85
+  CachingPatterns: 0.8
+  IOOptimization: 0.9
+  PerformanceMonitoring: 0.9
+  ConcurrencyPatterns: 0.85
+  ErrorSurfaceReduction: 0.8
+  O1_PrefRule: 0.8
+  CloudNativePatterns: 0.75
+  MessageQueuePatterns: 0.7
+  TestingStrategy: 0.75
+pattern_combinations:
+  performance_core_stack:
+    tokens: ["AlgorithmComplexity", "CachingPatterns", "IOOptimization"]
+    strength: 0.88
+    context: "Core memory management with performance optimization patterns"
+  system_reliability:
+    tokens: ["PerformanceMonitoring", "ErrorSurfaceReduction", "ConcurrencyPatterns"]
+    strength: 0.85
+    context: "Memory management with monitoring and concurrent system reliability"
+  optimization_foundation:
+    tokens: ["O1_PrefRule", "CloudNativePatterns", "TestingStrategy"]
+    strength: 0.77
+    context: "Memory optimization for cloud-native systems with testing"
+tokenBudget: 95

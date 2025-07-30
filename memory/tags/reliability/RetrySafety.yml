@@ -1,0 +1,65 @@
+tag: RetrySafety
+description: >
+  Safe retry patterns to handle transient failures without causing cascading issues.
+appliesTo:
+  - Network requests
+  - Database operations
+  - External API calls
+  - File I/O operations
+  - Message processing
+patterns:
+  - Exponential backoff with jitter
+  - Circuit breaker pattern
+  - Bulkhead isolation
+  - Timeout mechanisms
+  - Dead letter queues
+bestPractices:
+  - Limit retry attempts (3-5 max)
+  - Use exponential backoff: 1s, 2s, 4s, 8s
+  - Add jitter to prevent thundering herd
+  - Check idempotency before retry
+  - Log retry attempts and failures
+  - Implement circuit breaker thresholds
+implementation:
+  - Retry only on transient errors (5xx, timeouts)
+  - Don't retry on client errors (4xx)
+  - Use different strategies per error type
+  - Monitor retry rates and success
+  - Set maximum total retry time
+linkedTags:
+  direct_links: ["IdempotencyRules", "ErrorSurfaceReduction", "CircuitBreakerPatterns"]
+  cross_category: ["RateLimitGuard", "ErrorHandlingPatterns", "PerformanceOptimization"]
+  context_triggers: ["retry_safety", "transient_failures", "fault_tolerance", "resilience"]
+  semantic_clusters: ["reliability_patterns", "fault_tolerance", "error_recovery"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["IdempotencyRules+RetrySafety", "ErrorSurfaceReduction+RetrySafety", "CircuitBreakerPatterns+RetrySafety"]
+  activation_triggers: ["retry_mechanisms", "transient_errors", "network_failures", "service_resilience", "fault_recovery"]
+associative_strength:
+  IdempotencyRules: 0.95
+  ErrorSurfaceReduction: 0.9
+  CircuitBreakerPatterns: 0.9
+  RateLimitGuard: 0.8
+  ErrorHandlingPatterns: 0.9
+  PerformanceOptimization: 0.75
+  HealthCheckPatterns: 0.8
+  ChaosEngineering: 0.8
+  MessageQueuePatterns: 0.75
+  APIDesignPrinciples: 0.75
+pattern_combinations:
+  safe_retry_core:
+    tokens: ["IdempotencyRules", "ErrorSurfaceReduction", "CircuitBreakerPatterns"]
+    strength: 0.92
+    context: "Core safe retry patterns with idempotency and circuit breaking"
+  resilience_stack:
+    tokens: ["ErrorHandlingPatterns", "HealthCheckPatterns", "ChaosEngineering"]
+    strength: 0.87
+    context: "Complete resilience stack with retry safety and error handling"
+  performance_reliability:
+    tokens: ["RateLimitGuard", "PerformanceOptimization", "MessageQueuePatterns"]
+    strength: 0.77
+    context: "Retry safety with performance optimization and rate limiting"
+tokenBudget: 70

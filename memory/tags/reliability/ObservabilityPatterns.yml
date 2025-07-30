@@ -1,0 +1,101 @@
+tagName: ObservabilityPatterns
+description: "Comprehensive observability patterns for monitoring, logging, and tracing"
+appliesTo:
+  - "Distributed system monitoring"
+  - "Application performance monitoring"
+  - "Troubleshooting and debugging"
+  - "Service level objective (SLO) tracking"
+  - "Incident response and root cause analysis"
+patterns:
+  - "Implement the three pillars: metrics, logs, and traces"
+  - "Use structured logging with consistent formats"
+  - "Implement distributed tracing across service boundaries"
+  - "Create meaningful dashboards and alerts"
+  - "Use correlation IDs to track requests across services"
+bestPractices:
+  - "Instrument code at development time, not as an afterthought"
+  - "Use consistent naming conventions for metrics and logs"
+  - "Implement proper sampling strategies for high-volume systems"
+  - "Focus on user-centric metrics and business KPIs"
+  - "Create runbooks linking alerts to remediation steps"
+  - "Implement proper data retention policies"
+  - "Use observability data to drive system improvements"
+metricsPatterns:
+  - "RED metrics: Rate, Errors, Duration for services"
+  - "USE metrics: Utilization, Saturation, Errors for resources"
+  - "Golden signals: Latency, traffic, errors, saturation"
+  - "Business metrics: User registrations, revenue, conversions"
+  - "SLI/SLO metrics: Service level indicators and objectives"
+loggingPatterns:
+  - "Structured logging: Use JSON or similar structured formats"
+  - "Log levels: DEBUG, INFO, WARN, ERROR, FATAL with appropriate usage"
+  - "Contextual logging: Include request IDs, user IDs, session info"
+  - "Centralized logging: Aggregate logs from all services"
+  - "Log sampling: Sample high-volume logs to manage costs"
+tracingPatterns:
+  - "Distributed tracing: Track requests across service boundaries"
+  - "Span creation: Create spans for significant operations"
+  - "Trace context propagation: Pass trace context between services"
+  - "Sampling strategies: Head-based and tail-based sampling"
+  - "Trace analysis: Use traces for performance optimization"
+alertingStrategies:
+  - "Symptom-based alerts: Alert on user-visible problems"
+  - "Threshold-based alerts: Static limits for key metrics"
+  - "Anomaly detection: Machine learning-based alerting"
+  - "Alert fatigue prevention: Proper alert tuning and grouping"
+  - "Escalation policies: Progressive notification strategies"
+dashboardDesign:
+  - "Service dashboards: Key metrics for each service"
+  - "Business dashboards: Revenue, user engagement, conversions"
+  - "Infrastructure dashboards: System resource utilization"
+  - "SLO dashboards: Service level objective tracking"
+  - "Incident dashboards: Real-time incident status and impact"
+correlationTechniques:
+  - "Request correlation: Track requests across multiple services"
+  - "User journey tracking: Follow user interactions through the system"
+  - "Error correlation: Link errors to their root causes"
+  - "Performance correlation: Connect performance issues to their sources"
+  - "Business impact correlation: Link technical issues to business metrics"
+toolsAndPlatforms:
+  - "Metrics: Prometheus, Grafana, DataDog, New Relic"
+  - "Logging: ELK stack, Splunk, Fluentd, Loki"
+  - "Tracing: Jaeger, Zipkin, AWS X-Ray, Google Cloud Trace"
+  - "APM: New Relic, DataDog, AppDynamics, Dynatrace"
+  - "Unified platforms: Honeycomb, Lightstep, Observe"
+linkedTags:
+  direct_links: ["PerformanceMonitoring", "HealthCheckPatterns", "SecurityMonitoring"]
+  cross_category: ["CloudNativePatterns", "MicroservicesPatterns", "TestingStrategy"]
+  context_triggers: ["observability", "monitoring", "logging", "tracing"]
+  semantic_clusters: ["monitoring_patterns", "system_observability", "operational_intelligence"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["PerformanceMonitoring+ObservabilityPatterns", "HealthCheckPatterns+ObservabilityPatterns", "SecurityMonitoring+ObservabilityPatterns"]
+  activation_triggers: ["system_monitoring", "troubleshooting", "performance_analysis", "incident_response", "slo_tracking"]
+associative_strength:
+  PerformanceMonitoring: 0.95
+  HealthCheckPatterns: 0.9
+  SecurityMonitoring: 0.85
+  CloudNativePatterns: 0.85
+  MicroservicesPatterns: 0.8
+  TestingStrategy: 0.8
+  CircuitBreakerPatterns: 0.85
+  ChaosEngineering: 0.9
+  ErrorHandlingPatterns: 0.85
+  MessageQueuePatterns: 0.8
+pattern_combinations:
+  comprehensive_monitoring:
+    tokens: ["PerformanceMonitoring", "HealthCheckPatterns", "SecurityMonitoring"]
+    strength: 0.9
+    context: "Complete observability with performance, health, and security monitoring"
+  distributed_observability:
+    tokens: ["CloudNativePatterns", "MicroservicesPatterns", "MessageQueuePatterns"]
+    strength: 0.82
+    context: "Observability patterns for distributed cloud-native microservices"
+  reliability_monitoring:
+    tokens: ["CircuitBreakerPatterns", "ChaosEngineering", "ErrorHandlingPatterns"]
+    strength: 0.87
+    context: "Observability for system reliability and fault tolerance"
+tokenBudget: 85

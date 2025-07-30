@@ -1,0 +1,119 @@
+tagName: AdvancedTestingPatterns
+description: "Advanced testing patterns including contract, property-based, and mutation testing"
+appliesTo:
+  - "Contract testing for API compatibility"
+  - "Property-based testing for comprehensive coverage"
+  - "Mutation testing for test quality assessment"
+  - "Fuzz testing for security and robustness"
+  - "Snapshot testing for UI and output validation"
+patterns:
+  - "Use contract testing to verify API compatibility between services"
+  - "Implement property-based testing for comprehensive input validation"
+  - "Use mutation testing to assess test suite quality"
+  - "Implement fuzz testing for security vulnerability discovery"
+  - "Use snapshot testing for consistent output validation"
+bestPractices:
+  - "Combine multiple testing approaches for comprehensive coverage"
+  - "Use test generators to create diverse test scenarios"
+  - "Implement proper test isolation and cleanup"
+  - "Use deterministic test data for reproducible results"
+  - "Implement test categorization for selective execution"
+  - "Use visual regression testing for UI components"
+  - "Implement chaos testing for system resilience"
+contractTesting:
+  - "Consumer-driven contracts: Consumers define expected API behavior"
+  - "Provider verification: Verify providers meet consumer expectations"
+  - "Contract evolution: Handle API changes without breaking consumers"
+  - "Bi-directional contracts: Both consumer and provider define contracts"
+  - "Contract testing in CI/CD: Automated contract verification"
+propertyBasedTesting:
+  - "Property definition: Define invariants that should always hold"
+  - "Input generation: Automatically generate diverse test inputs"
+  - "Shrinking: Minimize failing test cases to simplest form"
+  - "Stateful testing: Test sequences of operations"
+  - "Model-based testing: Use models to generate test scenarios"
+mutationTesting:
+  - "Mutation operators: Introduce small changes to code"
+  - "Mutant killing: Tests should fail when code is mutated"
+  - "Mutation score: Percentage of mutants killed by tests"
+  - "Equivalent mutants: Mutations that don't change behavior"
+  - "Test improvement: Use mutation results to improve test quality"
+fuzzTesting:
+  - "Input fuzzing: Generate random or malformed inputs"
+  - "Protocol fuzzing: Test network protocol implementations"
+  - "File format fuzzing: Test file parsing and processing"
+  - "API fuzzing: Test REST and GraphQL APIs with invalid inputs"
+  - "Coverage-guided fuzzing: Use code coverage to guide input generation"
+snapshotTesting:
+  - "Output snapshots: Capture and compare program outputs"
+  - "UI snapshots: Test visual appearance of user interfaces"
+  - "Serialization snapshots: Test object serialization formats"
+  - "Snapshot updates: Handle legitimate changes to expected outputs"
+  - "Snapshot organization: Organize snapshots for maintainability"
+visualRegressionTesting:
+  - "Screenshot comparison: Compare visual appearance across changes"
+  - "Cross-browser testing: Test appearance across different browsers"
+  - "Responsive testing: Test appearance at different screen sizes"
+  - "Accessibility testing: Verify accessibility compliance"
+  - "Performance testing: Test visual performance metrics"
+chaosTestingPatterns:
+  - "Infrastructure chaos: Introduce failures in infrastructure"
+  - "Application chaos: Introduce failures in application code"
+  - "Network chaos: Simulate network partitions and delays"
+  - "Resource chaos: Exhaust system resources"
+  - "Time chaos: Manipulate system time and clocks"
+testDataManagement:
+  - "Test data builders: Create test data programmatically"
+  - "Data factories: Generate realistic test data"
+  - "Test data isolation: Ensure tests don't interfere with each other"
+  - "Synthetic data: Generate artificial data for testing"
+  - "Test data versioning: Manage test data changes over time"
+testOrganization:
+  - "Test categorization: Organize tests by type, speed, and purpose"
+  - "Test suites: Group related tests for execution"
+  - "Test tags: Label tests for selective execution"
+  - "Test parallelization: Run tests concurrently for speed"
+  - "Test prioritization: Run most important tests first"
+toolsAndFrameworks:
+  - "Contract testing: Pact, Spring Cloud Contract, Postman"
+  - "Property-based: QuickCheck, Hypothesis, fast-check"
+  - "Mutation testing: PIT, Stryker, MutPy"
+  - "Fuzz testing: AFL, libFuzzer, OSS-Fuzz"
+  - "Visual testing: Percy, Chromatic, Applitools"
+linkedTags:
+  direct_links: ["TestingPrinciples", "PerformanceTestingPatterns", "TestDataManagement"]
+  cross_category: ["SecurityMonitoring", "ErrorHandlingPatterns", "ChaosEngineering"]
+  context_triggers: ["advanced_testing", "contract_testing", "property_based_testing", "mutation_testing"]
+  semantic_clusters: ["testing_patterns", "quality_assurance", "test_automation"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["TestingPrinciples+AdvancedTestingPatterns", "PerformanceTestingPatterns+AdvancedTestingPatterns", "TestDataManagement+AdvancedTestingPatterns"]
+  activation_triggers: ["test_quality", "comprehensive_testing", "test_automation", "api_testing", "security_testing"]
+associative_strength:
+  TestingPrinciples: 0.9
+  PerformanceTestingPatterns: 0.85
+  TestDataManagement: 0.8
+  ContinuousTestingPatterns: 0.8
+  SecurityMonitoring: 0.8
+  ErrorHandlingPatterns: 0.85
+  ChaosEngineering: 0.9
+  APIDesignPrinciples: 0.75
+  MicroservicesPatterns: 0.75
+  ObservabilityPatterns: 0.8
+pattern_combinations:
+  comprehensive_testing_suite:
+    tokens: ["TestingPrinciples", "PerformanceTestingPatterns", "TestDataManagement"]
+    strength: 0.85
+    context: "Complete advanced testing implementation with principles and data management"
+  security_resilience_testing:
+    tokens: ["SecurityMonitoring", "ChaosEngineering", "ErrorHandlingPatterns"]
+    strength: 0.85
+    context: "Advanced testing for security vulnerabilities and system resilience"
+  api_service_testing:
+    tokens: ["APIDesignPrinciples", "MicroservicesPatterns", "ObservabilityPatterns"]
+    strength: 0.77
+    context: "Advanced testing patterns for API and microservices architectures"
+tokenBudget: 95

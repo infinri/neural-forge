@@ -1,0 +1,85 @@
+tagName: TestingPrinciples
+description: "Test-driven development and comprehensive testing methodologies"
+appliesTo:
+  - "Unit test design and implementation"
+  - "Integration testing strategies"
+  - "Test-driven development (TDD)"
+  - "Code quality assurance"
+  - "Continuous integration pipelines"
+patterns:
+  - "Red-Green-Refactor TDD cycle"
+  - "Arrange-Act-Assert test structure"
+  - "Given-When-Then behavior specification"
+  - "Test pyramid: unit > integration > e2e"
+  - "Fail fast with meaningful error messages"
+bestPractices:
+  - "Write tests before implementation (TDD)"
+  - "Keep tests simple, focused, and independent"
+  - "Use descriptive test names that explain intent"
+  - "Test edge cases and error conditions"
+  - "Mock external dependencies appropriately"
+  - "Maintain high test coverage (>80%)"
+  - "Run tests frequently and automatically"
+testTypes:
+  - "Unit tests: Test individual functions/methods"
+  - "Integration tests: Test component interactions"
+  - "End-to-end tests: Test complete user workflows"
+  - "Performance tests: Validate speed and scalability"
+  - "Security tests: Verify protection against threats"
+tddCycle:
+  - "Red: Write failing test for desired functionality"
+  - "Green: Write minimal code to make test pass"
+  - "Refactor: Improve code while keeping tests green"
+  - "Repeat: Continue cycle for next requirement"
+testStructure:
+  - "Arrange: Set up test data and conditions"
+  - "Act: Execute the code under test"
+  - "Assert: Verify expected outcomes"
+  - "Cleanup: Reset state for next test"
+mockingStrategies:
+  - "Mock external APIs and services"
+  - "Stub database connections and file systems"
+  - "Use test doubles for complex dependencies"
+  - "Verify interactions with mocked objects"
+testMaintenance:
+  - "Keep tests up-to-date with code changes"
+  - "Remove or fix flaky tests immediately"
+  - "Refactor tests when code structure changes"
+  - "Document complex test scenarios"
+linkedTags:
+  direct_links: ["AdvancedTestingPatterns", "ContinuousTestingPatterns", "TestDataManagement"]
+  cross_category: ["SOLID", "RefactoringPatterns", "ErrorHandlingPatterns"]
+  context_triggers: ["testing_principles", "tdd", "unit_testing", "test_quality"]
+  semantic_clusters: ["testing_patterns", "quality_assurance", "development_practices"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["AdvancedTestingPatterns+TestingPrinciples", "ContinuousTestingPatterns+TestingPrinciples", "TestDataManagement+TestingPrinciples"]
+  activation_triggers: ["test_driven_development", "unit_testing", "test_design", "quality_assurance", "testing_strategy"]
+associative_strength:
+  AdvancedTestingPatterns: 0.9
+  ContinuousTestingPatterns: 0.85
+  TestDataManagement: 0.85
+  PerformanceTestingPatterns: 0.8
+  SOLID: 0.8
+  RefactoringPatterns: 0.8
+  ErrorHandlingPatterns: 0.8
+  CodeMetrics: 0.75
+  NamingConventions: 0.75
+  TechnicalDebtManagement: 0.75
+pattern_combinations:
+  foundational_testing_framework:
+    tokens: ["AdvancedTestingPatterns", "ContinuousTestingPatterns", "TestDataManagement"]
+    strength: 0.87
+    context: "Complete testing foundation with principles, advanced patterns, and data management"
+  quality_driven_development:
+    tokens: ["SOLID", "RefactoringPatterns", "ErrorHandlingPatterns"]
+    strength: 0.8
+    context: "Testing principles integrated with solid development and refactoring practices"
+  code_quality_testing:
+    tokens: ["CodeMetrics", "NamingConventions", "TechnicalDebtManagement"]
+    strength: 0.75
+    context: "Testing principles supporting code quality metrics and technical debt management"
+tokenBudget: 80

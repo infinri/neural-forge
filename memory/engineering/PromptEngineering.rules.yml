@@ -1,0 +1,23 @@
+tagSet: PromptEngineering
+description: AI prompt optimization and interaction patterns.
+version: "1.0.0"
+tokenBudget: 100
+includes:
+  - ai-learning/ContinuousLearning
+principles:
+  - "Be specific and unambiguous in instructions"
+  - "Provide context without redundancy"
+  - "Use examples to clarify expected output"
+  - "Break complex tasks into steps"
+  - "Validate AI understanding before execution"
+patterns:
+  - System prompt + user prompt separation
+  - Role-based prompting for expertise
+  - Template-based consistency
+  - Progressive disclosure of complexity
+  - Feedback loops for iterative improvement
+optimization:
+  - Compress context using structured formats
+  - Use references instead of repetition
+  - Prioritize recent/relevant information
+  - Batch related requests efficiently

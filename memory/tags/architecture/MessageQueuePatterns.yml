@@ -1,0 +1,113 @@
+tagName: MessageQueuePatterns
+description: "Message queue and event streaming patterns for distributed systems"
+appliesTo:
+  - "Asynchronous communication between services"
+  - "Event-driven architecture implementation"
+  - "Decoupling system components"
+  - "Reliable message delivery"
+  - "Scalable data processing pipelines"
+patterns:
+  - "Use publish-subscribe for broadcasting events to multiple consumers"
+  - "Implement point-to-point queues for work distribution"
+  - "Use message routing for intelligent message delivery"
+  - "Implement dead letter queues for failed message handling"
+  - "Use event streaming for real-time data processing"
+bestPractices:
+  - "Design messages to be idempotent and self-contained"
+  - "Implement proper error handling and retry mechanisms"
+  - "Use message schemas for contract definition"
+  - "Implement message ordering when sequence matters"
+  - "Monitor queue depths and processing rates"
+  - "Use appropriate serialization formats (JSON, Avro, Protobuf)"
+  - "Implement proper message acknowledgment patterns"
+messagingPatterns:
+  - "Point-to-point: Direct message delivery between producer and consumer"
+  - "Publish-subscribe: Broadcast messages to multiple subscribers"
+  - "Request-reply: Synchronous-style communication over async messaging"
+  - "Message routing: Intelligent routing based on message content"
+  - "Message aggregation: Combine related messages for processing"
+queueTypes:
+  - "Work queues: Distribute tasks among multiple workers"
+  - "Priority queues: Process high-priority messages first"
+  - "Delay queues: Schedule messages for future delivery"
+  - "Dead letter queues: Handle messages that can't be processed"
+  - "Topic queues: Category-based message organization"
+reliabilityPatterns:
+  - "At-least-once delivery: Guarantee message delivery with possible duplicates"
+  - "Exactly-once delivery: Ensure messages are processed exactly once"
+  - "Message persistence: Store messages durably until processed"
+  - "Acknowledgment patterns: Confirm successful message processing"
+  - "Retry mechanisms: Handle temporary processing failures"
+eventStreaming:
+  - "Event logs: Immutable, ordered sequence of events"
+  - "Stream processing: Real-time event processing and transformation"
+  - "Event replay: Reprocess historical events"
+  - "Stream partitioning: Distribute events across multiple partitions"
+  - "Consumer groups: Coordinate multiple consumers for scalability"
+messageDesign:
+  - "Self-contained: Include all necessary information in the message"
+  - "Versioned schemas: Support message format evolution"
+  - "Correlation IDs: Track related messages across the system"
+  - "Timestamps: Include creation and processing timestamps"
+  - "Metadata: Add routing, priority, and processing hints"
+errorHandling:
+  - "Poison message handling: Isolate messages that cause processing errors"
+  - "Circuit breaker integration: Stop processing when downstream services fail"
+  - "Exponential backoff: Gradually increase retry intervals"
+  - "Dead letter processing: Handle permanently failed messages"
+  - "Error enrichment: Add context to error messages for debugging"
+scalabilityPatterns:
+  - "Horizontal scaling: Add more consumers to increase throughput"
+  - "Partitioning: Distribute messages across multiple partitions"
+  - "Load balancing: Distribute work evenly among consumers"
+  - "Auto-scaling: Automatically adjust consumer count based on load"
+  - "Batching: Process multiple messages together for efficiency"
+monitoringAndObservability:
+  - "Queue depth: Monitor pending message counts"
+  - "Processing rates: Track messages processed per second"
+  - "Error rates: Monitor failed message processing"
+  - "Latency: Measure end-to-end message processing time"
+  - "Consumer lag: Track how far behind consumers are"
+toolsAndPlatforms:
+  - "Apache Kafka: High-throughput event streaming platform"
+  - "RabbitMQ: Feature-rich message broker"
+  - "Apache Pulsar: Multi-tenant, geo-replicated messaging"
+  - "AWS SQS/SNS: Cloud-native messaging services"
+  - "Azure Service Bus: Enterprise messaging service"
+linkedTags:
+  direct_links: ["MicroservicesPatterns", "EventSourcingCQRS", "CloudNativePatterns"]
+  cross_category: ["ObservabilityPatterns", "ErrorSurfaceReduction", "PerformanceOptimization"]
+  context_triggers: ["message_queues", "event_streaming", "async_communication", "distributed_messaging"]
+  semantic_clusters: ["messaging_patterns", "async_architecture", "event_processing"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["MicroservicesPatterns+MessageQueuePatterns", "EventSourcingCQRS+MessageQueuePatterns", "CloudNativePatterns+MessageQueuePatterns"]
+  activation_triggers: ["async_processing", "event_driven_systems", "service_decoupling", "data_streaming", "message_routing"]
+associative_strength:
+  MicroservicesPatterns: 0.9
+  EventSourcingCQRS: 0.9
+  CloudNativePatterns: 0.85
+  ObservabilityPatterns: 0.85
+  ErrorSurfaceReduction: 0.8
+  PerformanceOptimization: 0.8
+  DomainDrivenDesign: 0.75
+  APIDesignPrinciples: 0.7
+  ResiliencePatterns: 0.85
+  ConcurrencyPatterns: 0.8
+pattern_combinations:
+  event_architecture_stack:
+    tokens: ["MicroservicesPatterns", "EventSourcingCQRS", "DomainDrivenDesign"]
+    strength: 0.9
+    context: "Complete event-driven architecture with messaging"
+  reliable_messaging:
+    tokens: ["ErrorSurfaceReduction", "ResiliencePatterns", "ObservabilityPatterns"]
+    strength: 0.85
+    context: "Reliable message processing with error handling and monitoring"
+  scalable_streaming:
+    tokens: ["CloudNativePatterns", "PerformanceOptimization", "ConcurrencyPatterns"]
+    strength: 0.83
+    context: "Scalable message streaming and processing patterns"
+tokenBudget: 90

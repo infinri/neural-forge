@@ -1,0 +1,91 @@
+tagName: SecurityHeaders
+description: "HTTP security headers for web application protection"
+appliesTo:
+  - "Web application security"
+  - "API endpoint protection"
+  - "Cross-origin resource sharing (CORS)"
+  - "Content security policy (CSP)"
+  - "Browser security mechanisms"
+patterns:
+  - "Implement comprehensive security headers on all responses"
+  - "Use Content Security Policy to prevent XSS attacks"
+  - "Configure CORS policies restrictively"
+  - "Enable HSTS for HTTPS enforcement"
+  - "Implement proper frame options to prevent clickjacking"
+bestPractices:
+  - "Set security headers at the web server or application level"
+  - "Test security headers with online scanners"
+  - "Monitor CSP violations for security insights"
+  - "Use nonce or hash-based CSP for inline scripts"
+  - "Implement proper CORS preflight handling"
+  - "Set secure cookie attributes (Secure, HttpOnly, SameSite)"
+  - "Use HTTPS everywhere with proper certificate validation"
+essentialHeaders:
+  - "Content-Security-Policy: Prevent XSS and injection attacks"
+  - "Strict-Transport-Security: Enforce HTTPS connections"
+  - "X-Frame-Options: Prevent clickjacking attacks"
+  - "X-Content-Type-Options: Prevent MIME type sniffing"
+  - "Referrer-Policy: Control referrer information leakage"
+  - "Permissions-Policy: Control browser feature access"
+corsConfiguration:
+  - "Access-Control-Allow-Origin: Specify allowed origins explicitly"
+  - "Access-Control-Allow-Methods: Limit to required HTTP methods"
+  - "Access-Control-Allow-Headers: Whitelist required headers only"
+  - "Access-Control-Allow-Credentials: Use cautiously with specific origins"
+  - "Access-Control-Max-Age: Set appropriate preflight cache duration"
+cspDirectives:
+  - "default-src 'self': Restrict all resources to same origin by default"
+  - "script-src: Control JavaScript execution sources"
+  - "style-src: Control CSS stylesheet sources"
+  - "img-src: Control image loading sources"
+  - "connect-src: Control AJAX, WebSocket, and fetch() sources"
+  - "font-src: Control web font sources"
+cookieSecurity:
+  - "Secure: Only send cookies over HTTPS connections"
+  - "HttpOnly: Prevent JavaScript access to cookies"
+  - "SameSite=Strict: Prevent CSRF attacks"
+  - "Path: Limit cookie scope to specific paths"
+  - "Domain: Set appropriate domain scope for cookies"
+headerValidation:
+  - "Validate all incoming headers for expected values"
+  - "Sanitize user-controlled header values"
+  - "Implement header size limits to prevent DoS"
+  - "Log suspicious header patterns for security analysis"
+  - "Use security header testing tools in CI/CD pipelines"
+linkedTags:
+  direct_links: ["InputSanitization", "AuthBypassPrevention", "ThreatModel"]
+  cross_category: ["TestingStrategy", "PerformanceMonitoring", "APIDesignPrinciples"]
+  context_triggers: ["web_security", "http_headers", "xss_prevention", "cors_policy"]
+  semantic_clusters: ["browser_security", "web_protection", "header_configuration"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["InputSanitization+SecurityHeaders", "AuthBypassPrevention+SecurityHeaders", "ThreatModel+SecurityHeaders"]
+  activation_triggers: ["web_application", "api_endpoints", "browser_protection", "csp_policy", "cors_configuration"]
+associative_strength:
+  InputSanitization: 0.95
+  AuthBypassPrevention: 0.9
+  ThreatModel: 0.85
+  OAuth2JWTPatterns: 0.8
+  SecurityMonitoring: 0.8
+  TestingStrategy: 0.75
+  PerformanceMonitoring: 0.6
+  APIDesignPrinciples: 0.75
+  RateLimitGuard: 0.7
+  ZeroTrustArchitecture: 0.75
+pattern_combinations:
+  web_security_foundation:
+    tokens: ["InputSanitization", "AuthBypassPrevention", "ThreatModel"]
+    strength: 0.93
+    context: "Complete web application security foundation"
+  api_security_stack:
+    tokens: ["OAuth2JWTPatterns", "RateLimitGuard", "SecurityMonitoring"]
+    strength: 0.88
+    context: "Secure API development with headers"
+  browser_protection_suite:
+    tokens: ["ThreatModel", "TestingStrategy", "PerformanceMonitoring"]
+    strength: 0.82
+    context: "Browser security and performance optimization"
+tokenBudget: 85

@@ -1,0 +1,113 @@
+tagName: DataMigrationPatterns
+description: "Database migration and schema evolution patterns for production systems"
+appliesTo:
+  - "Database schema changes and versioning"
+  - "Data transformation and migration"
+  - "Zero-downtime deployment strategies"
+  - "Legacy system modernization"
+  - "Multi-environment data synchronization"
+patterns:
+  - "Use versioned migrations with forward and backward compatibility"
+  - "Implement blue-green deployments for zero-downtime migrations"
+  - "Use expand-contract pattern for breaking schema changes"
+  - "Implement data validation and rollback mechanisms"
+  - "Use incremental migration strategies for large datasets"
+bestPractices:
+  - "Test migrations thoroughly in staging environments"
+  - "Implement automated rollback procedures"
+  - "Use database-agnostic migration tools when possible"
+  - "Monitor migration performance and impact"
+  - "Implement proper backup and recovery procedures"
+  - "Document all migration steps and dependencies"
+  - "Use feature flags to decouple schema changes from code deployment"
+migrationStrategies:
+  - "Big bang: Complete migration in single operation"
+  - "Incremental: Migrate data in smaller batches"
+  - "Parallel run: Run old and new systems simultaneously"
+  - "Phased migration: Migrate different components separately"
+  - "Strangler fig: Gradually replace legacy system"
+schemaEvolution:
+  - "Additive changes: Add new columns/tables without breaking existing code"
+  - "Expand-contract: Add new schema, migrate data, remove old schema"
+  - "Versioned schemas: Maintain multiple schema versions simultaneously"
+  - "Backward compatibility: Ensure old code works with new schema"
+  - "Forward compatibility: Design schema to handle future changes"
+zeroDowntimePatterns:
+  - "Blue-green deployment: Switch between two identical environments"
+  - "Rolling deployment: Update instances gradually"
+  - "Shadow migration: Migrate data in background while serving traffic"
+  - "Read replica migration: Migrate read replicas first, then promote"
+  - "Database proxy: Route traffic during migration"
+dataValidation:
+  - "Pre-migration validation: Verify data integrity before migration"
+  - "Post-migration validation: Confirm successful data transfer"
+  - "Checksum validation: Verify data hasn't been corrupted"
+  - "Row count validation: Ensure all records were migrated"
+  - "Business rule validation: Verify data meets business constraints"
+rollbackStrategies:
+  - "Automated rollback: Trigger rollback based on failure conditions"
+  - "Manual rollback: Human-initiated rollback procedures"
+  - "Point-in-time recovery: Restore to specific timestamp"
+  - "Snapshot rollback: Restore from pre-migration snapshot"
+  - "Partial rollback: Rollback specific components or data subsets"
+performanceOptimization:
+  - "Batch processing: Process data in optimal batch sizes"
+  - "Parallel processing: Use multiple threads/processes for migration"
+  - "Index optimization: Drop/recreate indexes for faster migration"
+  - "Connection pooling: Optimize database connections"
+  - "Resource monitoring: Monitor CPU, memory, and I/O during migration"
+migrationTesting:
+  - "Unit tests: Test individual migration scripts"
+  - "Integration tests: Test migration with application code"
+  - "Performance tests: Verify migration performance under load"
+  - "Rollback tests: Test rollback procedures regularly"
+  - "Data consistency tests: Verify data integrity after migration"
+toolsAndFrameworks:
+  - "Flyway: Database migration tool for Java applications"
+  - "Liquibase: Database-independent migration tool"
+  - "Alembic: Database migration tool for Python/SQLAlchemy"
+  - "Rails migrations: Built-in migration system for Ruby on Rails"
+  - "Entity Framework migrations: .NET database migration tool"
+monitoringAndObservability:
+  - "Migration progress: Track completion percentage and ETA"
+  - "Performance metrics: Monitor throughput and latency"
+  - "Error tracking: Log and alert on migration failures"
+  - "Resource utilization: Monitor system resources during migration"
+  - "Business impact: Track impact on application performance"
+linkedTags:
+  direct_links: ["DatabaseDesign", "DataPipelinePatterns", "DataPrivacyCompliance"]
+  cross_category: ["ObservabilityPatterns", "TestingStrategy", "CloudNativePatterns"]
+  context_triggers: ["data_migration", "schema_evolution", "database_changes", "zero_downtime"]
+  semantic_clusters: ["data_patterns", "migration_strategies", "database_operations"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["DatabaseDesign+DataMigrationPatterns", "DataPipelinePatterns+DataMigrationPatterns", "ObservabilityPatterns+DataMigrationPatterns"]
+  activation_triggers: ["database_migration", "schema_changes", "data_transformation", "system_modernization", "deployment_strategies"]
+associative_strength:
+  DatabaseDesign: 0.9
+  DataPipelinePatterns: 0.85
+  DataPrivacyCompliance: 0.8
+  ObservabilityPatterns: 0.85
+  TestingStrategy: 0.85
+  CloudNativePatterns: 0.8
+  PerformanceMonitoring: 0.8
+  ErrorHandlingPatterns: 0.8
+  CircuitBreakerPatterns: 0.75
+  MicroservicesPatterns: 0.75
+pattern_combinations:
+  data_management_core:
+    tokens: ["DatabaseDesign", "DataPipelinePatterns", "DataPrivacyCompliance"]
+    strength: 0.85
+    context: "Core data migration with design, pipeline, and privacy considerations"
+  operational_excellence:
+    tokens: ["ObservabilityPatterns", "TestingStrategy", "PerformanceMonitoring"]
+    strength: 0.83
+    context: "Data migration with monitoring, testing, and performance optimization"
+  distributed_migration:
+    tokens: ["CloudNativePatterns", "MicroservicesPatterns", "ErrorHandlingPatterns"]
+    strength: 0.77
+    context: "Data migration patterns for distributed cloud-native systems"
+tokenBudget: 90

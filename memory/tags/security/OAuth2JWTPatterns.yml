@@ -1,0 +1,82 @@
+tagName: OAuth2JWTPatterns
+description: "OAuth2 and JWT implementation patterns for secure authentication"
+appliesTo:
+  - "API authentication and authorization"
+  - "Single sign-on (SSO) implementations"
+  - "Token-based authentication systems"
+  - "Microservices security"
+  - "Mobile and web application auth"
+patterns:
+  - "Use OAuth2 authorization code flow for web applications"
+  - "Implement PKCE for public clients (mobile/SPA)"
+  - "Use JWT for stateless authentication tokens"
+  - "Implement proper token refresh mechanisms"
+  - "Validate JWT signatures and claims thoroughly"
+bestPractices:
+  - "Never store sensitive data in JWT payload"
+  - "Use short-lived access tokens (15-30 minutes)"
+  - "Implement secure token storage (httpOnly cookies)"
+  - "Use HTTPS for all OAuth2/JWT communications"
+  - "Implement proper CORS policies for token endpoints"
+  - "Validate audience (aud) and issuer (iss) claims"
+  - "Use asymmetric keys (RS256) for JWT signing"
+oauth2Flows:
+  - "Authorization Code: Server-side web applications"
+  - "PKCE: Mobile apps and SPAs"
+  - "Client Credentials: Service-to-service auth"
+  - "Device Code: IoT and limited input devices"
+jwtSecurity:
+  - "Always validate JWT signature before processing"
+  - "Check token expiration (exp) and not-before (nbf)"
+  - "Implement token blacklisting for logout"
+  - "Use secure random generators for token generation"
+  - "Implement rate limiting on token endpoints"
+tokenManagement:
+  - "Store refresh tokens securely (encrypted at rest)"
+  - "Implement token rotation on refresh"
+  - "Use secure, httpOnly cookies for web clients"
+  - "Implement proper token revocation endpoints"
+  - "Log authentication events for security monitoring"
+commonVulnerabilities:
+  - "JWT algorithm confusion attacks (use explicit alg)"
+  - "Token replay attacks (use jti claim and nonce)"
+  - "Cross-site request forgery on token endpoints"
+  - "Insecure token storage in local storage"
+  - "Missing token validation on protected endpoints"
+linkedTags:
+  direct_links: ["AuthBypassPrevention", "SecretsManagement", "SecurityHeaders"]
+  cross_category: ["MicroservicesPatterns", "TestingStrategy", "ErrorSurfaceReduction"]
+  context_triggers: ["authentication", "jwt", "oauth2", "api_security", "token_management"]
+  semantic_clusters: ["token_authentication", "secure_authorization", "identity_management"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["AuthBypassPrevention+OAuth2JWTPatterns", "SecretsManagement+OAuth2JWTPatterns", "SecurityHeaders+OAuth2JWTPatterns"]
+  activation_triggers: ["api_authentication", "sso_implementation", "microservices_auth", "mobile_auth", "token_based_auth"]
+associative_strength:
+  AuthBypassPrevention: 0.95
+  SecretsManagement: 0.9
+  SecurityHeaders: 0.85
+  ZeroTrustArchitecture: 0.8
+  MicroservicesPatterns: 0.8
+  TestingStrategy: 0.75
+  ErrorSurfaceReduction: 0.7
+  InputSanitization: 0.75
+  SecurityMonitoring: 0.8
+  RateLimitGuard: 0.75
+pattern_combinations:
+  modern_auth_stack:
+    tokens: ["AuthBypassPrevention", "SecretsManagement", "ZeroTrustArchitecture"]
+    strength: 0.93
+    context: "Modern authentication and authorization system"
+  microservices_auth:
+    tokens: ["MicroservicesPatterns", "SecurityHeaders", "SecurityMonitoring"]
+    strength: 0.88
+    context: "Secure microservices authentication"
+  api_security_foundation:
+    tokens: ["InputSanitization", "RateLimitGuard", "ThreatModel"]
+    strength: 0.85
+    context: "Comprehensive API security framework"
+tokenBudget: 95

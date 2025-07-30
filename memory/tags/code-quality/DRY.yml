@@ -1,0 +1,49 @@
+tag: DRY
+description: >
+  Don't Repeat Yourself - eliminate code duplication through abstraction.
+appliesTo:
+  - Code logic
+  - Configuration
+  - Documentation
+  - Test cases
+  - Data structures
+patterns:
+  - Extract common functions
+  - Use configuration files
+  - Create reusable components
+  - Implement template systems
+  - Utilize inheritance/composition
+bestPractices:
+  - Identify duplication early
+  - Abstract at the right level
+  - Don't over-abstract prematurely
+  - Use constants for magic numbers
+  - Centralize business rules
+  - Share utilities across modules
+violations:
+  - Copy-paste programming
+  - Hardcoded values in multiple places
+  - Repeated validation logic
+  - Duplicate error handling
+  - Similar test setups
+linkedTags:
+  direct_links: ["SOLID", "YAGNI", "RefactoringPatterns"]
+  cross_category: ["TechnicalDebtManagement", "CodeMetrics", "TestingStrategy"]
+  context_triggers: ["legacy_refactoring", "code_organization", "maintenance"]
+  semantic_clusters: ["abstraction", "reusability", "modularity"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["SOLID+DRY", "DRY+RefactoringPatterns", "DRY+YAGNI"]
+  activation_triggers: ["duplicate_code", "copy_paste", "repeated_logic", "maintenance_burden"]
+associative_strength:
+  SOLID: 0.9
+  YAGNI: 0.8
+  RefactoringPatterns: 0.9
+  TechnicalDebtManagement: 0.7
+  CodeMetrics: 0.6
+  TestingStrategy: 0.5
+  CodeCommentsGuideline: 0.4
+  O1_PrefRule: 0.3

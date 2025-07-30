@@ -1,0 +1,113 @@
+tagName: CircuitBreakerPatterns
+description: "Circuit breaker patterns for resilient distributed systems"
+appliesTo:
+  - "Microservices fault tolerance"
+  - "External service integration"
+  - "Database connection resilience"
+  - "API gateway protection"
+  - "Cascading failure prevention"
+patterns:
+  - "Implement circuit breakers for external service calls"
+  - "Use bulkhead pattern to isolate resources"
+  - "Implement timeout and deadline management"
+  - "Use exponential backoff for retry mechanisms"
+  - "Implement graceful degradation when services are unavailable"
+bestPractices:
+  - "Set appropriate failure thresholds based on service SLAs"
+  - "Implement proper monitoring and alerting for circuit state changes"
+  - "Use different circuit breakers for different failure types"
+  - "Implement fallback mechanisms for critical functionality"
+  - "Test circuit breaker behavior in staging environments"
+  - "Document circuit breaker configurations and thresholds"
+  - "Regular review and tuning of circuit breaker parameters"
+circuitStates:
+  - "Closed: Normal operation, requests pass through"
+  - "Open: Failures detected, requests fail fast"
+  - "Half-Open: Testing if service has recovered"
+  - "Forced-Open: Manual override to block all requests"
+  - "Forced-Closed: Manual override to allow all requests"
+failureDetection:
+  - "Exception-based: Count specific exception types"
+  - "Timeout-based: Detect slow responses as failures"
+  - "HTTP status-based: Treat certain status codes as failures"
+  - "Custom health checks: Application-specific failure detection"
+  - "Consecutive failure counting: Track failure streaks"
+thresholdConfiguration:
+  - "Failure threshold: Number/percentage of failures to open circuit"
+  - "Success threshold: Successful calls needed to close circuit"
+  - "Timeout threshold: Maximum acceptable response time"
+  - "Volume threshold: Minimum requests before evaluating failures"
+  - "Time window: Period for evaluating failure rates"
+fallbackStrategies:
+  - "Cached responses: Return previously cached successful responses"
+  - "Default values: Provide sensible defaults when service unavailable"
+  - "Alternative services: Route to backup or alternative services"
+  - "Degraded functionality: Provide limited functionality"
+  - "User notification: Inform users of temporary unavailability"
+bulkheadPattern:
+  - "Thread pool isolation: Separate thread pools for different services"
+  - "Connection pool isolation: Dedicated connection pools per service"
+  - "Resource partitioning: Limit resources available to each service"
+  - "Queue isolation: Separate queues for different operations"
+  - "CPU/Memory limits: Resource constraints per service component"
+monitoringAndAlerting:
+  - "Circuit state changes: Alert when circuits open or close"
+  - "Failure rate trends: Monitor increasing failure patterns"
+  - "Response time degradation: Alert on performance issues"
+  - "Fallback usage: Track when fallback mechanisms are triggered"
+  - "Recovery patterns: Monitor service recovery after failures"
+implementationLibraries:
+  - "Hystrix (Java): Netflix's circuit breaker library"
+  - "resilience4j (Java): Lightweight fault tolerance library"
+  - "Polly (.NET): Resilience and transient-fault-handling library"
+  - "circuit-breaker (Node.js): JavaScript circuit breaker implementation"
+  - "pybreaker (Python): Python circuit breaker library"
+testingStrategies:
+  - "Chaos engineering: Intentionally introduce failures"
+  - "Load testing: Test circuit behavior under high load"
+  - "Failure injection: Simulate various failure scenarios"
+  - "Recovery testing: Verify proper recovery behavior"
+  - "Configuration testing: Test different threshold settings"
+advancedPatterns:
+  - "Adaptive thresholds: Dynamically adjust based on historical data"
+  - "Multi-level circuits: Nested circuit breakers for complex systems"
+  - "Circuit breaker chaining: Coordinate multiple circuit breakers"
+  - "Health check integration: Use service health checks for state decisions"
+  - "Rate limiting integration: Combine with rate limiting for protection"
+linkedTags:
+  direct_links: ["ErrorHandlingPatterns", "RetrySafety", "HealthCheckPatterns"]
+  cross_category: ["MicroservicesPatterns", "CloudNativePatterns", "PerformanceMonitoring"]
+  context_triggers: ["circuit_breaker", "fault_tolerance", "resilience", "failure_handling"]
+  semantic_clusters: ["reliability_patterns", "fault_tolerance", "system_protection"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["ErrorHandlingPatterns+CircuitBreakerPatterns", "RetrySafety+CircuitBreakerPatterns", "HealthCheckPatterns+CircuitBreakerPatterns"]
+  activation_triggers: ["service_failures", "cascading_failures", "external_dependencies", "system_resilience", "fault_isolation"]
+associative_strength:
+  ErrorHandlingPatterns: 0.95
+  RetrySafety: 0.9
+  HealthCheckPatterns: 0.85
+  MicroservicesPatterns: 0.85
+  CloudNativePatterns: 0.8
+  PerformanceMonitoring: 0.8
+  ObservabilityPatterns: 0.85
+  ChaosEngineering: 0.9
+  RateLimitGuard: 0.8
+  APIDesignPrinciples: 0.75
+pattern_combinations:
+  resilience_core:
+    tokens: ["ErrorHandlingPatterns", "RetrySafety", "HealthCheckPatterns"]
+    strength: 0.9
+    context: "Core resilience patterns with circuit breaker protection"
+  distributed_reliability:
+    tokens: ["MicroservicesPatterns", "CloudNativePatterns", "ObservabilityPatterns"]
+    strength: 0.83
+    context: "Circuit breaker patterns for distributed cloud-native systems"
+  monitoring_protection:
+    tokens: ["PerformanceMonitoring", "ChaosEngineering", "RateLimitGuard"]
+    strength: 0.85
+    context: "Circuit breaker with monitoring, chaos testing, and rate limiting"
+tokenBudget: 95

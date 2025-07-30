@@ -1,0 +1,64 @@
+tag: YAGNI
+description: >
+  You Aren't Gonna Need It - avoid implementing functionality until it's actually required.
+appliesTo:
+  - Feature development
+  - Architecture decisions
+  - Code abstractions
+  - Infrastructure planning
+  - API design
+principles:
+  - Implement only current requirements
+  - Avoid premature optimization
+  - Don't build for hypothetical future needs
+  - Keep solutions simple and focused
+  - Refactor when requirements actually change
+bestPractices:
+  - Start with minimal viable implementation
+  - Add complexity only when needed
+  - Question every "what if" scenario
+  - Focus on current user stories
+  - Measure before adding features
+  - Delete unused code regularly
+violations:
+  - Over-engineered abstractions
+  - Unused configuration options
+  - Speculative features
+  - Complex inheritance hierarchies
+  - Generic solutions for specific problems
+linkedTags:
+  direct_links: ["DRY", "SOLID", "RefactoringPatterns"]
+  cross_category: ["APIDesignPrinciples", "PerformanceOptimization", "TestingStrategy"]
+  context_triggers: ["yagni", "over_engineering", "premature_optimization", "feature_creep", "simplicity"]
+  semantic_clusters: ["design_simplicity", "requirement_focus", "minimal_implementation"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["DRY+YAGNI", "SOLID+YAGNI", "RefactoringPatterns+YAGNI"]
+  activation_triggers: ["feature_development", "architecture_decisions", "api_design", "abstraction_design", "requirement_analysis"]
+associative_strength:
+  DRY: 0.9
+  SOLID: 0.85
+  RefactoringPatterns: 0.8
+  OOPPrinciples: 0.75
+  APIDesignPrinciples: 0.8
+  PerformanceOptimization: 0.75
+  TestingStrategy: 0.7
+  TechnicalDebtManagement: 0.7
+  CodeCommentsGuideline: 0.65
+  NamingConventions: 0.7
+pattern_combinations:
+  simplicity_foundation:
+    tokens: ["DRY", "SOLID", "OOPPrinciples"]
+    strength: 0.88
+    context: "Simple, focused design principles with YAGNI"
+  pragmatic_development:
+    tokens: ["APIDesignPrinciples", "TestingStrategy", "RefactoringPatterns"]
+    strength: 0.82
+    context: "Pragmatic development approach avoiding over-engineering"
+  maintenance_simplicity:
+    tokens: ["TechnicalDebtManagement", "PerformanceOptimization", "NamingConventions"]
+    strength: 0.78
+    context: "Simple maintenance and optimization strategies"

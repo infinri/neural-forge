@@ -1,0 +1,117 @@
+tagName: DataPrivacyCompliance
+description: "Data privacy and compliance patterns for GDPR, CCPA, and other regulations"
+appliesTo:
+  - "Personal data protection and privacy"
+  - "Regulatory compliance (GDPR, CCPA, HIPAA)"
+  - "Data retention and deletion policies"
+  - "Consent management systems"
+  - "Data breach response procedures"
+patterns:
+  - "Implement privacy by design in all data processing systems"
+  - "Use data minimization principles - collect only necessary data"
+  - "Implement proper consent management and tracking"
+  - "Design systems for data portability and deletion"
+  - "Implement comprehensive audit trails for data access"
+bestPractices:
+  - "Classify data based on sensitivity and regulatory requirements"
+  - "Implement role-based access controls for personal data"
+  - "Use pseudonymization and anonymization techniques"
+  - "Implement automated data retention and deletion policies"
+  - "Conduct regular privacy impact assessments"
+  - "Train development teams on privacy requirements"
+  - "Implement privacy-preserving analytics techniques"
+gdprCompliance:
+  - "Lawful basis: Establish legal grounds for data processing"
+  - "Consent management: Granular, withdrawable consent mechanisms"
+  - "Right to access: Provide individuals access to their data"
+  - "Right to rectification: Allow correction of inaccurate data"
+  - "Right to erasure: Implement data deletion capabilities"
+  - "Data portability: Export data in machine-readable formats"
+  - "Privacy by design: Build privacy into system architecture"
+dataClassification:
+  - "Public data: No privacy restrictions"
+  - "Internal data: Company confidential information"
+  - "Confidential data: Sensitive business information"
+  - "Personal data: Individually identifiable information"
+  - "Special category data: Health, biometric, genetic data"
+consentManagement:
+  - "Granular consent: Separate consent for different processing purposes"
+  - "Consent tracking: Record when and how consent was obtained"
+  - "Consent withdrawal: Easy mechanisms to withdraw consent"
+  - "Consent renewal: Periodic reconfirmation of consent"
+  - "Consent proof: Maintain evidence of valid consent"
+dataMinimization:
+  - "Purpose limitation: Use data only for stated purposes"
+  - "Data adequacy: Collect only necessary data"
+  - "Retention limits: Delete data when no longer needed"
+  - "Access controls: Limit access to authorized personnel"
+  - "Pseudonymization: Replace identifiers with pseudonyms"
+technicalSafeguards:
+  - "Encryption: Protect data at rest and in transit"
+  - "Access logging: Log all access to personal data"
+  - "Data masking: Hide sensitive data in non-production environments"
+  - "Secure deletion: Ensure data is truly deleted when required"
+  - "Backup encryption: Encrypt all backup copies of personal data"
+breachResponse:
+  - "Detection: Implement systems to detect data breaches"
+  - "Assessment: Evaluate breach severity and impact"
+  - "Notification: Report breaches to authorities within 72 hours"
+  - "Communication: Inform affected individuals when required"
+  - "Remediation: Take steps to mitigate breach impact"
+crossBorderTransfers:
+  - "Adequacy decisions: Transfer to countries with adequate protection"
+  - "Standard contractual clauses: Use approved transfer mechanisms"
+  - "Binding corporate rules: Internal data transfer agreements"
+  - "Certification schemes: Use certified data processors"
+  - "Transfer impact assessments: Evaluate transfer risks"
+dataSubjectRights:
+  - "Right to information: Provide clear privacy notices"
+  - "Right of access: Enable individuals to access their data"
+  - "Right to rectification: Allow correction of personal data"
+  - "Right to erasure: Implement data deletion capabilities"
+  - "Right to restrict processing: Allow processing limitations"
+  - "Right to data portability: Export data in standard formats"
+  - "Right to object: Allow objection to certain processing"
+implementationGuidance:
+  - "Privacy impact assessments: Evaluate privacy risks of new systems"
+  - "Data protection officer: Appoint DPO for high-risk processing"
+  - "Vendor management: Ensure third parties comply with privacy requirements"
+  - "Training programs: Educate staff on privacy requirements"
+  - "Regular audits: Assess compliance with privacy policies"
+linkedTags:
+  direct_links: ["EncryptionPatterns", "SecurityMonitoring", "DataMigrationPatterns"]
+  cross_category: ["AuthBypassPrevention", "InputSanitization", "TestingStrategy"]
+  context_triggers: ["data_privacy", "gdpr", "compliance", "personal_data"]
+  semantic_clusters: ["privacy_patterns", "regulatory_compliance", "data_protection"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["EncryptionPatterns+DataPrivacyCompliance", "SecurityMonitoring+DataPrivacyCompliance", "DataMigrationPatterns+DataPrivacyCompliance"]
+  activation_triggers: ["privacy_requirements", "regulatory_compliance", "data_protection", "consent_management", "data_breach_response"]
+associative_strength:
+  EncryptionPatterns: 0.9
+  SecurityMonitoring: 0.85
+  DataMigrationPatterns: 0.8
+  AuthBypassPrevention: 0.75
+  InputSanitization: 0.8
+  TestingStrategy: 0.8
+  DatabaseDesign: 0.8
+  DataPipelinePatterns: 0.75
+  SecretsManagement: 0.8
+  ZeroTrustArchitecture: 0.75
+pattern_combinations:
+  privacy_security_core:
+    tokens: ["EncryptionPatterns", "SecurityMonitoring", "SecretsManagement"]
+    strength: 0.85
+    context: "Core privacy compliance with encryption and security monitoring"
+  data_governance:
+    tokens: ["DataMigrationPatterns", "DatabaseDesign", "DataPipelinePatterns"]
+    strength: 0.78
+    context: "Data privacy compliance for data management and migration"
+  compliance_validation:
+    tokens: ["TestingStrategy", "InputSanitization", "AuthBypassPrevention"]
+    strength: 0.78
+    context: "Privacy compliance validation through testing and security controls"
+tokenBudget: 95

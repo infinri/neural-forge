@@ -1,0 +1,87 @@
+tagName: ErrorHandlingPatterns
+description: "Comprehensive error handling, exception hierarchies, and logging strategies"
+appliesTo:
+  - "Exception handling and recovery"
+  - "Error propagation and logging"
+  - "Graceful degradation patterns"
+  - "System resilience and fault tolerance"
+  - "User experience during failures"
+patterns:
+  - "Fail fast with meaningful error messages"
+  - "Use specific exception types for different error conditions"
+  - "Implement proper exception hierarchies"
+  - "Log errors with sufficient context for debugging"
+  - "Provide graceful fallbacks when possible"
+bestPractices:
+  - "Catch specific exceptions, not generic ones"
+  - "Don't swallow exceptions without handling"
+  - "Include error context and stack traces in logs"
+  - "Use structured logging for better analysis"
+  - "Implement circuit breakers for external dependencies"
+  - "Validate inputs early to prevent errors downstream"
+  - "Use error codes consistently across the system"
+exceptionHierarchy:
+  - "Create domain-specific exception classes"
+  - "Inherit from appropriate base exception types"
+  - "Include relevant error details in exception messages"
+  - "Use checked exceptions for recoverable errors"
+  - "Use unchecked exceptions for programming errors"
+loggingStrategies:
+  - "Use appropriate log levels (ERROR, WARN, INFO, DEBUG)"
+  - "Include correlation IDs for request tracing"
+  - "Log structured data for better searchability"
+  - "Avoid logging sensitive information"
+  - "Use centralized logging for distributed systems"
+errorRecovery:
+  - "Implement retry mechanisms with exponential backoff"
+  - "Provide fallback options when primary systems fail"
+  - "Use bulkhead patterns to isolate failures"
+  - "Implement graceful degradation for non-critical features"
+  - "Cache previous successful responses when possible"
+monitoringIntegration:
+  - "Set up alerts for critical error patterns"
+  - "Track error rates and response times"
+  - "Monitor system health and performance metrics"
+  - "Use distributed tracing for complex systems"
+userExperience:
+  - "Provide user-friendly error messages"
+  - "Avoid exposing internal system details"
+  - "Offer actionable steps for error resolution"
+  - "Maintain system functionality during partial failures"
+linkedTags:
+  direct_links: ["ErrorSurfaceReduction", "RetrySafety", "CircuitBreakerPatterns"]
+  cross_category: ["ObservabilityPatterns", "TestingStrategy", "SecurityMonitoring"]
+  context_triggers: ["error_handling", "exception_management", "fault_tolerance", "logging"]
+  semantic_clusters: ["reliability_patterns", "error_management", "system_resilience"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["ErrorSurfaceReduction+ErrorHandlingPatterns", "RetrySafety+ErrorHandlingPatterns", "CircuitBreakerPatterns+ErrorHandlingPatterns"]
+  activation_triggers: ["exception_handling", "error_recovery", "system_failures", "graceful_degradation", "fault_tolerance"]
+associative_strength:
+  ErrorSurfaceReduction: 0.9
+  RetrySafety: 0.9
+  CircuitBreakerPatterns: 0.95
+  ObservabilityPatterns: 0.85
+  TestingStrategy: 0.8
+  SecurityMonitoring: 0.75
+  HealthCheckPatterns: 0.8
+  ChaosEngineering: 0.85
+  PerformanceMonitoring: 0.8
+  InputSanitization: 0.75
+pattern_combinations:
+  reliability_core:
+    tokens: ["ErrorSurfaceReduction", "RetrySafety", "CircuitBreakerPatterns"]
+    strength: 0.92
+    context: "Core error handling and reliability patterns"
+  monitoring_observability:
+    tokens: ["ObservabilityPatterns", "PerformanceMonitoring", "SecurityMonitoring"]
+    strength: 0.8
+    context: "Error handling with comprehensive monitoring and observability"
+  testing_validation:
+    tokens: ["TestingStrategy", "ChaosEngineering", "HealthCheckPatterns"]
+    strength: 0.82
+    context: "Error handling validation through testing and health monitoring"
+tokenBudget: 75

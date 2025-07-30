@@ -1,0 +1,101 @@
+tagName: TestDataManagement
+description: "Test data management patterns for reliable and maintainable testing"
+appliesTo:
+  - "Test data creation and lifecycle management"
+  - "Data isolation between test runs"
+  - "Synthetic and anonymized data generation"
+  - "Test database setup and teardown"
+  - "Cross-environment data consistency"
+patterns:
+  - "Use test data builders for flexible data creation"
+  - "Implement proper test data isolation and cleanup"
+  - "Generate synthetic data that mimics production characteristics"
+  - "Use database transactions for test isolation"
+  - "Implement data factories for complex object creation"
+bestPractices:
+  - "Create minimal test data required for each test"
+  - "Use deterministic data generation for reproducible tests"
+  - "Implement proper cleanup after each test"
+  - "Use realistic data that represents production scenarios"
+  - "Avoid shared test data that creates dependencies between tests"
+  - "Version test data schemas alongside application schemas"
+  - "Implement data privacy protection in test environments"
+testDataCreation:
+  - "Object mothers: Pre-configured objects for common scenarios"
+  - "Test data builders: Fluent APIs for flexible data creation"
+  - "Data factories: Generate objects with realistic relationships"
+  - "Fixtures: Static test data files for consistent scenarios"
+  - "Synthetic generators: Programmatically create realistic data"
+dataIsolation:
+  - "Database transactions: Rollback changes after each test"
+  - "Test databases: Separate databases for each test run"
+  - "Data partitioning: Logical separation of test data"
+  - "Cleanup strategies: Explicit cleanup of test data"
+  - "Containerized databases: Fresh database instances for tests"
+syntheticDataGeneration:
+  - "Faker libraries: Generate realistic fake data"
+  - "Data relationships: Maintain referential integrity"
+  - "Realistic distributions: Match production data patterns"
+  - "Localization: Generate data for different locales"
+  - "Volume scaling: Generate appropriate data volumes"
+testEnvironmentManagement:
+  - "Environment parity: Consistent data across environments"
+  - "Data refresh: Regular updates from production (anonymized)"
+  - "Schema migration: Keep test schemas synchronized"
+  - "Seed data: Essential data for application functionality"
+  - "Configuration management: Environment-specific settings"
+dataPrivacyAndSecurity:
+  - "Data anonymization: Remove or mask personal information"
+  - "Data pseudonymization: Replace identifiers with fake values"
+  - "Access controls: Restrict access to sensitive test data"
+  - "Data retention: Manage lifecycle of test data"
+  - "Compliance: Ensure test data meets regulatory requirements"
+performanceConsiderations:
+  - "Data volume optimization: Use appropriate data sizes"
+  - "Database indexing: Optimize test database performance"
+  - "Parallel execution: Handle concurrent test data access"
+  - "Caching strategies: Cache frequently used test data"
+  - "Resource cleanup: Free resources after test completion"
+toolsAndFrameworks:
+  - "Factory libraries: FactoryBot, Factory Boy, ObjectMother"
+  - "Faker libraries: Faker.js, Python Faker, Java Faker"
+  - "Database tools: Testcontainers, H2, SQLite"
+  - "Data generation: Mockaroo, GenerateData, Bogus"
+  - "Migration tools: Flyway, Liquibase, Alembic"
+linkedTags:
+  direct_links: ["AdvancedTestingPatterns", "PerformanceTestingPatterns", "ContinuousTestingPatterns"]
+  cross_category: ["DataPrivacyCompliance", "DatabaseDesign", "DataMigrationPatterns"]
+  context_triggers: ["test_data", "data_management", "test_isolation", "synthetic_data"]
+  semantic_clusters: ["testing_patterns", "data_patterns", "test_infrastructure"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["AdvancedTestingPatterns+TestDataManagement", "PerformanceTestingPatterns+TestDataManagement", "ContinuousTestingPatterns+TestDataManagement"]
+  activation_triggers: ["test_data_creation", "data_isolation", "test_environment", "synthetic_generation", "data_cleanup"]
+associative_strength:
+  AdvancedTestingPatterns: 0.8
+  PerformanceTestingPatterns: 0.8
+  ContinuousTestingPatterns: 0.8
+  TestingPrinciples: 0.85
+  DataPrivacyCompliance: 0.9
+  DatabaseDesign: 0.85
+  DataMigrationPatterns: 0.8
+  DataPipelinePatterns: 0.75
+  EncryptionPatterns: 0.75
+  SecurityMonitoring: 0.7
+pattern_combinations:
+  comprehensive_test_data_strategy:
+    tokens: ["AdvancedTestingPatterns", "PerformanceTestingPatterns", "ContinuousTestingPatterns"]
+    strength: 0.8
+    context: "Complete test data management across all testing patterns and automation"
+  data_privacy_testing:
+    tokens: ["DataPrivacyCompliance", "DatabaseDesign", "EncryptionPatterns"]
+    strength: 0.83
+    context: "Test data management with privacy compliance and secure database design"
+  data_pipeline_testing:
+    tokens: ["DataMigrationPatterns", "DataPipelinePatterns", "SecurityMonitoring"]
+    strength: 0.75
+    context: "Test data management for data pipeline and migration testing"
+tokenBudget: 85

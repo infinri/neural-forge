@@ -1,0 +1,67 @@
+tag: AuthBypassPrevention
+description: >
+  Prevent authentication and authorization bypass vulnerabilities.
+appliesTo:
+  - API endpoints
+  - Web applications
+  - Microservices
+  - Database access
+  - File system operations
+vulnerabilities:
+  - Missing authentication checks
+  - Privilege escalation
+  - Session fixation
+  - Token manipulation
+  - Direct object references
+  - Path traversal
+bestPractices:
+  - Authenticate every request
+  - Validate authorization for each resource
+  - Use secure session management
+  - Implement proper logout
+  - Validate JWT tokens properly
+  - Use principle of least privilege
+  - Check permissions at data layer
+implementation:
+  - Middleware for authentication
+  - Role-based access control (RBAC)
+  - Attribute-based access control (ABAC)
+  - OAuth 2.0 / OpenID Connect
+  - Multi-factor authentication
+  - Session timeout mechanisms
+linkedTags:
+  direct_links: ["ThreatModel", "InputSanitization", "OAuth2JWTPatterns"]
+  cross_category: ["SOLID", "ErrorSurfaceReduction", "TestingStrategy"]
+  context_triggers: ["authentication", "authorization", "access_control", "security_bypass"]
+  semantic_clusters: ["identity_verification", "access_management", "privilege_control"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["ThreatModel+AuthBypassPrevention", "OAuth2JWTPatterns+AuthBypassPrevention", "InputSanitization+AuthBypassPrevention"]
+  activation_triggers: ["login_system", "api_security", "user_authentication", "privilege_escalation", "session_management"]
+associative_strength:
+  ThreatModel: 0.95
+  InputSanitization: 0.9
+  OAuth2JWTPatterns: 0.95
+  ZeroTrustArchitecture: 0.85
+  SecurityHeaders: 0.8
+  SOLID: 0.7
+  ErrorSurfaceReduction: 0.8
+  TestingStrategy: 0.75
+  RateLimitGuard: 0.7
+  SecretsManagement: 0.8
+pattern_combinations:
+  authentication_stack:
+    tokens: ["OAuth2JWTPatterns", "SecretsManagement", "SecurityHeaders"]
+    strength: 0.92
+    context: "Complete authentication system"
+  security_foundation:
+    tokens: ["ThreatModel", "InputSanitization", "SecurityMonitoring"]
+    strength: 0.88
+    context: "Security-first development foundation"
+  zero_trust_implementation:
+    tokens: ["ZeroTrustArchitecture", "EncryptionPatterns", "SecurityMonitoring"]
+    strength: 0.85
+    context: "Zero-trust security architecture"

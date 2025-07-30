@@ -1,0 +1,88 @@
+tagName: CodeReviewAutomation
+description: "AI self-assessment and automated code review patterns"
+appliesTo:
+  - "Automated code quality assessment"
+  - "Self-review before code submission"
+  - "Continuous improvement feedback"
+  - "Quality gate automation"
+  - "Learning from review outcomes"
+patterns:
+  - "Perform self-assessment before code submission"
+  - "Apply automated quality checks and metrics"
+  - "Learn from human reviewer feedback"
+  - "Identify common issues and prevent them"
+  - "Continuously improve review accuracy"
+bestPractices:
+  - "Check code against established quality standards"
+  - "Verify security best practices are followed"
+  - "Ensure performance considerations are addressed"
+  - "Validate test coverage and quality"
+  - "Review for maintainability and readability"
+  - "Check for proper error handling"
+selfAssessmentChecklist:
+  - "Security: Are inputs validated and outputs sanitized?"
+  - "Performance: Is the algorithm complexity appropriate?"
+  - "Maintainability: Is the code DRY and following SOLID?"
+  - "Testing: Are there adequate tests with good coverage?"
+  - "Documentation: Are complex parts properly documented?"
+  - "Error Handling: Are edge cases and failures handled?"
+automatedChecks:
+  - "Static code analysis for potential issues"
+  - "Security vulnerability scanning"
+  - "Performance profiling and bottleneck detection"
+  - "Test coverage analysis"
+  - "Code complexity metrics"
+learningFromReviews:
+  - "Track common feedback patterns"
+  - "Identify frequently missed issues"
+  - "Learn reviewer preferences and standards"
+  - "Adapt to team-specific coding conventions"
+  - "Improve prediction of review outcomes"
+qualityMetrics:
+  - "Cyclomatic complexity scores"
+  - "Code duplication percentages"
+  - "Test coverage percentages"
+  - "Security vulnerability counts"
+  - "Performance benchmark results"
+feedbackIntegration:
+  - "Store reviewer comments for pattern analysis"
+  - "Track which issues lead to code rejections"
+  - "Learn from successful code approvals"
+  - "Adapt review criteria based on outcomes"
+linkedTags:
+  direct_links: ["SelfImprovement", "ContinuousLearning", "CodeMetrics"]
+  cross_category: ["TestingStrategy", "SOLID", "SecurityMonitoring"]
+  context_triggers: ["code_review", "automated_assessment", "quality_gates", "self_assessment"]
+  semantic_clusters: ["review_automation", "quality_assessment", "continuous_improvement"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["SelfImprovement+CodeReviewAutomation", "ContinuousLearning+CodeReviewAutomation", "CodeMetrics+CodeReviewAutomation"]
+  activation_triggers: ["code_submission", "quality_assessment", "review_feedback", "automated_checks", "self_evaluation"]
+associative_strength:
+  SelfImprovement: 0.95
+  ContinuousLearning: 0.9
+  CodeMetrics: 0.9
+  TestingStrategy: 0.85
+  SOLID: 0.8
+  SecurityMonitoring: 0.8
+  TechnicalDebtManagement: 0.8
+  RefactoringPatterns: 0.75
+  MetaCognition: 0.75
+  PerformanceOptimization: 0.7
+pattern_combinations:
+  automated_quality_core:
+    tokens: ["SelfImprovement", "ContinuousLearning", "CodeMetrics"]
+    strength: 0.92
+    context: "Core automated code review with learning and metrics"
+  comprehensive_assessment:
+    tokens: ["TestingStrategy", "SOLID", "SecurityMonitoring"]
+    strength: 0.88
+    context: "Comprehensive code assessment across quality dimensions"
+  improvement_integration:
+    tokens: ["TechnicalDebtManagement", "RefactoringPatterns", "MetaCognition"]
+    strength: 0.82
+    context: "Code review automation integrated with improvement processes"
+tokenBudget: 75

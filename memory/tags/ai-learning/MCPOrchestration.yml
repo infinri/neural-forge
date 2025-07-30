@@ -1,0 +1,64 @@
+name: "MCPOrchestration"
+description: "Advanced MCP tool coordination for synesthetic cognitive processing"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 92
+linkedTags:
+  direct_links: ["FractalMCPPatterns", "SynestheticProcessing", "CognitiveArchitecture"]
+  cross_category: ["MicroservicesPatterns", "ObservabilityPatterns", "PerformanceOptimization"]
+  context_triggers: ["mcp_orchestration", "tool_coordination", "cognitive_processing", "synesthetic_web"]
+  semantic_clusters: ["tool_orchestration", "cognitive_coordination", "mcp_integration"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["FractalMCPPatterns+MCPOrchestration", "SynestheticProcessing+MCPOrchestration", "CognitiveArchitecture+MCPOrchestration"]
+  activation_triggers: ["multi_tool_problems", "complex_orchestration", "cognitive_synthesis", "tool_chaining", "mcp_coordination"]
+associative_strength:
+  FractalMCPPatterns: 0.95
+  SynestheticProcessing: 0.95
+  CognitiveArchitecture: 0.9
+  MetaCognition: 0.85
+  RecursiveThinking: 0.85
+  MicroservicesPatterns: 0.8
+  ObservabilityPatterns: 0.8
+  PerformanceOptimization: 0.75
+  AdaptiveDepth: 0.8
+  ContinuousLearning: 0.75
+pattern_combinations:
+  cognitive_orchestration_core:
+    tokens: ["FractalMCPPatterns", "SynestheticProcessing", "MetaCognition"]
+    strength: 0.93
+    context: "Core cognitive orchestration with fractal and synesthetic processing"
+  intelligent_coordination:
+    tokens: ["CognitiveArchitecture", "RecursiveThinking", "AdaptiveDepth"]
+    strength: 0.88
+    context: "Intelligent MCP coordination with adaptive reasoning"
+  system_integration:
+    tokens: ["MicroservicesPatterns", "ObservabilityPatterns", "PerformanceOptimization"]
+    strength: 0.82
+    context: "MCP orchestration integrated with system architecture"
+
+rules:
+  - id: "synesthetic-web-pattern"
+    pattern: "supermemoryai retrieves context → context7 injects docs → atom-of-thoughts decomposes → sequential-thinking chains → puppeteer validates"
+    trigger: "Multi-modal problems requiring diverse cognitive approaches"
+    
+  - id: "cross-modal-reinforcement"
+    pattern: "Each MCP output changes how previous layers operate → Recursive feedback loops → Emergent specialization"
+    trigger: "Complex problems benefiting from multiple perspective integration"
+    
+  - id: "tool-specialization-evolution"
+    pattern: "Track MCP effectiveness per problem type → Develop specialized modes → Auto-select optimal tool combinations"
+    trigger: "Repeated similar problem patterns"
+
+orchestration_strategies:
+  parallel_processing: "Deploy multiple MCP chains simultaneously"
+  sequential_chaining: "Linear tool progression with feedback loops"
+  recursive_nesting: "Tools calling themselves with modified parameters"
+  
+performance_optimization:
+  tool_selection: "Choose MCPs based on problem characteristics"
+  resource_balancing: "Distribute computational load across tools"
+  feedback_integration: "Use tool outputs to improve future orchestration"

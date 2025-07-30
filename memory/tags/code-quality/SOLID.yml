@@ -1,0 +1,65 @@
+tag: SOLID
+description: >
+  Five fundamental object-oriented design principles for maintainable code.
+appliesTo:
+  - Class design
+  - Interface design
+  - Module architecture
+  - Component structure
+principles:
+  S: Single Responsibility Principle
+    - One class, one reason to change
+    - Separate concerns clearly
+  O: Open/Closed Principle
+    - Open for extension, closed for modification
+    - Use inheritance and composition
+  L: Liskov Substitution Principle
+    - Subtypes must be substitutable for base types
+    - Maintain behavioral contracts
+  I: Interface Segregation Principle
+    - Many specific interfaces > one general interface
+    - Clients shouldn't depend on unused methods
+  D: Dependency Inversion Principle
+    - Depend on abstractions, not concretions
+    - High-level modules shouldn't depend on low-level
+bestPractices:
+  - Use dependency injection
+  - Favor composition over inheritance
+  - Define clear interfaces and contracts
+  - Keep classes focused and cohesive
+linkedTags:
+  direct_links: ["DRY", "OOPPrinciples", "RefactoringPatterns"]
+  cross_category: ["ThreatModel", "TestingStrategy", "MicroservicesPatterns"]
+  context_triggers: ["object_oriented", "class_design", "interface_design", "architecture_principles"]
+  semantic_clusters: ["design_principles", "code_structure", "maintainability"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["DRY+SOLID", "OOPPrinciples+SOLID", "RefactoringPatterns+SOLID"]
+  activation_triggers: ["class_creation", "interface_definition", "module_design", "component_architecture", "code_refactoring"]
+associative_strength:
+  DRY: 0.95
+  OOPPrinciples: 0.9
+  RefactoringPatterns: 0.85
+  CodeCommentsGuideline: 0.7
+  TestingStrategy: 0.8
+  MicroservicesPatterns: 0.75
+  ThreatModel: 0.65
+  NamingConventions: 0.8
+  TechnicalDebtManagement: 0.75
+  APIDesignPrinciples: 0.8
+pattern_combinations:
+  design_foundation:
+    tokens: ["DRY", "OOPPrinciples", "NamingConventions"]
+    strength: 0.92
+    context: "Fundamental design principles for clean code"
+  architecture_quality:
+    tokens: ["RefactoringPatterns", "TechnicalDebtManagement", "TestingStrategy"]
+    strength: 0.88
+    context: "Quality-focused architecture with SOLID principles"
+  service_design:
+    tokens: ["MicroservicesPatterns", "APIDesignPrinciples", "ThreatModel"]
+    strength: 0.82
+    context: "Service-oriented design with security considerations"

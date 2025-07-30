@@ -1,0 +1,88 @@
+tagName: ConcurrencyPatterns
+description: "Threading, async/await, race conditions, and parallel processing patterns"
+appliesTo:
+  - "Multi-threaded application design"
+  - "Asynchronous programming"
+  - "Parallel processing and performance"
+  - "Race condition prevention"
+  - "Resource synchronization"
+patterns:
+  - "Use immutable objects to avoid synchronization"
+  - "Prefer async/await over raw threading"
+  - "Apply producer-consumer patterns for data processing"
+  - "Use thread-safe collections and data structures"
+  - "Implement proper resource cleanup and disposal"
+bestPractices:
+  - "Avoid shared mutable state when possible"
+  - "Use locks sparingly and consistently"
+  - "Prefer atomic operations over synchronization"
+  - "Design for thread safety from the beginning"
+  - "Use thread pools instead of creating threads manually"
+  - "Handle cancellation tokens properly in async operations"
+threadSafety:
+  - "Use concurrent collections (ConcurrentHashMap, etc.)"
+  - "Apply synchronization primitives (locks, semaphores)"
+  - "Implement thread-local storage for per-thread data"
+  - "Use volatile keywords for visibility guarantees"
+  - "Apply memory barriers for ordering guarantees"
+asyncPatterns:
+  - "Use async/await for I/O-bound operations"
+  - "Implement proper exception handling in async code"
+  - "Avoid blocking async operations with .Wait() or .Result"
+  - "Use ConfigureAwait(false) in library code"
+  - "Handle task cancellation gracefully"
+raceConditionPrevention:
+  - "Identify critical sections and protect them"
+  - "Use atomic operations for simple state changes"
+  - "Implement proper initialization patterns"
+  - "Avoid double-checked locking antipatterns"
+  - "Use immutable objects for shared data"
+performanceOptimization:
+  - "Use parallel processing for CPU-intensive tasks"
+  - "Implement work-stealing algorithms"
+  - "Balance thread pool sizes for optimal throughput"
+  - "Use lock-free data structures when appropriate"
+  - "Profile and measure concurrent performance"
+commonPitfalls:
+  - "Deadlocks from improper lock ordering"
+  - "Race conditions in initialization code"
+  - "Memory leaks from unclosed resources"
+  - "Performance degradation from excessive locking"
+  - "Starvation from unfair synchronization"
+linkedTags:
+  direct_links: ["MessageQueuePatterns", "CloudNativePatterns", "EventSourcingCQRS"]
+  cross_category: ["PerformanceOptimization", "ErrorSurfaceReduction", "TestingStrategy"]
+  context_triggers: ["concurrency", "threading", "async_await", "parallel_processing"]
+  semantic_clusters: ["concurrent_programming", "thread_safety", "async_patterns"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["MessageQueuePatterns+ConcurrencyPatterns", "CloudNativePatterns+ConcurrencyPatterns", "PerformanceOptimization+ConcurrencyPatterns"]
+  activation_triggers: ["multi_threading", "async_operations", "race_conditions", "parallel_execution", "thread_safety"]
+associative_strength:
+  MessageQueuePatterns: 0.85
+  CloudNativePatterns: 0.8
+  EventSourcingCQRS: 0.8
+  PerformanceOptimization: 0.9
+  ErrorSurfaceReduction: 0.85
+  TestingStrategy: 0.8
+  MicroservicesPatterns: 0.75
+  ObservabilityPatterns: 0.75
+  ResiliencePatterns: 0.8
+  CodeMetrics: 0.7
+pattern_combinations:
+  async_architecture_stack:
+    tokens: ["MessageQueuePatterns", "CloudNativePatterns", "EventSourcingCQRS"]
+    strength: 0.85
+    context: "Concurrent patterns for async distributed architecture"
+  performance_reliability:
+    tokens: ["PerformanceOptimization", "ErrorSurfaceReduction", "ResiliencePatterns"]
+    strength: 0.87
+    context: "High-performance concurrent systems with error handling"
+  testing_monitoring:
+    tokens: ["TestingStrategy", "ObservabilityPatterns", "CodeMetrics"]
+    strength: 0.78
+    context: "Concurrent code testing and performance monitoring"
+tokenBudget: 85

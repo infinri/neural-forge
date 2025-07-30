@@ -1,0 +1,66 @@
+tag: InputSanitization
+description: >
+  Validate and sanitize all user inputs to prevent injection attacks and data corruption.
+appliesTo:
+  - Web forms
+  - API parameters
+  - Database queries
+  - File uploads
+  - Command line arguments
+techniques:
+  - Whitelist validation (preferred)
+  - Blacklist filtering (secondary)
+  - Input encoding/escaping
+  - Type validation
+  - Length/size limits
+  - Format validation (regex)
+bestPractices:
+  - Validate on server side always
+  - Sanitize before processing
+  - Use parameterized queries
+  - Escape output for context
+  - Reject malformed input
+  - Log validation failures
+common_attacks:
+  - SQL injection
+  - XSS (Cross-site scripting)
+  - Command injection
+  - Path traversal
+  - XML/JSON injection
+  - LDAP injection
+linkedTags:
+  direct_links: ["ThreatModel", "AuthBypassPrevention", "SecurityHeaders"]
+  cross_category: ["SOLID", "TestingStrategy", "ErrorSurfaceReduction"]
+  context_triggers: ["user_input", "data_validation", "injection_prevention", "xss_protection"]
+  semantic_clusters: ["input_validation", "security_filtering", "attack_prevention"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["ThreatModel+InputSanitization", "AuthBypassPrevention+InputSanitization", "TestingStrategy+InputSanitization"]
+  activation_triggers: ["web_forms", "api_endpoints", "user_data", "sql_injection", "xss_prevention"]
+associative_strength:
+  ThreatModel: 0.95
+  AuthBypassPrevention: 0.9
+  SecurityHeaders: 0.85
+  ErrorSurfaceReduction: 0.8
+  TestingStrategy: 0.85
+  SOLID: 0.7
+  DatabaseDesign: 0.8
+  OAuth2JWTPatterns: 0.75
+  SecurityMonitoring: 0.8
+  DataPrivacyCompliance: 0.75
+pattern_combinations:
+  web_security_stack:
+    tokens: ["SecurityHeaders", "AuthBypassPrevention", "ThreatModel"]
+    strength: 0.92
+    context: "Complete web application security"
+  api_security_foundation:
+    tokens: ["OAuth2JWTPatterns", "RateLimitGuard", "SecurityMonitoring"]
+    strength: 0.88
+    context: "Secure API development foundation"
+  data_protection_layer:
+    tokens: ["EncryptionPatterns", "DataPrivacyCompliance", "DatabaseDesign"]
+    strength: 0.85
+    context: "Data security and privacy protection"

@@ -1,0 +1,108 @@
+tagName: ChaosEngineering
+description: "Chaos engineering principles for building resilient distributed systems"
+appliesTo:
+  - "System resilience testing"
+  - "Failure mode discovery"
+  - "Disaster recovery validation"
+  - "Microservices fault tolerance"
+  - "Production system hardening"
+patterns:
+  - "Introduce controlled failures to test system resilience"
+  - "Start with small, reversible experiments in non-production"
+  - "Gradually increase experiment scope and complexity"
+  - "Automate chaos experiments as part of regular testing"
+  - "Use chaos engineering to validate incident response procedures"
+bestPractices:
+  - "Define clear hypotheses before running chaos experiments"
+  - "Start with non-production environments and gradually move to production"
+  - "Ensure experiments are safe and reversible"
+  - "Monitor system behavior during and after experiments"
+  - "Document findings and implement improvements based on results"
+  - "Get organizational buy-in and establish chaos engineering culture"
+  - "Integrate chaos experiments into CI/CD pipelines"
+chaosExperimentTypes:
+  - "Infrastructure failures: Server crashes, network partitions"
+  - "Resource exhaustion: CPU spikes, memory pressure, disk full"
+  - "Dependency failures: Database unavailability, API timeouts"
+  - "Network issues: Latency injection, packet loss, bandwidth limits"
+  - "Security failures: Certificate expiration, authentication failures"
+  - "Data corruption: Disk errors, database inconsistencies"
+experimentDesign:
+  - "Hypothesis formation: What do you expect to happen?"
+  - "Blast radius definition: Limit the scope of potential impact"
+  - "Success criteria: How will you measure experiment success?"
+  - "Rollback plan: How to quickly revert if things go wrong?"
+  - "Monitoring setup: What metrics will you track during the experiment?"
+toolsAndPlatforms:
+  - "Chaos Monkey: Netflix's pioneering chaos engineering tool"
+  - "Gremlin: Comprehensive chaos engineering platform"
+  - "Litmus: Kubernetes-native chaos engineering framework"
+  - "Chaos Toolkit: Open-source chaos engineering toolkit"
+  - "Pumba: Docker container chaos testing tool"
+infrastructureChaos:
+  - "Instance termination: Randomly terminate servers or containers"
+  - "Network partitioning: Isolate services from each other"
+  - "Resource starvation: Consume CPU, memory, or disk resources"
+  - "Clock skew: Introduce time synchronization issues"
+  - "DNS failures: Make DNS resolution fail or return wrong results"
+applicationChaos:
+  - "Exception injection: Force applications to throw exceptions"
+  - "Latency injection: Add artificial delays to operations"
+  - "Memory leaks: Simulate gradual memory consumption"
+  - "Thread exhaustion: Consume all available threads"
+  - "Configuration corruption: Modify configuration files"
+organizationalAspects:
+  - "Game days: Scheduled chaos experiments with full team participation"
+  - "Blameless post-mortems: Learn from failures without assigning blame"
+  - "Chaos champions: Dedicated team members to drive chaos engineering"
+  - "Executive support: Leadership backing for chaos engineering initiatives"
+  - "Cultural change: Shift from avoiding failures to embracing them"
+safetyMeasures:
+  - "Automated rollback: Automatic reversion when problems are detected"
+  - "Circuit breakers: Prevent experiments from causing cascading failures"
+  - "Monitoring integration: Real-time monitoring during experiments"
+  - "Time limits: Automatic experiment termination after specified duration"
+  - "Approval processes: Required approvals for production experiments"
+metricsAndObservability:
+  - "System health metrics: Track key performance indicators during experiments"
+  - "Business metrics: Monitor impact on user experience and revenue"
+  - "Recovery time: Measure how quickly systems recover from failures"
+  - "Blast radius: Track the actual scope of experiment impact"
+  - "Learning outcomes: Document insights gained from each experiment"
+linkedTags:
+  direct_links: ["CircuitBreakerPatterns", "HealthCheckPatterns", "ObservabilityPatterns"]
+  cross_category: ["TestingStrategy", "CloudNativePatterns", "MicroservicesPatterns"]
+  context_triggers: ["chaos_engineering", "resilience_testing", "failure_injection", "system_hardening"]
+  semantic_clusters: ["reliability_patterns", "fault_tolerance", "system_resilience"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["CircuitBreakerPatterns+ChaosEngineering", "HealthCheckPatterns+ChaosEngineering", "ObservabilityPatterns+ChaosEngineering"]
+  activation_triggers: ["resilience_testing", "failure_scenarios", "disaster_recovery", "fault_tolerance_validation", "system_hardening"]
+associative_strength:
+  CircuitBreakerPatterns: 0.9
+  HealthCheckPatterns: 0.85
+  ObservabilityPatterns: 0.9
+  TestingStrategy: 0.85
+  CloudNativePatterns: 0.8
+  MicroservicesPatterns: 0.8
+  ErrorHandlingPatterns: 0.85
+  PerformanceMonitoring: 0.8
+  SecurityMonitoring: 0.75
+  RetrySafety: 0.8
+pattern_combinations:
+  resilience_foundation:
+    tokens: ["CircuitBreakerPatterns", "HealthCheckPatterns", "ObservabilityPatterns"]
+    strength: 0.88
+    context: "Complete system resilience foundation with chaos engineering"
+  distributed_testing:
+    tokens: ["TestingStrategy", "CloudNativePatterns", "MicroservicesPatterns"]
+    strength: 0.83
+    context: "Chaos engineering for distributed cloud-native microservices"
+  error_reliability:
+    tokens: ["ErrorHandlingPatterns", "RetrySafety", "PerformanceMonitoring"]
+    strength: 0.82
+    context: "Comprehensive error handling and reliability with chaos testing"
+tokenBudget: 85

@@ -1,0 +1,64 @@
+name: "RecursiveThinking"
+description: "Self-modifying recursive reasoning patterns with infinite depth scaling"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 90
+linkedTags:
+  direct_links: ["FractalMCPPatterns", "MetaCognition", "AdaptiveDepth"]
+  cross_category: ["SOLID", "TestingStrategy", "PerformanceOptimization"]
+  context_triggers: ["recursive_thinking", "deep_reasoning", "adaptive_depth", "self_modification"]
+  semantic_clusters: ["recursive_patterns", "adaptive_reasoning", "depth_control"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["FractalMCPPatterns+RecursiveThinking", "MetaCognition+RecursiveThinking", "AdaptiveDepth+RecursiveThinking"]
+  activation_triggers: ["complex_problems", "deep_analysis", "recursive_decomposition", "multi_layer_reasoning", "adaptive_strategies"]
+associative_strength:
+  FractalMCPPatterns: 0.95
+  MetaCognition: 0.95
+  AdaptiveDepth: 0.9
+  CognitiveArchitecture: 0.85
+  SelfImprovement: 0.8
+  SynestheticProcessing: 0.8
+  SOLID: 0.7
+  TestingStrategy: 0.75
+  PerformanceOptimization: 0.75
+  ContinuousLearning: 0.8
+pattern_combinations:
+  recursive_intelligence_core:
+    tokens: ["FractalMCPPatterns", "MetaCognition", "CognitiveArchitecture"]
+    strength: 0.93
+    context: "Core recursive intelligence with meta-cognitive awareness"
+  adaptive_reasoning_stack:
+    tokens: ["AdaptiveDepth", "SelfImprovement", "SynestheticProcessing"]
+    strength: 0.88
+    context: "Adaptive recursive reasoning with continuous improvement"
+  system_optimization:
+    tokens: ["SOLID", "PerformanceOptimization", "TestingStrategy"]
+    strength: 0.8
+    context: "Recursive thinking applied to system design and optimization"
+
+rules:
+  - id: "adaptive-depth-control"
+    pattern: "Monitor confidence levels → Continue recursion until threshold → Auto-adjust depth based on problem complexity"
+    trigger: "Uncertain or incomplete reasoning at current depth"
+    
+  - id: "self-modifying-architecture"
+    pattern: "Track reasoning success patterns → Modify own recursive strategies → Update decomposition methods based on outcomes"
+    trigger: "Performance feedback from completed recursive cycles"
+    
+  - id: "fractal-state-preservation"
+    pattern: "Store complete recursive state at each level → Enable cross-session resume → Maintain context hierarchy"
+    trigger: "Complex multi-session reasoning tasks"
+
+termination_conditions:
+  confidence_threshold: 0.85
+  max_depth: 10
+  time_budget: "30min"
+  
+optimization:
+  pattern_learning: "Extract successful recursion strategies"
+  depth_prediction: "Estimate optimal depth before starting"
+  resource_allocation: "Balance depth vs computational cost"

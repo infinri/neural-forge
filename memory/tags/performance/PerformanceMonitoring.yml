@@ -1,0 +1,114 @@
+tagName: PerformanceMonitoring
+description: "Performance monitoring, profiling, and alerting patterns for production systems"
+appliesTo:
+  - "Application performance monitoring (APM)"
+  - "System resource monitoring"
+  - "Performance bottleneck identification"
+  - "SLA monitoring and alerting"
+  - "Capacity planning and scaling"
+patterns:
+  - "Implement comprehensive metrics collection across all system layers"
+  - "Use distributed tracing for microservices performance analysis"
+  - "Set up automated alerting for performance degradation"
+  - "Establish performance baselines and track trends over time"
+  - "Implement real user monitoring (RUM) for user experience insights"
+bestPractices:
+  - "Monitor the full stack: application, infrastructure, and network"
+  - "Use both synthetic and real user monitoring"
+  - "Implement performance budgets and enforce them in CI/CD"
+  - "Focus on user-centric metrics (Core Web Vitals)"
+  - "Set up proactive alerting before users are impacted"
+  - "Regularly review and tune monitoring thresholds"
+  - "Correlate performance data with business metrics"
+keyMetrics:
+  - "Response time: 95th percentile response times for critical operations"
+  - "Throughput: Requests per second and transaction volumes"
+  - "Error rate: Percentage of failed requests or operations"
+  - "Availability: System uptime and service availability"
+  - "Resource utilization: CPU, memory, disk, and network usage"
+  - "Database performance: Query execution times and connection pool usage"
+userExperienceMetrics:
+  - "Core Web Vitals: LCP, FID, CLS for web applications"
+  - "Time to First Byte (TTFB): Server response time"
+  - "Time to Interactive (TTI): When page becomes fully interactive"
+  - "First Contentful Paint (FCP): When first content appears"
+  - "Cumulative Layout Shift (CLS): Visual stability metric"
+infrastructureMonitoring:
+  - "CPU utilization: Average and peak usage across instances"
+  - "Memory usage: Heap utilization and garbage collection metrics"
+  - "Disk I/O: Read/write operations per second and latency"
+  - "Network I/O: Bandwidth utilization and packet loss"
+  - "Load balancer metrics: Request distribution and health checks"
+applicationMonitoring:
+  - "Custom business metrics: User registrations, orders, revenue"
+  - "Feature usage: Adoption rates and user engagement"
+  - "Error tracking: Exception rates and error categorization"
+  - "Performance counters: Cache hit rates, queue lengths"
+  - "Security metrics: Failed login attempts, suspicious activities"
+distributedTracing:
+  - "Request correlation: Track requests across multiple services"
+  - "Service dependency mapping: Understand service interactions"
+  - "Bottleneck identification: Find slow services in request chains"
+  - "Error propagation: Track how errors spread through the system"
+  - "Performance attribution: Identify which service causes delays"
+alertingStrategies:
+  - "Threshold-based alerts: Static limits for key metrics"
+  - "Anomaly detection: Machine learning-based unusual pattern detection"
+  - "Trend-based alerts: Alerts based on metric trends over time"
+  - "Composite alerts: Multiple conditions for reduced false positives"
+  - "Escalation policies: Progressive notification strategies"
+profilingTechniques:
+  - "CPU profiling: Identify hot code paths and optimization opportunities"
+  - "Memory profiling: Find memory leaks and allocation patterns"
+  - "I/O profiling: Analyze disk and network operation performance"
+  - "Database profiling: Query performance and execution plan analysis"
+  - "Continuous profiling: Always-on profiling in production"
+toolsAndPlatforms:
+  - "APM tools: New Relic, Datadog, AppDynamics for application monitoring"
+  - "Infrastructure monitoring: Prometheus, Grafana, Nagios"
+  - "Log aggregation: ELK stack, Splunk for log analysis"
+  - "Distributed tracing: Jaeger, Zipkin for microservices"
+  - "Synthetic monitoring: Pingdom, StatusCake for uptime monitoring"
+performanceBudgets:
+  - "Page load time: <3 seconds for 95% of users"
+  - "API response time: <500ms for 95% of requests"
+  - "Database query time: <100ms for 95% of queries"
+  - "Memory usage: <80% of available memory"
+  - "CPU utilization: <70% average, <90% peak"
+linkedTags:
+  direct_links: ["MemoryManagement", "IOOptimization", "AlgorithmComplexity"]
+  cross_category: ["ObservabilityPatterns", "SecurityMonitoring", "TestingStrategy"]
+  context_triggers: ["performance_monitoring", "apm", "metrics", "profiling"]
+  semantic_clusters: ["monitoring_patterns", "performance_analysis", "system_observability"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["MemoryManagement+PerformanceMonitoring", "IOOptimization+PerformanceMonitoring", "AlgorithmComplexity+PerformanceMonitoring"]
+  activation_triggers: ["performance_issues", "system_monitoring", "bottleneck_analysis", "capacity_planning", "sla_monitoring"]
+associative_strength:
+  MemoryManagement: 0.9
+  IOOptimization: 0.9
+  AlgorithmComplexity: 0.9
+  ObservabilityPatterns: 0.95
+  SecurityMonitoring: 0.85
+  TestingStrategy: 0.8
+  CachingPatterns: 0.85
+  O1_PrefRule: 0.85
+  CloudNativePatterns: 0.85
+  MicroservicesPatterns: 0.8
+pattern_combinations:
+  performance_optimization_stack:
+    tokens: ["MemoryManagement", "IOOptimization", "AlgorithmComplexity"]
+    strength: 0.9
+    context: "Complete performance monitoring with optimization patterns"
+  observability_foundation:
+    tokens: ["ObservabilityPatterns", "SecurityMonitoring", "TestingStrategy"]
+    strength: 0.87
+    context: "Comprehensive system observability with security and testing"
+  scalable_monitoring:
+    tokens: ["CloudNativePatterns", "MicroservicesPatterns", "CachingPatterns"]
+    strength: 0.83
+    context: "Performance monitoring for scalable distributed systems"
+tokenBudget: 95

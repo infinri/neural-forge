@@ -1,0 +1,66 @@
+name: "SynestheticProcessing"
+description: "Cross-modal cognitive processing where each MCP operates in different modalities"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 88
+linkedTags:
+  direct_links: ["MCPOrchestration", "CognitiveArchitecture", "FractalMCPPatterns"]
+  cross_category: ["MicroservicesPatterns", "ObservabilityPatterns", "APIDesignPrinciples"]
+  context_triggers: ["synesthetic_processing", "cross_modal", "multi_dimensional", "cognitive_modalities"]
+  semantic_clusters: ["modal_processing", "cognitive_synthesis", "emergent_intelligence"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["MCPOrchestration+SynestheticProcessing", "CognitiveArchitecture+SynestheticProcessing", "FractalMCPPatterns+SynestheticProcessing"]
+  activation_triggers: ["multi_modal_analysis", "cross_domain_reasoning", "emergent_insights", "complex_synthesis", "cognitive_integration"]
+associative_strength:
+  MCPOrchestration: 0.95
+  CognitiveArchitecture: 0.95
+  FractalMCPPatterns: 0.9
+  MetaCognition: 0.85
+  RecursiveThinking: 0.8
+  AdaptiveDepth: 0.8
+  MicroservicesPatterns: 0.75
+  ObservabilityPatterns: 0.8
+  APIDesignPrinciples: 0.7
+  SelfImprovement: 0.8
+pattern_combinations:
+  cognitive_synthesis_core:
+    tokens: ["MCPOrchestration", "CognitiveArchitecture", "MetaCognition"]
+    strength: 0.93
+    context: "Core synesthetic cognitive processing with orchestration"
+  fractal_intelligence:
+    tokens: ["FractalMCPPatterns", "RecursiveThinking", "AdaptiveDepth"]
+    strength: 0.88
+    context: "Fractal synesthetic processing with recursive intelligence"
+  system_integration:
+    tokens: ["MicroservicesPatterns", "ObservabilityPatterns", "SelfImprovement"]
+    strength: 0.82
+    context: "Synesthetic processing integrated with system architecture"
+
+rules:
+  - id: "modal-separation"
+    pattern: "Memory modality (supermemoryai) → Context modality (context7) → Logic modality (atom-of-thoughts) → Temporal modality (sequential-thinking) → Reality modality (puppeteer)"
+    trigger: "Problems requiring multi-dimensional analysis"
+    
+  - id: "cross-modal-feedback"
+    pattern: "Each modality's output reshapes previous modalities' operation → Creates synesthetic reinforcement loops"
+    trigger: "Complex problems where different perspectives reveal new insights"
+    
+  - id: "emergent-specialization"
+    pattern: "MCPs develop specialized modes for nested reasoning → Context7 becomes personalized → Atom-of-thoughts learns problem-specific patterns"
+    trigger: "Repeated exposure to similar problem domains"
+
+modality_types:
+  memory: "Historical patterns and learned experiences"
+  context: "Current technical and domain knowledge"
+  logic: "Structured decomposition and reasoning"
+  temporal: "Sequential planning and execution"
+  reality: "Real-world validation and testing"
+  
+synesthetic_effects:
+  cross_modal_priming: "One modality prepares others for specific processing"
+  modal_interference: "Conflicting modalities create creative tension"
+  emergent_insights: "Novel solutions from modal intersection"

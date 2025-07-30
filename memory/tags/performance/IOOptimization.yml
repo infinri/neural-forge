@@ -1,0 +1,110 @@
+tagName: IOOptimization
+description: "Input/output optimization patterns for network, disk, and database operations"
+appliesTo:
+  - "File system operations"
+  - "Network communication optimization"
+  - "Database query performance"
+  - "API response time improvement"
+  - "Batch processing optimization"
+patterns:
+  - "Use asynchronous I/O for non-blocking operations"
+  - "Implement connection pooling for database and network resources"
+  - "Batch multiple operations to reduce I/O overhead"
+  - "Use buffering for sequential read/write operations"
+  - "Implement proper caching strategies for frequently accessed data"
+bestPractices:
+  - "Profile I/O operations to identify bottlenecks"
+  - "Use appropriate buffer sizes for different operation types"
+  - "Implement timeout and retry mechanisms for network operations"
+  - "Choose the right consistency level for distributed systems"
+  - "Use compression for large data transfers"
+  - "Implement proper error handling for I/O failures"
+  - "Monitor I/O metrics in production environments"
+fileSystemOptimization:
+  - "Use memory-mapped files for large file processing"
+  - "Implement sequential access patterns when possible"
+  - "Use appropriate buffer sizes (typically 4KB-64KB)"
+  - "Avoid frequent small writes; batch operations instead"
+  - "Use asynchronous file operations for better concurrency"
+  - "Implement file locking strategies for concurrent access"
+networkOptimization:
+  - "Connection pooling: Reuse connections to reduce overhead"
+  - "Keep-alive connections: Avoid connection establishment costs"
+  - "Request batching: Combine multiple requests into single calls"
+  - "Compression: Use gzip/deflate for text-based data"
+  - "CDN usage: Serve static content from edge locations"
+  - "HTTP/2: Leverage multiplexing and server push"
+databaseOptimization:
+  - "Connection pooling: Maintain optimal connection pool sizes"
+  - "Query batching: Execute multiple queries in single round-trip"
+  - "Prepared statements: Reduce query parsing overhead"
+  - "Read replicas: Distribute read load across multiple instances"
+  - "Query optimization: Use appropriate indexes and query plans"
+  - "Lazy loading: Load data only when needed"
+asyncPatterns:
+  - "Non-blocking I/O: Use async/await patterns appropriately"
+  - "Event-driven architecture: React to I/O completion events"
+  - "Callback patterns: Handle I/O completion asynchronously"
+  - "Promise/Future patterns: Compose asynchronous operations"
+  - "Reactive streams: Handle backpressure in data pipelines"
+cachingStrategies:
+  - "Application-level caching: Cache frequently accessed data"
+  - "Database query result caching: Reduce database load"
+  - "HTTP response caching: Use appropriate cache headers"
+  - "CDN caching: Cache static assets at edge locations"
+  - "In-memory caching: Use Redis/Memcached for shared cache"
+batchingTechniques:
+  - "Database batch inserts: Insert multiple records in single operation"
+  - "API request batching: Combine multiple API calls"
+  - "File processing batching: Process files in chunks"
+  - "Message queue batching: Process messages in batches"
+  - "Log aggregation: Batch log entries before writing"
+compressionStrategies:
+  - "Text compression: Use gzip for JSON/XML/HTML responses"
+  - "Image optimization: Use appropriate formats and compression"
+  - "Database compression: Enable column/page compression"
+  - "Archive compression: Use efficient algorithms for backups"
+  - "Stream compression: Compress data in real-time pipelines"
+monitoringMetrics:
+  - "I/O throughput: Bytes per second for read/write operations"
+  - "Latency: Response times for I/O operations"
+  - "Queue depth: Number of pending I/O operations"
+  - "Error rates: Failed I/O operations and retry patterns"
+  - "Resource utilization: CPU, memory, and network usage during I/O"
+linkedTags:
+  direct_links: ["MemoryManagement", "CachingPatterns", "PerformanceMonitoring"]
+  cross_category: ["ConcurrencyPatterns", "MessageQueuePatterns", "CloudNativePatterns"]
+  context_triggers: ["io_optimization", "network_performance", "database_performance", "file_operations"]
+  semantic_clusters: ["performance_patterns", "system_optimization", "resource_efficiency"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["MemoryManagement+IOOptimization", "CachingPatterns+IOOptimization", "PerformanceMonitoring+IOOptimization"]
+  activation_triggers: ["slow_io_operations", "network_bottlenecks", "database_latency", "file_processing", "batch_operations"]
+associative_strength:
+  MemoryManagement: 0.9
+  CachingPatterns: 0.85
+  PerformanceMonitoring: 0.9
+  ConcurrencyPatterns: 0.85
+  MessageQueuePatterns: 0.8
+  CloudNativePatterns: 0.8
+  AlgorithmComplexity: 0.8
+  O1_PrefRule: 0.8
+  MicroservicesPatterns: 0.75
+  APIDesignPrinciples: 0.75
+pattern_combinations:
+  performance_optimization_core:
+    tokens: ["MemoryManagement", "CachingPatterns", "PerformanceMonitoring"]
+    strength: 0.9
+    context: "Core I/O performance optimization with monitoring and caching"
+  async_distributed_io:
+    tokens: ["ConcurrencyPatterns", "MessageQueuePatterns", "CloudNativePatterns"]
+    strength: 0.83
+    context: "Asynchronous I/O patterns for distributed cloud-native systems"
+  algorithmic_efficiency:
+    tokens: ["AlgorithmComplexity", "O1_PrefRule", "MicroservicesPatterns"]
+    strength: 0.8
+    context: "I/O optimization with algorithmic efficiency for microservices"
+tokenBudget: 90

@@ -1,0 +1,65 @@
+name: "EvolutionaryIntelligence"
+description: "Self-evolving cognitive systems that develop novel reasoning strategies through usage"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 96
+linkedTags:
+  direct_links: ["SelfBootstrapping", "MetaCognition", "CognitiveArchitecture"]
+  cross_category: ["PerformanceOptimization", "TestingStrategy", "ContinuousIntegration"]
+  context_triggers: ["evolutionary_intelligence", "cognitive_evolution", "strategy_evolution", "emergent_capabilities"]
+  semantic_clusters: ["evolutionary_systems", "adaptive_intelligence", "cognitive_evolution"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["SelfBootstrapping+EvolutionaryIntelligence", "MetaCognition+EvolutionaryIntelligence", "CognitiveArchitecture+EvolutionaryIntelligence"]
+  activation_triggers: ["strategy_evolution", "cognitive_adaptation", "emergent_behavior", "performance_optimization", "intelligence_evolution"]
+associative_strength:
+  SelfBootstrapping: 0.95
+  MetaCognition: 0.9
+  CognitiveArchitecture: 0.9
+  SelfImprovement: 0.85
+  AdaptiveDepth: 0.85
+  FractalMCPPatterns: 0.8
+  PerformanceOptimization: 0.75
+  TestingStrategy: 0.7
+  ContinuousLearning: 0.8
+  RecursiveThinking: 0.8
+pattern_combinations:
+  evolutionary_core:
+    tokens: ["SelfBootstrapping", "MetaCognition", "SelfImprovement"]
+    strength: 0.93
+    context: "Core evolutionary intelligence with self-bootstrapping and meta-cognition"
+  cognitive_adaptation:
+    tokens: ["CognitiveArchitecture", "AdaptiveDepth", "FractalMCPPatterns"]
+    strength: 0.88
+    context: "Cognitive architecture evolution with adaptive intelligence"
+  performance_evolution:
+    tokens: ["PerformanceOptimization", "TestingStrategy", "ContinuousLearning"]
+    strength: 0.82
+    context: "Evolutionary intelligence applied to system performance optimization"
+
+rules:
+  - id: "cognitive-evolution-cycles"
+    pattern: "Generate strategy variations → Test performance → Select successful patterns → Reproduce with mutations → Eliminate failed approaches"
+    trigger: "Multiple problem-solving sessions with measurable outcomes"
+    
+  - id: "strategy-genealogy-tracking"
+    pattern: "Track lineage of successful strategies → Identify evolutionary branches → Preserve beneficial mutations → Map cognitive phylogeny"
+    trigger: "Long-term system usage with strategy evolution"
+    
+  - id: "emergent-capability-cultivation"
+    pattern: "Detect novel problem-solving approaches → Nurture promising emergent behaviors → Integrate into core cognitive repertoire"
+    trigger: "System exhibiting unexpected or superior performance"
+
+evolution_mechanisms:
+  mutation: "Introduce random variations in successful strategies"
+  crossover: "Combine elements from different successful approaches"
+  selection: "Favor strategies with better performance metrics"
+  
+fitness_metrics:
+  solution_quality: "Accuracy and completeness of problem solutions"
+  efficiency: "Resource usage and time to solution"
+  generalizability: "Success across different problem domains"
+  novelty: "Discovery of previously unknown solution approaches"

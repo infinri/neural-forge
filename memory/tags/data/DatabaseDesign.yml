@@ -1,0 +1,86 @@
+tagName: DatabaseDesign
+description: "Database design principles, normalization, and optimization strategies"
+appliesTo:
+  - "Database schema design"
+  - "Query optimization"
+  - "Data modeling and relationships"
+  - "Performance tuning"
+  - "Data integrity and consistency"
+patterns:
+  - "Design for data integrity first, optimize second"
+  - "Normalize to eliminate redundancy, denormalize for performance"
+  - "Use appropriate indexes for query patterns"
+  - "Design with ACID properties in mind"
+  - "Plan for scalability and growth"
+bestPractices:
+  - "Follow normalization rules (1NF, 2NF, 3NF)"
+  - "Use foreign keys to enforce referential integrity"
+  - "Index frequently queried columns"
+  - "Avoid premature optimization"
+  - "Use appropriate data types for storage efficiency"
+  - "Implement proper backup and recovery strategies"
+acidProperties:
+  - "Atomicity: All operations in transaction succeed or fail together"
+  - "Consistency: Database remains in valid state after transactions"
+  - "Isolation: Concurrent transactions don't interfere"
+  - "Durability: Committed changes survive system failures"
+normalizationRules:
+  - "1NF: Eliminate repeating groups, atomic values only"
+  - "2NF: Remove partial dependencies on composite keys"
+  - "3NF: Eliminate transitive dependencies"
+  - "BCNF: Every determinant is a candidate key"
+indexingStrategies:
+  - "Primary indexes on unique identifiers"
+  - "Secondary indexes on frequently searched columns"
+  - "Composite indexes for multi-column queries"
+  - "Partial indexes for filtered queries"
+  - "Avoid over-indexing (impacts write performance)"
+queryOptimization:
+  - "Use EXPLAIN to analyze query execution plans"
+  - "Avoid SELECT * in production queries"
+  - "Use appropriate JOIN types and conditions"
+  - "Limit result sets with WHERE clauses"
+  - "Consider query caching for repeated operations"
+scalabilityPatterns:
+  - "Vertical scaling: Increase server resources"
+  - "Horizontal scaling: Distribute across servers"
+  - "Read replicas for read-heavy workloads"
+  - "Sharding for large datasets"
+  - "Connection pooling for efficiency"
+linkedTags:
+  direct_links: ["DataMigrationPatterns", "DataPipelinePatterns", "DataPrivacyCompliance"]
+  cross_category: ["PerformanceMonitoring", "CachingPatterns", "TestingStrategy"]
+  context_triggers: ["database_design", "schema_design", "data_modeling", "query_optimization"]
+  semantic_clusters: ["data_patterns", "database_architecture", "data_integrity"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["DataMigrationPatterns+DatabaseDesign", "DataPipelinePatterns+DatabaseDesign", "DataPrivacyCompliance+DatabaseDesign"]
+  activation_triggers: ["database_schema", "data_modeling", "query_performance", "data_integrity", "scalability_planning"]
+associative_strength:
+  DataMigrationPatterns: 0.9
+  DataPipelinePatterns: 0.85
+  DataPrivacyCompliance: 0.8
+  PerformanceMonitoring: 0.85
+  CachingPatterns: 0.8
+  TestingStrategy: 0.8
+  IOOptimization: 0.8
+  AlgorithmComplexity: 0.75
+  MicroservicesPatterns: 0.75
+  EventSourcingCQRS: 0.8
+pattern_combinations:
+  data_management_foundation:
+    tokens: ["DataMigrationPatterns", "DataPipelinePatterns", "DataPrivacyCompliance"]
+    strength: 0.85
+    context: "Complete database design with migration, pipeline, and privacy patterns"
+  performance_optimization:
+    tokens: ["PerformanceMonitoring", "CachingPatterns", "IOOptimization"]
+    strength: 0.82
+    context: "Database design with performance monitoring and optimization"
+  distributed_data_architecture:
+    tokens: ["MicroservicesPatterns", "EventSourcingCQRS", "TestingStrategy"]
+    strength: 0.77
+    context: "Database design for distributed systems with event sourcing and testing"
+tokenBudget: 90

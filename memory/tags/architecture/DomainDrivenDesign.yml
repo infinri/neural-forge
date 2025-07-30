@@ -1,0 +1,120 @@
+tagName: DomainDrivenDesign
+description: "Domain-driven design patterns for complex business domains"
+appliesTo:
+  - "Complex business domain modeling"
+  - "Microservices boundary definition"
+  - "Team organization around domains"
+  - "Legacy system modernization"
+  - "Strategic software design"
+patterns:
+  - "Model the domain using ubiquitous language"
+  - "Define bounded contexts to separate domain concerns"
+  - "Use aggregates to maintain consistency boundaries"
+  - "Implement domain services for complex business logic"
+  - "Separate domain logic from infrastructure concerns"
+bestPractices:
+  - "Collaborate closely with domain experts"
+  - "Use ubiquitous language consistently across team"
+  - "Keep domain model focused on business rules"
+  - "Implement proper aggregate boundaries"
+  - "Use domain events to communicate between contexts"
+  - "Apply strategic design before tactical patterns"
+  - "Evolve the model based on deeper domain insights"
+strategicDesign:
+  - "Bounded contexts: Define clear domain boundaries"
+  - "Context mapping: Understand relationships between contexts"
+  - "Ubiquitous language: Shared vocabulary within each context"
+  - "Domain vision: High-level understanding of the domain"
+  - "Core domain: Identify the most important business areas"
+tacticalPatterns:
+  - "Entities: Objects with identity and lifecycle"
+  - "Value objects: Immutable objects without identity"
+  - "Aggregates: Consistency boundaries around entities"
+  - "Domain services: Business logic that doesn't belong to entities"
+  - "Repositories: Abstraction for data access"
+  - "Factories: Complex object creation logic"
+boundedContexts:
+  - "Context boundaries: Clear separation of domain concerns"
+  - "Context integration: How contexts communicate"
+  - "Shared kernel: Common code shared between contexts"
+  - "Customer-supplier: Upstream/downstream relationships"
+  - "Conformist: Downstream context conforms to upstream"
+aggregateDesign:
+  - "Aggregate root: Single entry point for aggregate access"
+  - "Consistency boundary: Maintain invariants within aggregate"
+  - "Small aggregates: Keep aggregates focused and small"
+  - "Reference by ID: Use IDs to reference other aggregates"
+  - "Eventual consistency: Between aggregates, not within"
+domainEvents:
+  - "Business events: Meaningful occurrences in the domain"
+  - "Event publishing: Notify other contexts of changes"
+  - "Event handling: React to events from other contexts"
+  - "Event sourcing: Store events as source of truth"
+  - "Saga patterns: Coordinate long-running processes"
+layeredArchitecture:
+  - "Domain layer: Core business logic and rules"
+  - "Application layer: Use cases and workflow coordination"
+  - "Infrastructure layer: Technical concerns and external systems"
+  - "Presentation layer: User interface and API endpoints"
+  - "Dependency inversion: Domain doesn't depend on infrastructure"
+repositoryPatterns:
+  - "Abstract repositories: Domain-focused data access interfaces"
+  - "Aggregate repositories: One repository per aggregate root"
+  - "Specification pattern: Encapsulate query logic"
+  - "Unit of work: Manage transactions across repositories"
+  - "In-memory repositories: For testing and prototyping"
+domainServices:
+  - "Stateless services: No internal state"
+  - "Domain logic: Business rules that don't fit in entities"
+  - "Cross-aggregate operations: Coordinate multiple aggregates"
+  - "Policy implementation: Encode business policies"
+  - "Calculation services: Complex business calculations"
+contextMapping:
+  - "Partnership: Two contexts work together as partners"
+  - "Shared kernel: Shared code between contexts"
+  - "Customer-supplier: Clear upstream/downstream relationship"
+  - "Conformist: Downstream conforms to upstream model"
+  - "Anti-corruption layer: Protect domain from external models"
+implementationGuidance:
+  - "Start with strategic design: Understand the domain first"
+  - "Use event storming: Collaborative domain modeling technique"
+  - "Iterate on the model: Refine based on new insights"
+  - "Test domain logic: Focus testing on business rules"
+  - "Document ubiquitous language: Maintain shared vocabulary"
+linkedTags:
+  direct_links: ["MicroservicesPatterns", "EventSourcingCQRS", "APIDesignPrinciples"]
+  cross_category: ["SOLID", "TestingStrategy", "OOPPrinciples"]
+  context_triggers: ["domain_driven_design", "bounded_contexts", "ubiquitous_language", "aggregate_design"]
+  semantic_clusters: ["domain_modeling", "strategic_design", "business_architecture"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["MicroservicesPatterns+DomainDrivenDesign", "EventSourcingCQRS+DomainDrivenDesign", "APIDesignPrinciples+DomainDrivenDesign"]
+  activation_triggers: ["complex_domains", "business_modeling", "service_boundaries", "domain_modeling", "strategic_design"]
+associative_strength:
+  MicroservicesPatterns: 0.9
+  EventSourcingCQRS: 0.85
+  APIDesignPrinciples: 0.8
+  SOLID: 0.8
+  TestingStrategy: 0.8
+  OOPPrinciples: 0.85
+  DesignPatterns: 0.8
+  MessageQueuePatterns: 0.75
+  NamingConventions: 0.75
+  RefactoringPatterns: 0.7
+pattern_combinations:
+  domain_architecture_foundation:
+    tokens: ["MicroservicesPatterns", "EventSourcingCQRS", "APIDesignPrinciples"]
+    strength: 0.88
+    context: "Complete domain-driven architecture foundation"
+  design_quality_stack:
+    tokens: ["SOLID", "OOPPrinciples", "DesignPatterns"]
+    strength: 0.85
+    context: "Domain-driven design with quality principles"
+  implementation_excellence:
+    tokens: ["TestingStrategy", "RefactoringPatterns", "NamingConventions"]
+    strength: 0.8
+    context: "High-quality domain implementation with testing and refactoring"
+tokenBudget: 90

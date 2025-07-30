@@ -1,0 +1,95 @@
+tagName: ZeroTrustArchitecture
+description: "Zero trust security model implementation patterns"
+appliesTo:
+  - "Network security architecture"
+  - "Identity and access management"
+  - "Microservices security"
+  - "Cloud security implementation"
+  - "Device and endpoint security"
+patterns:
+  - "Never trust, always verify every request"
+  - "Implement least privilege access controls"
+  - "Use micro-segmentation for network isolation"
+  - "Verify device identity and health before access"
+  - "Implement continuous authentication and authorization"
+bestPractices:
+  - "Authenticate and authorize every network connection"
+  - "Encrypt all communications end-to-end"
+  - "Log and monitor all network traffic and access attempts"
+  - "Implement device compliance checking before network access"
+  - "Use identity-based access controls rather than network location"
+  - "Implement just-in-time (JIT) access for administrative functions"
+  - "Regularly validate and update access permissions"
+coreComponents:
+  - "Identity verification: Multi-factor authentication for all users"
+  - "Device verification: Certificate-based device authentication"
+  - "Network micro-segmentation: Isolate resources and limit lateral movement"
+  - "Data classification: Classify and protect data based on sensitivity"
+  - "Policy enforcement: Centralized policy engine for access decisions"
+implementationLayers:
+  - "Identity layer: User and service identity verification"
+  - "Device layer: Endpoint security and compliance validation"
+  - "Network layer: Micro-segmentation and traffic inspection"
+  - "Application layer: API security and application-level controls"
+  - "Data layer: Data classification and protection mechanisms"
+accessControl:
+  - "Risk-based authentication: Adjust authentication requirements based on risk"
+  - "Conditional access: Grant access based on multiple factors"
+  - "Privileged access management: Special controls for administrative access"
+  - "Session management: Continuous validation of active sessions"
+  - "Access reviews: Regular validation of user permissions and access"
+networkSecurity:
+  - "Software-defined perimeter (SDP): Create secure network overlays"
+  - "Network access control (NAC): Validate devices before network access"
+  - "Intrusion detection and prevention: Monitor for malicious activity"
+  - "Traffic inspection: Deep packet inspection for all network traffic"
+  - "Lateral movement prevention: Limit communication between network segments"
+monitoringAndAnalytics:
+  - "User and entity behavior analytics (UEBA): Detect anomalous behavior"
+  - "Security information and event management (SIEM): Centralized logging"
+  - "Threat intelligence: Integrate external threat data"
+  - "Risk scoring: Assign risk scores to users, devices, and activities"
+  - "Incident response: Automated response to detected threats"
+cloudImplementation:
+  - "Cloud access security broker (CASB): Control cloud service access"
+  - "Cloud workload protection: Secure cloud-based applications"
+  - "Container security: Secure containerized applications"
+  - "Serverless security: Secure function-as-a-service implementations"
+  - "Multi-cloud security: Consistent security across cloud providers"
+linkedTags:
+  direct_links: ["ThreatModel", "SecurityMonitoring", "EncryptionPatterns"]
+  cross_category: ["MicroservicesPatterns", "APIDesignPrinciples", "ObservabilityPatterns"]
+  context_triggers: ["zero_trust", "network_security", "identity_verification", "micro_segmentation"]
+  semantic_clusters: ["trust_verification", "security_architecture", "access_control"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["ThreatModel+ZeroTrustArchitecture", "SecurityMonitoring+ZeroTrustArchitecture", "EncryptionPatterns+ZeroTrustArchitecture"]
+  activation_triggers: ["network_architecture", "identity_management", "microservices_security", "cloud_security", "endpoint_security"]
+associative_strength:
+  ThreatModel: 0.95
+  SecurityMonitoring: 0.9
+  EncryptionPatterns: 0.9
+  OAuth2JWTPatterns: 0.85
+  AuthBypassPrevention: 0.85
+  MicroservicesPatterns: 0.8
+  APIDesignPrinciples: 0.75
+  ObservabilityPatterns: 0.7
+  SecurityHeaders: 0.75
+  InputSanitization: 0.7
+pattern_combinations:
+  zero_trust_foundation:
+    tokens: ["ThreatModel", "SecurityMonitoring", "AuthBypassPrevention"]
+    strength: 0.93
+    context: "Complete zero trust security foundation"
+  secure_architecture_stack:
+    tokens: ["MicroservicesPatterns", "APIDesignPrinciples", "EncryptionPatterns"]
+    strength: 0.88
+    context: "Zero trust microservices architecture"
+  identity_security_suite:
+    tokens: ["OAuth2JWTPatterns", "SecurityHeaders", "InputSanitization"]
+    strength: 0.85
+    context: "Identity-based security with zero trust principles"
+tokenBudget: 85

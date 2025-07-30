@@ -1,0 +1,119 @@
+tagName: CloudNativePatterns
+description: "Cloud-native architecture patterns for scalable, resilient applications"
+appliesTo:
+  - "Container orchestration and management"
+  - "Serverless and function-as-a-service architectures"
+  - "Auto-scaling and resource optimization"
+  - "Multi-cloud and hybrid cloud strategies"
+  - "Cloud-native security and compliance"
+patterns:
+  - "Design applications as stateless, horizontally scalable services"
+  - "Use containers for consistent deployment across environments"
+  - "Implement auto-scaling based on metrics and demand"
+  - "Use managed cloud services to reduce operational overhead"
+  - "Design for failure with redundancy and graceful degradation"
+bestPractices:
+  - "Follow the twelve-factor app methodology"
+  - "Implement infrastructure as code (IaC)"
+  - "Use immutable infrastructure patterns"
+  - "Implement proper service mesh for microservices"
+  - "Use cloud-native storage and database solutions"
+  - "Implement comprehensive monitoring and observability"
+  - "Design for multi-region deployment and disaster recovery"
+containerPatterns:
+  - "Single responsibility: One process per container"
+  - "Immutable containers: Build once, deploy anywhere"
+  - "Layered images: Optimize for size and caching"
+  - "Health checks: Implement proper liveness and readiness probes"
+  - "Resource limits: Set appropriate CPU and memory constraints"
+orchestrationPatterns:
+  - "Declarative configuration: Define desired state, not imperative steps"
+  - "Service discovery: Automatic service registration and lookup"
+  - "Load balancing: Distribute traffic across healthy instances"
+  - "Rolling updates: Zero-downtime deployments"
+  - "Horizontal pod autoscaling: Scale based on resource utilization"
+serverlessPatterns:
+  - "Event-driven functions: Trigger functions based on events"
+  - "Stateless execution: Functions should not maintain state"
+  - "Cold start optimization: Minimize function initialization time"
+  - "Function composition: Chain functions for complex workflows"
+  - "Pay-per-use: Optimize for cost efficiency"
+scalingStrategies:
+  - "Horizontal scaling: Add more instances rather than bigger instances"
+  - "Auto-scaling: Automatically adjust capacity based on demand"
+  - "Predictive scaling: Scale proactively based on patterns"
+  - "Multi-dimensional scaling: Scale based on multiple metrics"
+  - "Cost optimization: Balance performance and cost"
+storagePatterns:
+  - "Persistent volumes: Durable storage for stateful applications"
+  - "Object storage: Scalable storage for unstructured data"
+  - "Database as a service: Managed database solutions"
+  - "Caching layers: Distributed caching for performance"
+  - "Data replication: Multi-region data distribution"
+securityPatterns:
+  - "Zero trust networking: Verify every connection"
+  - "Identity and access management: Centralized authentication"
+  - "Secrets management: Secure storage and rotation of credentials"
+  - "Network policies: Micro-segmentation for container networks"
+  - "Image scanning: Vulnerability scanning for container images"
+observabilityPatterns:
+  - "Distributed tracing: Track requests across services"
+  - "Centralized logging: Aggregate logs from all services"
+  - "Metrics collection: Comprehensive system and business metrics"
+  - "Service mesh observability: Traffic and performance insights"
+  - "Cost monitoring: Track and optimize cloud spending"
+deploymentPatterns:
+  - "Blue-green deployment: Zero-downtime deployments"
+  - "Canary releases: Gradual rollout with monitoring"
+  - "Feature flags: Decouple deployment from feature release"
+  - "GitOps: Git-based deployment and configuration management"
+  - "Progressive delivery: Automated rollout based on success metrics"
+multiCloudStrategies:
+  - "Cloud abstraction: Use cloud-agnostic tools and patterns"
+  - "Data sovereignty: Keep data in required geographic regions"
+  - "Vendor lock-in avoidance: Use open standards and portable solutions"
+  - "Cost optimization: Leverage different cloud providers' strengths"
+  - "Disaster recovery: Cross-cloud backup and failover strategies"
+toolsAndPlatforms:
+  - "Kubernetes: Container orchestration platform"
+  - "Docker: Containerization technology"
+  - "Istio/Linkerd: Service mesh implementations"
+  - "Helm: Kubernetes package manager"
+  - "Terraform: Infrastructure as code tool"
+linkedTags:
+  direct_links: ["MicroservicesPatterns", "MessageQueuePatterns", "ObservabilityPatterns"]
+  cross_category: ["ZeroTrustArchitecture", "PerformanceOptimization", "ResiliencePatterns"]
+  context_triggers: ["cloud_native", "kubernetes", "containers", "serverless"]
+  semantic_clusters: ["cloud_architecture", "container_orchestration", "scalable_systems"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["MicroservicesPatterns+CloudNativePatterns", "MessageQueuePatterns+CloudNativePatterns", "ObservabilityPatterns+CloudNativePatterns"]
+  activation_triggers: ["cloud_deployment", "container_orchestration", "auto_scaling", "serverless_functions", "multi_cloud"]
+associative_strength:
+  MicroservicesPatterns: 0.95
+  MessageQueuePatterns: 0.85
+  ObservabilityPatterns: 0.9
+  ZeroTrustArchitecture: 0.85
+  PerformanceOptimization: 0.85
+  ResiliencePatterns: 0.9
+  APIDesignPrinciples: 0.75
+  EventSourcingCQRS: 0.75
+  SecretsManagement: 0.8
+  SecurityMonitoring: 0.8
+pattern_combinations:
+  cloud_microservices_stack:
+    tokens: ["MicroservicesPatterns", "MessageQueuePatterns", "ObservabilityPatterns"]
+    strength: 0.92
+    context: "Complete cloud-native microservices architecture"
+  secure_cloud_deployment:
+    tokens: ["ZeroTrustArchitecture", "SecretsManagement", "SecurityMonitoring"]
+    strength: 0.85
+    context: "Secure cloud-native deployment with zero-trust principles"
+  resilient_scaling:
+    tokens: ["ResiliencePatterns", "PerformanceOptimization", "APIDesignPrinciples"]
+    strength: 0.83
+    context: "Resilient and performant cloud-native scaling patterns"
+tokenBudget: 95

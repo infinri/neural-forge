@@ -1,0 +1,72 @@
+tagName: AlgorithmComplexity
+description: "Algorithm complexity analysis and BigO notation for performance-aware code design"
+appliesTo: 
+  - "Algorithm design and implementation"
+  - "Data structure selection"
+  - "Performance optimization"
+  - "Code review and analysis"
+  - "System scalability planning"
+patterns:
+  - "Always analyze time complexity before implementation"
+  - "Consider space complexity trade-offs"
+  - "Choose optimal data structures for access patterns"
+  - "Identify bottlenecks through complexity analysis"
+  - "Document complexity assumptions and constraints"
+bestPractices:
+  - "O(1) operations preferred for frequent access"
+  - "O(log n) acceptable for search operations"
+  - "O(n) linear scans only when necessary"
+  - "Avoid O(n²) nested loops on large datasets"
+  - "O(n log n) sorting algorithms for general use"
+  - "Precompute expensive operations when possible"
+  - "Use memoization for recursive algorithms"
+  - "Consider amortized complexity for dynamic structures"
+complexityGuidelines:
+  - "O(1) - Hash table lookups, array access, stack operations"
+  - "O(log n) - Binary search, balanced tree operations"
+  - "O(n) - Linear search, single array traversal"
+  - "O(n log n) - Efficient sorting (merge sort, heap sort)"
+  - "O(n²) - Nested loops, bubble sort (avoid for large n)"
+  - "O(2ⁿ) - Exponential algorithms (optimize or avoid)"
+spaceComplexity:
+  - "Prefer in-place algorithms when possible"
+  - "Consider memory allocation patterns"
+  - "Balance time vs space trade-offs"
+  - "Account for call stack in recursive algorithms"
+linkedTags:
+  direct_links: ["O1_PrefRule", "CachingPatterns", "PerformanceMonitoring"]
+  cross_category: ["ConcurrencyPatterns", "CodeMetrics", "TestingStrategy"]
+  context_triggers: ["algorithm_complexity", "big_o", "performance_analysis", "optimization"]
+  semantic_clusters: ["performance_engineering", "algorithmic_efficiency", "complexity_analysis"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["O1_PrefRule+AlgorithmComplexity", "CachingPatterns+AlgorithmComplexity", "PerformanceMonitoring+AlgorithmComplexity"]
+  activation_triggers: ["performance_optimization", "algorithm_design", "data_structure_selection", "scalability_analysis", "bottleneck_identification"]
+associative_strength:
+  O1_PrefRule: 0.95
+  CachingPatterns: 0.85
+  PerformanceMonitoring: 0.9
+  ConcurrencyPatterns: 0.8
+  CodeMetrics: 0.85
+  TestingStrategy: 0.8
+  IOOptimization: 0.8
+  MemoryManagement: 0.85
+  CloudNativePatterns: 0.7
+  MessageQueuePatterns: 0.7
+pattern_combinations:
+  performance_foundation:
+    tokens: ["O1_PrefRule", "CachingPatterns", "PerformanceMonitoring"]
+    strength: 0.9
+    context: "Complete performance analysis and optimization foundation"
+  scalable_systems:
+    tokens: ["ConcurrencyPatterns", "IOOptimization", "MemoryManagement"]
+    strength: 0.85
+    context: "Algorithm complexity for scalable concurrent systems"
+  quality_measurement:
+    tokens: ["CodeMetrics", "TestingStrategy", "CloudNativePatterns"]
+    strength: 0.78
+    context: "Performance measurement and testing in distributed systems"
+tokenBudget: 100

@@ -1,0 +1,113 @@
+tagName: EventSourcingCQRS
+description: "Event sourcing and Command Query Responsibility Segregation patterns"
+appliesTo:
+  - "Event-driven architecture design"
+  - "Audit trail and compliance requirements"
+  - "High-performance read/write separation"
+  - "Temporal data modeling"
+  - "Distributed system state management"
+patterns:
+  - "Store events instead of current state for complete audit trail"
+  - "Separate command and query models for optimal performance"
+  - "Use event streams as the source of truth"
+  - "Implement event replay for system recovery and testing"
+  - "Design events as immutable facts about what happened"
+bestPractices:
+  - "Design events to be immutable and append-only"
+  - "Use meaningful event names that describe business actions"
+  - "Include sufficient context in events for future processing"
+  - "Implement event versioning for schema evolution"
+  - "Use snapshots to optimize event replay performance"
+  - "Separate read and write models based on usage patterns"
+  - "Implement proper event ordering and causality"
+eventSourcing:
+  - "Event store: Persistent storage for all domain events"
+  - "Event streams: Ordered sequences of events per aggregate"
+  - "Event replay: Reconstruct state by replaying events"
+  - "Snapshots: Periodic state captures to optimize replay"
+  - "Event versioning: Handle schema changes over time"
+cqrsPatterns:
+  - "Command model: Optimized for writes and business logic"
+  - "Query model: Optimized for reads and reporting"
+  - "Projection: Transform events into read-optimized views"
+  - "Denormalization: Duplicate data for query performance"
+  - "Eventually consistent: Accept temporary inconsistency"
+eventDesign:
+  - "Domain events: Business-meaningful occurrences"
+  - "Event payload: Include all necessary context"
+  - "Event metadata: Timestamp, correlation ID, causation ID"
+  - "Event versioning: Support for schema evolution"
+  - "Event naming: Use past tense verb phrases"
+aggregatePatterns:
+  - "Aggregate root: Single entry point for command handling"
+  - "Event generation: Aggregates produce events from commands"
+  - "State reconstruction: Rebuild aggregate state from events"
+  - "Invariant enforcement: Maintain business rules consistency"
+  - "Optimistic concurrency: Handle concurrent modifications"
+projectionStrategies:
+  - "Real-time projections: Update views as events occur"
+  - "Batch projections: Process events in scheduled batches"
+  - "Multiple projections: Different views for different use cases"
+  - "Projection rebuilding: Recreate views from event history"
+  - "Projection versioning: Handle view schema changes"
+eventStore:
+  - "Append-only storage: Events are never modified or deleted"
+  - "Stream partitioning: Organize events by aggregate or tenant"
+  - "Event ordering: Maintain global or per-stream ordering"
+  - "Concurrency control: Handle concurrent event appends"
+  - "Event querying: Efficient retrieval of event ranges"
+implementationConsiderations:
+  - "Event store selection: Purpose-built vs general-purpose databases"
+  - "Serialization: JSON, Avro, or Protocol Buffers for events"
+  - "Performance: Optimize for high write throughput"
+  - "Scalability: Horizontal scaling strategies"
+  - "Backup and recovery: Event store backup strategies"
+complexityManagement:
+  - "Start simple: Begin with basic event sourcing patterns"
+  - "Gradual adoption: Introduce CQRS where it adds value"
+  - "Bounded contexts: Apply patterns within specific domains"
+  - "Team expertise: Ensure team understands the patterns"
+  - "Tooling support: Use appropriate frameworks and libraries"
+toolsAndFrameworks:
+  - "Event stores: EventStore, Apache Kafka, AWS EventBridge"
+  - "Frameworks: Axon Framework, NEventStore, Eventuous"
+  - "Projection engines: Kafka Streams, Apache Flink"
+  - "CQRS frameworks: MediatR, Wolverine, EventFlow"
+  - "Message brokers: RabbitMQ, Apache Pulsar, Azure Service Bus"
+linkedTags:
+  direct_links: ["MicroservicesPatterns", "MessageQueuePatterns", "DomainDrivenDesign"]
+  cross_category: ["TestingStrategy", "PerformanceOptimization", "ObservabilityPatterns"]
+  context_triggers: ["event_sourcing", "cqrs", "event_driven", "audit_trail"]
+  semantic_clusters: ["event_architecture", "data_patterns", "distributed_state"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["MicroservicesPatterns+EventSourcingCQRS", "MessageQueuePatterns+EventSourcingCQRS", "DomainDrivenDesign+EventSourcingCQRS"]
+  activation_triggers: ["event_driven_architecture", "audit_requirements", "temporal_data", "state_management", "read_write_separation"]
+associative_strength:
+  MicroservicesPatterns: 0.9
+  MessageQueuePatterns: 0.9
+  DomainDrivenDesign: 0.85
+  TestingStrategy: 0.8
+  PerformanceOptimization: 0.8
+  ObservabilityPatterns: 0.8
+  APIDesignPrinciples: 0.75
+  DataModelingPrinciples: 0.85
+  ConcurrencyPatterns: 0.8
+  CloudNativePatterns: 0.75
+pattern_combinations:
+  event_architecture_foundation:
+    tokens: ["MicroservicesPatterns", "MessageQueuePatterns", "DomainDrivenDesign"]
+    strength: 0.9
+    context: "Complete event-driven architecture foundation"
+  performance_monitoring:
+    tokens: ["PerformanceOptimization", "ObservabilityPatterns", "TestingStrategy"]
+    strength: 0.82
+    context: "Event sourcing with performance monitoring and testing"
+  distributed_data_patterns:
+    tokens: ["DataModelingPrinciples", "ConcurrencyPatterns", "CloudNativePatterns"]
+    strength: 0.8
+    context: "Distributed data management with event sourcing"
+tokenBudget: 95

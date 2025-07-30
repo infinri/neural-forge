@@ -1,0 +1,65 @@
+name: "CognitiveArchitecture"
+description: "Foundational patterns for building scalable AI cognitive systems with MCP tools"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 91
+linkedTags:
+  direct_links: ["SynestheticProcessing", "MetaCognition", "FractalMCPPatterns"]
+  cross_category: ["MicroservicesPatterns", "ObservabilityPatterns", "APIDesignPrinciples"]
+  context_triggers: ["cognitive_architecture", "ai_reasoning", "system_design", "cognitive_layers"]
+  semantic_clusters: ["cognitive_systems", "ai_architecture", "reasoning_patterns"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["SynestheticProcessing+CognitiveArchitecture", "MetaCognition+CognitiveArchitecture", "FractalMCPPatterns+CognitiveArchitecture"]
+  activation_triggers: ["complex_reasoning", "ai_system_design", "cognitive_modeling", "multi_layer_processing", "emergent_behavior"]
+associative_strength:
+  SynestheticProcessing: 0.95
+  MetaCognition: 0.9
+  FractalMCPPatterns: 0.9
+  RecursiveThinking: 0.85
+  AdaptiveDepth: 0.85
+  MicroservicesPatterns: 0.75
+  ObservabilityPatterns: 0.8
+  APIDesignPrinciples: 0.7
+  ContinuousLearning: 0.8
+  SelfImprovement: 0.8
+pattern_combinations:
+  cognitive_foundation:
+    tokens: ["SynestheticProcessing", "MetaCognition", "RecursiveThinking"]
+    strength: 0.93
+    context: "Complete cognitive architecture foundation"
+  adaptive_intelligence:
+    tokens: ["FractalMCPPatterns", "AdaptiveDepth", "ContinuousLearning"]
+    strength: 0.88
+    context: "Adaptive and evolving cognitive systems"
+  system_integration:
+    tokens: ["MicroservicesPatterns", "ObservabilityPatterns", "SelfImprovement"]
+    strength: 0.82
+    context: "Cognitive architecture integrated with system design"
+
+rules:
+  - id: "layered-cognitive-processing"
+    pattern: "Memory layer → Context layer → Logic layer → Planning layer → Execution layer → Feedback integration"
+    trigger: "Complex problems requiring structured cognitive approach"
+    
+  - id: "cognitive-state-management"
+    pattern: "Maintain cognitive state across tool transitions → Preserve context hierarchy → Enable resumable reasoning"
+    trigger: "Multi-step reasoning requiring state persistence"
+    
+  - id: "emergent-capability-detection"
+    pattern: "Monitor for novel reasoning patterns → Identify emergent capabilities → Integrate new patterns into architecture"
+    trigger: "System exhibiting unexpected problem-solving abilities"
+
+architectural_principles:
+  modularity: "Each cognitive function as separate, composable module"
+  scalability: "Architecture scales with problem complexity"
+  adaptability: "System modifies structure based on performance"
+  
+integration_patterns:
+  sequential_flow: "Linear progression through cognitive layers"
+  parallel_processing: "Multiple cognitive streams simultaneously"
+  recursive_nesting: "Cognitive layers calling themselves"
+  feedback_loops: "Output influences previous layer operation"

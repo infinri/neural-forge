@@ -1,0 +1,65 @@
+tag: ThreatModel
+description: >
+  Systematic approach to identifying and mitigating security threats.
+appliesTo:
+  - System architecture
+  - API design
+  - Data flow analysis
+  - Access control
+  - Input validation
+methodology:
+  - STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation)
+  - Attack trees and threat scenarios
+  - Risk assessment (likelihood × impact)
+  - Mitigation strategies
+  - Regular threat reviews
+threats:
+  - Authentication bypass
+  - Data injection attacks
+  - Privilege escalation
+  - Information leakage
+  - Denial of service
+  - Man-in-the-middle
+mitigations:
+  - Input validation and sanitization
+  - Authentication and authorization
+  - Encryption in transit and at rest
+  - Rate limiting and monitoring
+  - Secure coding practices
+  - Regular security audits
+linkedTags:
+  direct_links: ["InputSanitization", "AuthBypassPrevention", "SecurityMonitoring"]
+  cross_category: ["SOLID", "TestingStrategy", "ErrorSurfaceReduction"]
+  context_triggers: ["threat_analysis", "security_assessment", "risk_modeling", "vulnerability_analysis"]
+  semantic_clusters: ["threat_identification", "risk_assessment", "security_planning"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["InputSanitization+ThreatModel", "AuthBypassPrevention+ThreatModel", "SecurityMonitoring+ThreatModel"]
+  activation_triggers: ["security_design", "threat_assessment", "risk_analysis", "security_architecture", "vulnerability_review"]
+associative_strength:
+  InputSanitization: 0.95
+  AuthBypassPrevention: 0.95
+  SecurityMonitoring: 0.9
+  EncryptionPatterns: 0.85
+  RateLimitGuard: 0.8
+  SOLID: 0.7
+  TestingStrategy: 0.8
+  ErrorSurfaceReduction: 0.85
+  SecurityHeaders: 0.8
+  ZeroTrustArchitecture: 0.85
+pattern_combinations:
+  security_foundation:
+    tokens: ["InputSanitization", "AuthBypassPrevention", "SecurityMonitoring"]
+    strength: 0.95
+    context: "Complete security foundation with threat modeling"
+  risk_management_stack:
+    tokens: ["EncryptionPatterns", "RateLimitGuard", "ErrorSurfaceReduction"]
+    strength: 0.88
+    context: "Comprehensive risk management and mitigation"
+  security_architecture:
+    tokens: ["ZeroTrustArchitecture", "SecurityHeaders", "TestingStrategy"]
+    strength: 0.85
+    context: "Secure architecture design with threat modeling"

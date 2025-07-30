@@ -1,0 +1,38 @@
+tagSet: SecurityPrinciples
+description: Security-first development principles and threat mitigation.
+version: "1.0.0"
+tokenBudget: 250
+includes:
+  # Core Security Patterns
+  - security/ThreatModel
+  - security/InputSanitization
+  - security/AuthBypassPrevention
+  - security/RateLimitGuard
+  - security/OAuth2JWTPatterns
+  - security/SecretsManagement
+  - security/SecurityHeaders
+  - security/EncryptionPatterns
+  - security/SecurityMonitoring
+  - security/ZeroTrustArchitecture
+  
+  # Related Patterns
+  - data/DataPrivacyCompliance
+  - reliability/ObservabilityPatterns
+principles:
+  - "Never trust user input - validate everything"
+  - "Principle of least privilege"
+  - "Defense in depth - multiple security layers"
+  - "Fail securely - errors shouldn't expose data"
+  - "Security by design, not as an afterthought"
+threats:
+  - SQL injection via parameterized queries
+  - XSS via output encoding
+  - CSRF via tokens and SameSite cookies
+  - Authentication bypass via proper session management
+  - Data exposure via encryption at rest/transit
+practices:
+  - Hash passwords with salt (bcrypt/scrypt)
+  - Use HTTPS everywhere
+  - Implement rate limiting
+  - Log security events (not sensitive data)
+  - Regular dependency updates

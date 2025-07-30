@@ -1,0 +1,64 @@
+name: "AdaptiveDepth"
+description: "Dynamic depth control for recursive reasoning with confidence-based termination"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 87
+linkedTags:
+  direct_links: ["RecursiveThinking", "ContinuousLearning", "MetaCognition"]
+  cross_category: ["PerformanceOptimization", "TestingStrategy", "ObservabilityPatterns"]
+  context_triggers: ["adaptive_depth", "confidence_calibration", "recursive_control", "resource_optimization"]
+  semantic_clusters: ["depth_control", "adaptive_reasoning", "confidence_management"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["RecursiveThinking+AdaptiveDepth", "ContinuousLearning+AdaptiveDepth", "MetaCognition+AdaptiveDepth"]
+  activation_triggers: ["recursive_reasoning", "depth_optimization", "confidence_thresholds", "resource_constraints", "complexity_analysis"]
+associative_strength:
+  RecursiveThinking: 0.95
+  ContinuousLearning: 0.9
+  MetaCognition: 0.85
+  FractalMCPPatterns: 0.85
+  CognitiveArchitecture: 0.8
+  PerformanceOptimization: 0.8
+  TestingStrategy: 0.7
+  ObservabilityPatterns: 0.75
+  SelfImprovement: 0.8
+  SynestheticProcessing: 0.75
+pattern_combinations:
+  adaptive_reasoning_core:
+    tokens: ["RecursiveThinking", "ContinuousLearning", "MetaCognition"]
+    strength: 0.92
+    context: "Core adaptive depth control with learning and meta-cognition"
+  cognitive_optimization:
+    tokens: ["FractalMCPPatterns", "CognitiveArchitecture", "SelfImprovement"]
+    strength: 0.88
+    context: "Cognitive architecture optimization with adaptive depth"
+  system_performance:
+    tokens: ["PerformanceOptimization", "ObservabilityPatterns", "TestingStrategy"]
+    strength: 0.82
+    context: "System performance optimization with adaptive depth control"
+
+rules:
+  - id: "confidence-based-termination"
+    pattern: "Monitor confidence at each recursive level → Continue until threshold met → Naturally adaptive depth based on problem complexity"
+    trigger: "Recursive reasoning with uncertain stopping points"
+    
+  - id: "depth-prediction-modeling"
+    pattern: "Analyze problem characteristics → Predict optimal depth before starting → Allocate resources accordingly"
+    trigger: "Resource-constrained recursive reasoning tasks"
+    
+  - id: "dynamic-depth-adjustment"
+    pattern: "Real-time depth modification based on intermediate results → Expand when promising → Contract when diminishing returns"
+    trigger: "Recursive processes showing unexpected complexity patterns"
+
+depth_strategies:
+  breadth_first: "Explore all atoms at current level before going deeper"
+  depth_first: "Pursue most promising paths to maximum depth"
+  hybrid_adaptive: "Switch strategies based on problem characteristics"
+  
+termination_signals:
+  confidence_plateau: "No improvement in confidence over N iterations"
+  resource_exhaustion: "Approaching computational or time limits"
+  convergence_detection: "Similar conclusions from multiple paths"

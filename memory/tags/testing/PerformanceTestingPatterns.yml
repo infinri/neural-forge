@@ -1,0 +1,108 @@
+tagName: PerformanceTestingPatterns
+description: "Performance testing patterns for load, stress, and scalability testing"
+appliesTo:
+  - "Load testing for expected traffic volumes"
+  - "Stress testing for system breaking points"
+  - "Scalability testing for growth planning"
+  - "Endurance testing for long-running stability"
+  - "Spike testing for traffic surge handling"
+patterns:
+  - "Design realistic load scenarios based on production traffic patterns"
+  - "Implement gradual load ramp-up to identify performance thresholds"
+  - "Use performance baselines to detect regressions"
+  - "Test individual components and end-to-end user journeys"
+  - "Implement continuous performance testing in CI/CD pipelines"
+bestPractices:
+  - "Test in production-like environments with realistic data volumes"
+  - "Monitor system resources during performance tests"
+  - "Use realistic user behavior patterns and think times"
+  - "Test with production-like network conditions and latency"
+  - "Implement proper test data management for consistent results"
+  - "Set clear performance criteria and acceptance thresholds"
+  - "Analyze results holistically, not just response times"
+testTypes:
+  - "Load testing: Normal expected load conditions"
+  - "Stress testing: Beyond normal capacity to find breaking points"
+  - "Spike testing: Sudden increases in load"
+  - "Volume testing: Large amounts of data processing"
+  - "Endurance testing: Extended periods of normal load"
+  - "Scalability testing: System behavior as load increases"
+loadModeling:
+  - "User journey mapping: Realistic user interaction patterns"
+  - "Traffic distribution: Proportional load across different operations"
+  - "Think time: Realistic delays between user actions"
+  - "Ramp-up patterns: Gradual increase to target load"
+  - "Peak and off-peak scenarios: Different load patterns"
+metricsAndKPIs:
+  - "Response time: 95th percentile response times"
+  - "Throughput: Requests or transactions per second"
+  - "Error rate: Percentage of failed requests"
+  - "Resource utilization: CPU, memory, disk, network usage"
+  - "Concurrency: Number of simultaneous users or connections"
+bottleneckIdentification:
+  - "Database performance: Query execution times and connection pools"
+  - "Application server: CPU and memory utilization"
+  - "Network bandwidth: Data transfer rates and latency"
+  - "External dependencies: Third-party service response times"
+  - "Caching effectiveness: Cache hit rates and performance impact"
+testEnvironment:
+  - "Production-like infrastructure: Similar hardware and configuration"
+  - "Realistic data volumes: Production-sized datasets"
+  - "Network simulation: Realistic latency and bandwidth"
+  - "Load balancer configuration: Same as production setup"
+  - "Monitoring tools: Same observability stack as production"
+automationPatterns:
+  - "CI/CD integration: Automated performance testing in pipelines"
+  - "Performance gates: Block deployments that don't meet criteria"
+  - "Trend analysis: Track performance changes over time"
+  - "Alerting: Notify teams of performance regressions"
+  - "Reporting: Automated performance test reports"
+testDataManagement:
+  - "Synthetic data generation: Create realistic test datasets"
+  - "Data refresh: Keep test data current and representative"
+  - "Data isolation: Prevent test interference"
+  - "Data cleanup: Manage test data lifecycle"
+  - "Data privacy: Anonymize production data for testing"
+toolsAndPlatforms:
+  - "JMeter: Open-source load testing tool"
+  - "k6: Modern load testing tool with JavaScript"
+  - "Gatling: High-performance load testing framework"
+  - "LoadRunner: Enterprise performance testing platform"
+  - "Artillery: Lightweight load testing toolkit"
+linkedTags:
+  direct_links: ["AdvancedTestingPatterns", "ContinuousTestingPatterns", "TestDataManagement"]
+  cross_category: ["PerformanceMonitoring", "CachingPatterns", "AlgorithmComplexity"]
+  context_triggers: ["performance_testing", "load_testing", "stress_testing", "scalability_testing"]
+  semantic_clusters: ["testing_patterns", "performance_patterns", "quality_assurance"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["AdvancedTestingPatterns+PerformanceTestingPatterns", "ContinuousTestingPatterns+PerformanceTestingPatterns", "TestDataManagement+PerformanceTestingPatterns"]
+  activation_triggers: ["performance_validation", "load_capacity", "system_limits", "scalability_planning", "performance_regression"]
+associative_strength:
+  AdvancedTestingPatterns: 0.85
+  ContinuousTestingPatterns: 0.85
+  TestDataManagement: 0.8
+  TestingPrinciples: 0.8
+  PerformanceMonitoring: 0.9
+  CachingPatterns: 0.8
+  AlgorithmComplexity: 0.8
+  IOOptimization: 0.8
+  MemoryManagement: 0.75
+  ObservabilityPatterns: 0.8
+pattern_combinations:
+  comprehensive_performance_testing:
+    tokens: ["AdvancedTestingPatterns", "ContinuousTestingPatterns", "TestDataManagement"]
+    strength: 0.83
+    context: "Complete performance testing implementation with advanced patterns and automation"
+  performance_optimization_validation:
+    tokens: ["PerformanceMonitoring", "CachingPatterns", "AlgorithmComplexity"]
+    strength: 0.83
+    context: "Performance testing with optimization patterns and monitoring"
+  system_performance_analysis:
+    tokens: ["IOOptimization", "MemoryManagement", "ObservabilityPatterns"]
+    strength: 0.78
+    context: "Performance testing with system optimization and observability"
+tokenBudget: 90

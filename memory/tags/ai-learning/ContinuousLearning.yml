@@ -1,0 +1,84 @@
+tagName: ContinuousLearning
+description: "AI continuous learning patterns using supermemory MCP for autonomous improvement"
+appliesTo:
+  - "AI code generation and review"
+  - "Learning from user feedback"
+  - "Pattern recognition improvement"
+  - "Error analysis and correction"
+  - "Performance optimization learning"
+patterns:
+  - "Store successful code patterns in supermemory"
+  - "Learn from code review feedback"
+  - "Track performance improvements over time"
+  - "Identify recurring bugs and solutions"
+  - "Build knowledge base of domain-specific patterns"
+bestPractices:
+  - "Record context with every learning event"
+  - "Tag memories with relevant engineering principles"
+  - "Cross-reference similar problems and solutions"
+  - "Update rule applications based on outcomes"
+  - "Maintain feedback loops with user preferences"
+  - "Learn from both successes and failures"
+  - "Continuously refine pattern recognition"
+supermemoryIntegration:
+  - "Use mcp2_addToSupermemory for successful patterns"
+  - "Store user preferences and coding style"
+  - "Record domain-specific requirements"
+  - "Track rule effectiveness and outcomes"
+  - "Build contextual knowledge graphs"
+learningTriggers:
+  - "After successful code deployment"
+  - "Following user feedback or corrections"
+  - "When encountering new problem domains"
+  - "After performance optimization wins"
+  - "During code review cycles"
+feedbackLoop:
+  - "Analyze: What worked well in this implementation?"
+  - "Store: Record successful patterns and context"
+  - "Reflect: How can this inform future decisions?"
+  - "Apply: Use learned patterns in similar contexts"
+  - "Validate: Monitor outcomes and adjust"
+memoryCategories:
+  - "successful_patterns"
+  - "user_preferences"
+  - "domain_knowledge"
+  - "performance_optimizations"
+  - "security_lessons"
+  - "debugging_strategies"
+linkedTags:
+  direct_links: ["SelfImprovement", "MetaCognition", "AdaptiveDepth"]
+  cross_category: ["PerformanceOptimization", "CodeMetrics", "ObservabilityPatterns"]
+  context_triggers: ["continuous_learning", "pattern_recognition", "feedback_integration", "autonomous_improvement"]
+  semantic_clusters: ["learning_systems", "adaptive_intelligence", "knowledge_accumulation"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["SelfImprovement+ContinuousLearning", "MetaCognition+ContinuousLearning", "AdaptiveDepth+ContinuousLearning"]
+  activation_triggers: ["learning_opportunity", "feedback_received", "pattern_discovery", "performance_analysis", "knowledge_gap"]
+associative_strength:
+  SelfImprovement: 0.95
+  MetaCognition: 0.9
+  AdaptiveDepth: 0.85
+  RecursiveThinking: 0.8
+  PerformanceOptimization: 0.8
+  CodeMetrics: 0.75
+  ObservabilityPatterns: 0.75
+  CognitiveArchitecture: 0.8
+  FractalMCPPatterns: 0.75
+  TestingStrategy: 0.7
+pattern_combinations:
+  learning_intelligence_core:
+    tokens: ["SelfImprovement", "MetaCognition", "RecursiveThinking"]
+    strength: 0.92
+    context: "Core continuous learning with intelligent adaptation"
+  adaptive_optimization:
+    tokens: ["AdaptiveDepth", "PerformanceOptimization", "CodeMetrics"]
+    strength: 0.85
+    context: "Continuous learning applied to system optimization"
+  cognitive_evolution:
+    tokens: ["CognitiveArchitecture", "FractalMCPPatterns", "ObservabilityPatterns"]
+    strength: 0.82
+    context: "Evolving cognitive systems through continuous learning"
+tokenBudget: 90

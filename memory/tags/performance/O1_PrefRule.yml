@@ -1,0 +1,64 @@
+tag: O1_PrefRule
+description: >
+  Prefer O(1) constant time operations over higher complexity alternatives.
+appliesTo:
+  - Algorithm selection
+  - Data structure choice
+  - Database queries
+  - Cache lookups
+  - Hash table operations
+strategies:
+  - Use hash maps for key-value lookups
+  - Implement LRU cache with HashMap + DoublyLinkedList
+  - Choose arrays over linked lists for random access
+  - Use sets for membership testing
+  - Implement circular buffers for fixed-size queues
+bestPractices:
+  - Profile before optimizing
+  - Consider space-time tradeoffs
+  - Use appropriate data structures
+  - Avoid nested loops when possible
+  - Cache computed results
+  - Use indexes for database queries
+examples:
+  - HashMap.get() vs Array.find()
+  - Set.has() vs Array.includes()
+  - Direct array access vs linear search
+  - Hash-based routing vs sequential matching
+linkedTags:
+  direct_links: ["CachingPatterns", "AlgorithmComplexity", "PerformanceMonitoring"]
+  cross_category: ["DRY", "SOLID", "CodeMetrics"]
+  context_triggers: ["o1_optimization", "constant_time", "performance", "efficiency"]
+  semantic_clusters: ["performance_patterns", "algorithmic_efficiency", "optimization_rules"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["CachingPatterns+O1_PrefRule", "AlgorithmComplexity+O1_PrefRule", "PerformanceMonitoring+O1_PrefRule"]
+  activation_triggers: ["performance_critical_code", "algorithm_selection", "data_structure_choice", "optimization_opportunities", "scalability_requirements"]
+associative_strength:
+  CachingPatterns: 0.9
+  AlgorithmComplexity: 0.95
+  PerformanceMonitoring: 0.85
+  DRY: 0.8
+  SOLID: 0.75
+  CodeMetrics: 0.8
+  IOOptimization: 0.8
+  MemoryManagement: 0.8
+  MicroservicesPatterns: 0.7
+  CloudNativePatterns: 0.7
+pattern_combinations:
+  performance_optimization_core:
+    tokens: ["CachingPatterns", "AlgorithmComplexity", "PerformanceMonitoring"]
+    strength: 0.9
+    context: "Core O(1) performance optimization with caching and complexity analysis"
+  quality_efficiency:
+    tokens: ["DRY", "SOLID", "CodeMetrics"]
+    strength: 0.78
+    context: "O(1) optimization with code quality and maintainability principles"
+  system_performance:
+    tokens: ["IOOptimization", "MemoryManagement", "CloudNativePatterns"]
+    strength: 0.77
+    context: "O(1) patterns for system-level performance in cloud environments"
+tokenBudget: 75

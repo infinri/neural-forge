@@ -1,0 +1,66 @@
+tag: ErrorSurfaceReduction
+description: >
+  Minimize potential failure points and improve system reliability through defensive programming.
+appliesTo:
+  - Error handling
+  - Input validation
+  - API design
+  - Resource management
+  - State management
+strategies:
+  - Fail fast with clear error messages
+  - Use type systems to catch errors early
+  - Implement circuit breakers
+  - Graceful degradation patterns
+  - Defensive copying of mutable data
+  - Null/undefined checks
+bestPractices:
+  - Return errors, don't throw exceptions for expected failures
+  - Use Result/Option types where available
+  - Validate preconditions early
+  - Clean up resources in finally blocks
+  - Log errors with sufficient context
+  - Avoid silent failures
+patterns:
+  - Try-catch-finally blocks
+  - Error boundaries in UI components
+  - Bulkhead pattern for isolation
+  - Timeout mechanisms
+  - Retry with exponential backoff
+linkedTags:
+  direct_links: ["IdempotencyRules", "RetrySafety", "ErrorHandlingPatterns"]
+  cross_category: ["InputSanitization", "SOLID", "TestingStrategy"]
+  context_triggers: ["error_reduction", "defensive_programming", "reliability", "fault_prevention"]
+  semantic_clusters: ["reliability_patterns", "error_prevention", "defensive_design"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["IdempotencyRules+ErrorSurfaceReduction", "RetrySafety+ErrorSurfaceReduction", "ErrorHandlingPatterns+ErrorSurfaceReduction"]
+  activation_triggers: ["error_prevention", "defensive_programming", "system_hardening", "reliability_improvement", "fault_tolerance"]
+associative_strength:
+  IdempotencyRules: 0.9
+  RetrySafety: 0.9
+  ErrorHandlingPatterns: 0.9
+  InputSanitization: 0.85
+  SOLID: 0.8
+  TestingStrategy: 0.85
+  CircuitBreakerPatterns: 0.85
+  AuthBypassPrevention: 0.75
+  ConcurrencyPatterns: 0.85
+  MemoryManagement: 0.8
+pattern_combinations:
+  reliability_foundation:
+    tokens: ["IdempotencyRules", "RetrySafety", "ErrorHandlingPatterns"]
+    strength: 0.9
+    context: "Core error surface reduction with reliability patterns"
+  defensive_programming:
+    tokens: ["InputSanitization", "SOLID", "TestingStrategy"]
+    strength: 0.83
+    context: "Defensive programming practices for error prevention"
+  system_hardening:
+    tokens: ["CircuitBreakerPatterns", "ConcurrencyPatterns", "MemoryManagement"]
+    strength: 0.83
+    context: "System hardening through error surface reduction"
+tokenBudget: 70

@@ -1,0 +1,86 @@
+tagName: DesignPatterns
+description: "Essential software design patterns for flexible and maintainable code"
+appliesTo:
+  - "Object-oriented design and architecture"
+  - "Code reusability and maintainability"
+  - "Problem-solving with proven solutions"
+  - "Framework and library design"
+  - "System decoupling and flexibility"
+patterns:
+  - "Apply patterns to solve recurring design problems"
+  - "Use creational patterns for object instantiation"
+  - "Implement structural patterns for object composition"
+  - "Apply behavioral patterns for object interaction"
+  - "Choose appropriate patterns based on context"
+creationalPatterns:
+  - "Singleton: Ensure single instance of a class"
+  - "Factory Method: Create objects without specifying exact classes"
+  - "Abstract Factory: Create families of related objects"
+  - "Builder: Construct complex objects step by step"
+  - "Prototype: Create objects by cloning existing instances"
+structuralPatterns:
+  - "Adapter: Make incompatible interfaces work together"
+  - "Decorator: Add behavior to objects dynamically"
+  - "Facade: Provide simplified interface to complex subsystem"
+  - "Composite: Treat individual and composite objects uniformly"
+  - "Proxy: Provide placeholder or surrogate for another object"
+behavioralPatterns:
+  - "Observer: Define one-to-many dependency between objects"
+  - "Strategy: Define family of algorithms and make them interchangeable"
+  - "Command: Encapsulate requests as objects"
+  - "State: Allow object to alter behavior when internal state changes"
+  - "Template Method: Define skeleton of algorithm in base class"
+bestPractices:
+  - "Don't force patterns where they don't fit naturally"
+  - "Understand the problem before applying a pattern"
+  - "Consider simpler solutions before complex patterns"
+  - "Use patterns to communicate design intent"
+  - "Refactor to patterns when complexity justifies them"
+modernPatterns:
+  - "Dependency Injection: Provide dependencies from external source"
+  - "Repository: Encapsulate data access logic"
+  - "MVC/MVP/MVVM: Separate presentation from business logic"
+  - "Publisher-Subscriber: Decouple message producers and consumers"
+  - "Circuit Breaker: Prevent cascading failures in distributed systems"
+antiPatterns:
+  - "Avoid overengineering with unnecessary patterns"
+  - "Don't use Singleton as global variable replacement"
+  - "Avoid God Object pattern with too many responsibilities"
+  - "Don't create deep inheritance hierarchies"
+linkedTags:
+  direct_links: ["SOLID", "OOPPrinciples", "RefactoringPatterns"]
+  cross_category: ["MicroservicesPatterns", "DomainDrivenDesign", "TestingStrategy"]
+  context_triggers: ["design_patterns", "object_oriented", "code_structure", "reusability"]
+  semantic_clusters: ["structural_design", "behavioral_patterns", "creational_patterns"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["SOLID+DesignPatterns", "OOPPrinciples+DesignPatterns", "RefactoringPatterns+DesignPatterns"]
+  activation_triggers: ["code_design", "pattern_application", "architecture_decisions", "code_flexibility", "maintainability"]
+associative_strength:
+  SOLID: 0.9
+  OOPPrinciples: 0.9
+  RefactoringPatterns: 0.85
+  MicroservicesPatterns: 0.75
+  DomainDrivenDesign: 0.8
+  TestingStrategy: 0.8
+  NamingConventions: 0.75
+  CodeCommentsGuideline: 0.7
+  TechnicalDebtManagement: 0.75
+  APIDesignPrinciples: 0.75
+pattern_combinations:
+  object_oriented_foundation:
+    tokens: ["SOLID", "OOPPrinciples", "NamingConventions"]
+    strength: 0.88
+    context: "Complete object-oriented design foundation with patterns"
+  architecture_design_stack:
+    tokens: ["MicroservicesPatterns", "DomainDrivenDesign", "APIDesignPrinciples"]
+    strength: 0.8
+    context: "Architectural design patterns for system structure"
+  quality_maintenance:
+    tokens: ["RefactoringPatterns", "TestingStrategy", "TechnicalDebtManagement"]
+    strength: 0.82
+    context: "Design patterns with quality maintenance and testing"
+tokenBudget: 80

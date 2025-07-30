@@ -1,0 +1,62 @@
+tag: RateLimitGuard
+description: >
+  Patterns for enforcing safe API limits to avoid overload, abuse, or cascade failure.
+appliesTo:
+  - REST APIs
+  - Internal service calls
+  - User-triggered loops
+  - Database queries
+  - External API calls
+patterns:
+  - Token bucket (smooth rate limiting)
+  - Leaky bucket (burst handling)
+  - Fixed window (simple time-based)
+  - Sliding window (precise rate control)
+  - Adaptive rate limiting (dynamic adjustment)
+bestPractices:
+  - Apply before authentication if abuse possible
+  - Sync with retry/backoff logic
+  - Don't log failed hits to avoid log overflow
+  - Use distributed counters for scale
+  - Implement graceful degradation
+  - Return 429 status with Retry-After header
+linkedTags:
+  direct_links: ["IdempotencyRules", "RetrySafety", "CircuitBreakerPatterns"]
+  cross_category: ["PerformanceMonitoring", "CachingPatterns", "TestingStrategy"]
+  context_triggers: ["rate_limiting", "dos_protection", "api_throttling", "abuse_prevention"]
+  semantic_clusters: ["traffic_control", "system_protection", "resource_management"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["IdempotencyRules+RateLimitGuard", "RetrySafety+RateLimitGuard", "CircuitBreakerPatterns+RateLimitGuard"]
+  activation_triggers: ["api_protection", "ddos_prevention", "resource_throttling", "abuse_mitigation"]
+associative_strength:
+  IdempotencyRules: 0.9
+  RetrySafety: 0.85
+  CircuitBreakerPatterns: 0.8
+  PerformanceMonitoring: 0.8
+  CachingPatterns: 0.75
+  TestingStrategy: 0.7
+  AuthBypassPrevention: 0.75
+  SecurityMonitoring: 0.8
+  LoadBalancing: 0.7
+  ErrorSurfaceReduction: 0.75
+pattern_combinations:
+  resilience_stack:
+    tokens: ["CircuitBreakerPatterns", "RetrySafety", "HealthCheckPatterns"]
+    strength: 0.88
+    context: "System resilience and fault tolerance"
+  api_protection_suite:
+    tokens: ["AuthBypassPrevention", "InputSanitization", "SecurityMonitoring"]
+    strength: 0.85
+    context: "Comprehensive API protection"
+  performance_safeguards:
+    tokens: ["PerformanceMonitoring", "CachingPatterns", "LoadBalancing"]
+    strength: 0.82
+    context: "Performance protection and optimization"
+implementation:
+  - Redis for distributed rate limiting
+  - In-memory for single instance
+  - Headers: X-RateLimit-Limit, X-RateLimit-Remaining

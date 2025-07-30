@@ -1,0 +1,65 @@
+name: "MetaCognition"
+description: "Self-aware reasoning about reasoning processes and cognitive strategy optimization"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 89
+linkedTags:
+  direct_links: ["RecursiveThinking", "SelfBootstrapping", "CognitiveArchitecture"]
+  cross_category: ["TestingStrategy", "PerformanceOptimization", "ObservabilityPatterns"]
+  context_triggers: ["meta_cognition", "self_awareness", "reasoning_optimization", "cognitive_strategy"]
+  semantic_clusters: ["self_reflection", "cognitive_optimization", "meta_reasoning"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["RecursiveThinking+MetaCognition", "SelfBootstrapping+MetaCognition", "CognitiveArchitecture+MetaCognition"]
+  activation_triggers: ["complex_reasoning", "strategy_optimization", "self_improvement", "cognitive_analysis", "reasoning_evaluation"]
+associative_strength:
+  RecursiveThinking: 0.95
+  SelfBootstrapping: 0.9
+  CognitiveArchitecture: 0.9
+  FractalMCPPatterns: 0.85
+  SelfImprovement: 0.85
+  AdaptiveDepth: 0.8
+  TestingStrategy: 0.75
+  PerformanceOptimization: 0.7
+  ObservabilityPatterns: 0.75
+  ContinuousLearning: 0.8
+pattern_combinations:
+  meta_reasoning_core:
+    tokens: ["RecursiveThinking", "SelfBootstrapping", "SelfImprovement"]
+    strength: 0.92
+    context: "Core meta-cognitive reasoning and self-improvement"
+  cognitive_architecture_stack:
+    tokens: ["CognitiveArchitecture", "FractalMCPPatterns", "AdaptiveDepth"]
+    strength: 0.88
+    context: "Advanced cognitive architecture with meta-cognition"
+  optimization_monitoring:
+    tokens: ["PerformanceOptimization", "ObservabilityPatterns", "TestingStrategy"]
+    strength: 0.8
+    context: "Meta-cognitive optimization with monitoring and testing"
+
+rules:
+  - id: "reasoning-about-reasoning"
+    pattern: "Monitor own thinking processes → Identify reasoning patterns → Evaluate strategy effectiveness → Adjust cognitive approach"
+    trigger: "Complex problems requiring strategy adaptation"
+    
+  - id: "cognitive-strategy-evolution"
+    pattern: "Track problem-solving success rates → Extract meta-patterns → Develop new reasoning strategies → Test and refine approaches"
+    trigger: "Repeated exposure to challenging problem types"
+    
+  - id: "self-optimization-loops"
+    pattern: "Analyze cognitive performance → Identify bottlenecks → Modify reasoning architecture → Measure improvement"
+    trigger: "Performance degradation or optimization opportunities"
+
+meta_levels:
+  level_1: "Direct problem solving"
+  level_2: "Reasoning about problem-solving approach"
+  level_3: "Optimizing reasoning strategies"
+  level_4: "Evolving cognitive architecture"
+  
+emergence_indicators:
+  strategy_innovation: "Novel reasoning approaches not explicitly programmed"
+  adaptive_depth: "Automatic adjustment of cognitive complexity"
+  cross_domain_transfer: "Applying successful patterns across problem types"

@@ -1,0 +1,69 @@
+tag: CodeCommentsGuideline
+description: >
+  Strategic commenting practices for maintainable and self-documenting code.
+appliesTo:
+  - Function documentation
+  - Complex algorithms
+  - Business logic
+  - API interfaces
+  - Configuration files
+principles:
+  - Code should be self-documenting first
+  - Comments explain WHY, not WHAT
+  - Keep comments close to relevant code
+  - Update comments when code changes
+  - Avoid obvious comments
+bestPractices:
+  - Document public APIs with examples
+  - Explain complex business rules
+  - Note performance considerations
+  - Document assumptions and constraints
+  - Use TODO/FIXME for technical debt
+  - Include links to external documentation
+formats:
+  - JSDoc for JavaScript
+  - Docstrings for Python
+  - XML docs for C#
+  - Javadoc for Java
+  - Rustdoc for Rust
+avoid:
+  - Commenting every line
+  - Outdated comments
+  - Commented-out code
+  - Redundant explanations
+linkedTags:
+  direct_links: ["NamingConventions", "SOLID", "OOPPrinciples"]
+  cross_category: ["APIDesignPrinciples", "TestingStrategy", "TechnicalDebtManagement"]
+  context_triggers: ["code_documentation", "comment_guidelines", "api_documentation", "code_clarity"]
+  semantic_clusters: ["documentation_standards", "code_readability", "maintainability"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["NamingConventions+CodeCommentsGuideline", "SOLID+CodeCommentsGuideline", "OOPPrinciples+CodeCommentsGuideline"]
+  activation_triggers: ["function_documentation", "api_design", "complex_algorithms", "business_logic", "code_review"]
+associative_strength:
+  NamingConventions: 0.95
+  SOLID: 0.85
+  OOPPrinciples: 0.85
+  DRY: 0.8
+  RefactoringPatterns: 0.8
+  APIDesignPrinciples: 0.85
+  TestingStrategy: 0.75
+  TechnicalDebtManagement: 0.8
+  CodeMetrics: 0.7
+  YAGNI: 0.65
+pattern_combinations:
+  documentation_foundation:
+    tokens: ["NamingConventions", "SOLID", "OOPPrinciples"]
+    strength: 0.9
+    context: "Complete code documentation and clarity foundation"
+  api_documentation_stack:
+    tokens: ["APIDesignPrinciples", "TestingStrategy", "TechnicalDebtManagement"]
+    strength: 0.85
+    context: "Comprehensive API documentation and maintenance"
+  quality_maintenance:
+    tokens: ["RefactoringPatterns", "CodeMetrics", "DRY"]
+    strength: 0.82
+    context: "Documentation supporting code quality and maintenance"

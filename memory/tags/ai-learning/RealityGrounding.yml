@@ -1,0 +1,64 @@
+name: "RealityGrounding"
+description: "Web-reality verification patterns ensuring recursive reasoning stays connected to real-world data"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 94
+linkedTags:
+  direct_links: ["FractalMCPPatterns", "MCPOrchestration", "SynestheticProcessing"]
+  cross_category: ["TestingStrategy", "SecurityMonitoring", "ObservabilityPatterns"]
+  context_triggers: ["reality_grounding", "fact_checking", "web_validation", "empirical_verification"]
+  semantic_clusters: ["reality_validation", "fact_verification", "empirical_grounding"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["FractalMCPPatterns+RealityGrounding", "MCPOrchestration+RealityGrounding", "SynestheticProcessing+RealityGrounding"]
+  activation_triggers: ["fact_verification", "empirical_validation", "web_research", "data_validation", "reality_checking"]
+associative_strength:
+  FractalMCPPatterns: 0.95
+  MCPOrchestration: 0.9
+  SynestheticProcessing: 0.85
+  CognitiveArchitecture: 0.8
+  TestingStrategy: 0.8
+  SecurityMonitoring: 0.75
+  ObservabilityPatterns: 0.8
+  MetaCognition: 0.75
+  RecursiveThinking: 0.8
+  AdaptiveDepth: 0.75
+pattern_combinations:
+  reality_validation_core:
+    tokens: ["FractalMCPPatterns", "MCPOrchestration", "SynestheticProcessing"]
+    strength: 0.92
+    context: "Core reality grounding with fractal MCP patterns and orchestration"
+  verification_integration:
+    tokens: ["TestingStrategy", "SecurityMonitoring", "ObservabilityPatterns"]
+    strength: 0.85
+    context: "Reality grounding integrated with testing and monitoring systems"
+  cognitive_validation:
+    tokens: ["CognitiveArchitecture", "MetaCognition", "RecursiveThinking"]
+    strength: 0.82
+    context: "Cognitive reality grounding with meta-cognitive validation"
+
+rules:
+  - id: "recursive-fact-checking"
+    pattern: "Each reasoning atom triggers real-world verification → Puppeteer gathers data → Results spawn verification sub-atoms → Recursive validation spirals"
+    trigger: "Claims or hypotheses requiring empirical validation"
+    
+  - id: "continuous-reality-sync"
+    pattern: "Maintain real-world data streams → Update reasoning based on fresh data → Invalidate outdated conclusions automatically"
+    trigger: "Time-sensitive or rapidly changing domains"
+    
+  - id: "multi-source-validation"
+    pattern: "Cross-reference multiple data sources → Identify conflicting information → Resolve discrepancies through deeper investigation"
+    trigger: "Critical decisions requiring high confidence"
+
+validation_strategies:
+  automated_scraping: "Puppeteer-based data collection from authoritative sources"
+  cross_referencing: "Compare findings across multiple independent sources"
+  temporal_tracking: "Monitor how facts change over time"
+  
+grounding_mechanisms:
+  source_credibility: "Weight sources by reliability and recency"
+  data_freshness: "Prioritize recent data over outdated information"
+  verification_depth: "Adjust validation thoroughness based on claim importance"

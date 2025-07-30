@@ -1,0 +1,61 @@
+name: "FractalMCPPatterns"
+description: "Revolutionary recursive MCP workflows creating fractal intelligence networks"
+category: "ai-learning"
+priority: "SR"
+tokenBudget: 95
+linkedTags:
+  direct_links: ["RecursiveThinking", "MCPOrchestration", "CognitiveArchitecture"]
+  cross_category: ["MicroservicesPatterns", "ObservabilityPatterns", "TestingStrategy"]
+  context_triggers: ["fractal_patterns", "recursive_workflows", "mcp_orchestration", "complex_reasoning"]
+  semantic_clusters: ["fractal_intelligence", "recursive_systems", "advanced_cognition"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["RecursiveThinking+FractalMCPPatterns", "MCPOrchestration+FractalMCPPatterns", "CognitiveArchitecture+FractalMCPPatterns"]
+  activation_triggers: ["complex_problems", "multi_layer_reasoning", "recursive_decomposition", "advanced_ai_workflows", "fractal_analysis"]
+associative_strength:
+  RecursiveThinking: 0.95
+  MCPOrchestration: 0.9
+  CognitiveArchitecture: 0.9
+  MetaCognition: 0.85
+  AdaptiveDepth: 0.85
+  SynestheticProcessing: 0.8
+  MicroservicesPatterns: 0.7
+  ObservabilityPatterns: 0.75
+  TestingStrategy: 0.65
+  SelfImprovement: 0.8
+pattern_combinations:
+  fractal_intelligence_core:
+    tokens: ["RecursiveThinking", "MCPOrchestration", "MetaCognition"]
+    strength: 0.93
+    context: "Core fractal intelligence with recursive reasoning"
+  cognitive_depth_stack:
+    tokens: ["CognitiveArchitecture", "AdaptiveDepth", "SynestheticProcessing"]
+    strength: 0.88
+    context: "Deep cognitive processing with fractal patterns"
+  system_integration:
+    tokens: ["MicroservicesPatterns", "ObservabilityPatterns", "SelfImprovement"]
+    strength: 0.78
+    context: "Fractal patterns integrated with system architecture"
+
+rules:
+  - id: "infinite-atom-spiral"
+    pattern: "Layer 1: atom-of-thoughts breaks problem → Layer 2: sequential-thinking processes each atom → Layer 3: context7 injects docs → Creates sub-atoms recursively"
+    trigger: "Complex multi-faceted problems requiring deep decomposition"
+    
+  - id: "memory-accelerated-engine" 
+    pattern: "Sequential-thinking → supermemoryai stores reasoning patterns → Future sessions query past patterns → atom-of-thoughts uses historical success patterns"
+    trigger: "Problems similar to previously solved challenges"
+    
+  - id: "web-reality-verification"
+    pattern: "atom-of-thoughts creates hypotheses → sequential-thinking plans verification → puppeteer gathers real data → Results create verification sub-atoms"
+    trigger: "Claims requiring real-world validation"
+
+implementation:
+  depth_control: "Continue recursion until confidence threshold met"
+  state_preservation: "Use supermemoryai for cross-session continuity"
+  parallel_paths: "Deploy multiple recursive streams simultaneously"
+  
+meta_cognitive: "At 5+ layers, system reasons about own reasoning processes"

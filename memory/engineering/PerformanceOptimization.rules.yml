@@ -1,0 +1,34 @@
+tagSet: PerformanceOptimization
+description: Performance patterns and optimization strategies.
+version: "1.0.0"
+tokenBudget: 180
+includes:
+  # Core Performance Patterns
+  - performance/CachingPatterns
+  - performance/O1_PrefRule
+  - performance/AlgorithmComplexity
+  - performance/MemoryManagement
+  - performance/IOOptimization
+  - performance/PerformanceMonitoring
+  
+  # Related Patterns
+  - data/DataPipelinePatterns
+  - testing/PerformanceTestingPatterns
+principles:
+  - "Measure before optimizing - profile first"
+  - "Optimize critical paths, not everything"
+  - "Choose right data structures for access patterns"
+  - "Minimize I/O operations and network calls"
+  - "Cache expensive computations and queries"
+patterns:
+  - Lazy loading for deferred initialization
+  - Connection pooling for database access
+  - Batch processing for bulk operations
+  - Async/await for non-blocking operations
+  - Pagination for large datasets
+optimization:
+  - Time complexity: O(1) > O(log n) > O(n) > O(n²)
+  - Space complexity: minimize memory allocations
+  - Database: use indexes, avoid N+1 queries
+  - Caching: Redis/Memcached for hot data
+  - CDN: static assets and geographic distribution

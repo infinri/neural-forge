@@ -1,0 +1,69 @@
+tag: CachingPatterns
+description: >
+  Caching strategies to improve performance and reduce load on backend systems.
+appliesTo:
+  - Database queries
+  - API responses
+  - Computed results
+  - Static assets
+  - Session data
+patterns:
+  - Cache-aside (lazy loading)
+  - Write-through (immediate consistency)
+  - Write-behind (eventual consistency)
+  - Refresh-ahead (proactive updates)
+  - Cache hierarchy (L1, L2, L3)
+bestPractices:
+  - Set appropriate TTL values
+  - Use cache keys consistently
+  - Handle cache misses gracefully
+  - Implement cache warming strategies
+  - Monitor hit/miss ratios
+  - Use compression for large objects
+invalidation:
+  - Time-based expiration
+  - Event-driven invalidation
+  - Manual cache clearing
+  - Version-based invalidation
+technologies:
+  - Redis (distributed, persistent)
+  - Memcached (in-memory, simple)
+  - Application-level (HashMap, LRU)
+  - CDN (geographic distribution)
+linkedTags:
+  direct_links: ["O1_PrefRule", "AlgorithmComplexity", "PerformanceMonitoring"]
+  cross_category: ["RateLimitGuard", "MicroservicesPatterns", "CloudNativePatterns"]
+  context_triggers: ["caching", "performance", "data_storage", "optimization"]
+  semantic_clusters: ["performance_patterns", "data_access", "system_optimization"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["O1_PrefRule+CachingPatterns", "AlgorithmComplexity+CachingPatterns", "PerformanceMonitoring+CachingPatterns"]
+  activation_triggers: ["data_caching", "response_optimization", "database_performance", "api_acceleration", "memory_efficiency"]
+associative_strength:
+  O1_PrefRule: 0.9
+  AlgorithmComplexity: 0.85
+  PerformanceMonitoring: 0.85
+  RateLimitGuard: 0.8
+  MicroservicesPatterns: 0.75
+  CloudNativePatterns: 0.8
+  IOOptimization: 0.85
+  MemoryManagement: 0.8
+  MessageQueuePatterns: 0.7
+  APIDesignPrinciples: 0.75
+pattern_combinations:
+  performance_optimization_stack:
+    tokens: ["O1_PrefRule", "AlgorithmComplexity", "PerformanceMonitoring"]
+    strength: 0.87
+    context: "Complete performance optimization with caching strategies"
+  distributed_caching:
+    tokens: ["MicroservicesPatterns", "CloudNativePatterns", "MessageQueuePatterns"]
+    strength: 0.78
+    context: "Distributed caching patterns for microservices architecture"
+  resource_management:
+    tokens: ["IOOptimization", "MemoryManagement", "RateLimitGuard"]
+    strength: 0.82
+    context: "Comprehensive resource management with caching optimization"
+tokenBudget: 85

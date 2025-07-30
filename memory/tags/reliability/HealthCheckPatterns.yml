@@ -1,0 +1,114 @@
+tagName: HealthCheckPatterns
+description: "Service health monitoring and availability verification patterns"
+appliesTo:
+  - "Microservices health monitoring"
+  - "Load balancer health checks"
+  - "Container orchestration health probes"
+  - "Service discovery integration"
+  - "Automated failover mechanisms"
+patterns:
+  - "Implement comprehensive health check endpoints"
+  - "Use different health check types for different purposes"
+  - "Implement dependency health aggregation"
+  - "Use circuit breakers to isolate unhealthy dependencies"
+  - "Implement graceful shutdown with health check coordination"
+bestPractices:
+  - "Keep health checks lightweight and fast (<1 second)"
+  - "Include dependency checks but with appropriate timeouts"
+  - "Implement different health check levels (liveness, readiness, startup)"
+  - "Use health check results for automated remediation"
+  - "Log health check failures with sufficient context"
+  - "Implement health check caching to avoid overwhelming dependencies"
+  - "Test health check behavior in failure scenarios"
+healthCheckTypes:
+  - "Liveness: Is the application running and responsive?"
+  - "Readiness: Is the application ready to serve traffic?"
+  - "Startup: Has the application finished initializing?"
+  - "Deep health: Are all critical dependencies available?"
+  - "Shallow health: Basic application responsiveness only"
+healthCheckComponents:
+  - "Application status: Core application functionality"
+  - "Database connectivity: Connection pool and query execution"
+  - "External services: Critical third-party service availability"
+  - "Message queues: Queue connectivity and processing capability"
+  - "File system: Disk space and write permissions"
+  - "Memory usage: Available memory and garbage collection health"
+implementationPatterns:
+  - "HTTP endpoints: /health, /health/live, /health/ready"
+  - "Response format: JSON with status and component details"
+  - "Status codes: 200 for healthy, 503 for unhealthy"
+  - "Timeout handling: Fail fast if dependencies are slow"
+  - "Caching: Cache dependency checks to reduce load"
+dependencyChecking:
+  - "Critical dependencies: Must be healthy for service to be healthy"
+  - "Non-critical dependencies: Can be degraded without failing health"
+  - "Timeout configuration: Short timeouts to prevent cascading delays"
+  - "Circuit breaker integration: Skip checks for known-failed dependencies"
+  - "Fallback mechanisms: Alternative approaches when dependencies fail"
+kubernetesIntegration:
+  - "Liveness probes: Restart containers when health checks fail"
+  - "Readiness probes: Remove from service when not ready"
+  - "Startup probes: Allow longer initialization time"
+  - "Probe configuration: Appropriate intervals and thresholds"
+  - "Resource limits: Ensure probes don't consume excessive resources"
+loadBalancerIntegration:
+  - "Health check endpoints: Dedicated endpoints for load balancer checks"
+  - "Check intervals: Balance between responsiveness and load"
+  - "Failure thresholds: Number of consecutive failures before removal"
+  - "Recovery thresholds: Number of successes needed to re-add"
+  - "Geographic distribution: Health checks from multiple locations"
+monitoringAndAlerting:
+  - "Health check metrics: Success rates and response times"
+  - "Dependency health trends: Track dependency reliability over time"
+  - "Alert on health check failures: Immediate notification for critical services"
+  - "Health check dashboards: Visual representation of system health"
+  - "Correlation with other metrics: Link health to performance and errors"
+gracefulShutdown:
+  - "Health check coordination: Signal unhealthy during shutdown"
+  - "Drain connections: Allow existing requests to complete"
+  - "Cleanup resources: Properly close connections and release resources"
+  - "Shutdown timeouts: Maximum time allowed for graceful shutdown"
+  - "Force shutdown: Hard termination if graceful shutdown fails"
+testingStrategies:
+  - "Health check unit tests: Test individual component health logic"
+  - "Integration tests: Test health checks with real dependencies"
+  - "Failure simulation: Test behavior when dependencies fail"
+  - "Load testing: Ensure health checks perform under load"
+  - "Chaos testing: Verify health check behavior during system failures"
+linkedTags:
+  direct_links: ["CircuitBreakerPatterns", "ObservabilityPatterns", "ChaosEngineering"]
+  cross_category: ["CloudNativePatterns", "MicroservicesPatterns", "PerformanceMonitoring"]
+  context_triggers: ["health_checks", "service_monitoring", "availability", "system_health"]
+  semantic_clusters: ["monitoring_patterns", "service_reliability", "system_observability"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["CircuitBreakerPatterns+HealthCheckPatterns", "ObservabilityPatterns+HealthCheckPatterns", "ChaosEngineering+HealthCheckPatterns"]
+  activation_triggers: ["service_health", "availability_monitoring", "load_balancer_checks", "container_probes", "dependency_monitoring"]
+associative_strength:
+  CircuitBreakerPatterns: 0.85
+  ObservabilityPatterns: 0.9
+  ChaosEngineering: 0.85
+  CloudNativePatterns: 0.85
+  MicroservicesPatterns: 0.8
+  PerformanceMonitoring: 0.85
+  ErrorHandlingPatterns: 0.8
+  APIDesignPrinciples: 0.75
+  TestingStrategy: 0.8
+  MessageQueuePatterns: 0.7
+pattern_combinations:
+  reliability_monitoring:
+    tokens: ["CircuitBreakerPatterns", "ObservabilityPatterns", "ChaosEngineering"]
+    strength: 0.87
+    context: "Complete reliability monitoring with health checks and chaos testing"
+  distributed_health:
+    tokens: ["CloudNativePatterns", "MicroservicesPatterns", "MessageQueuePatterns"]
+    strength: 0.78
+    context: "Health check patterns for distributed cloud-native microservices"
+  performance_reliability:
+    tokens: ["PerformanceMonitoring", "ErrorHandlingPatterns", "TestingStrategy"]
+    strength: 0.82
+    context: "Health monitoring with performance tracking and error handling"
+tokenBudget: 90

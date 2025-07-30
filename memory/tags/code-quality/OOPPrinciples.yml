@@ -1,0 +1,86 @@
+tagName: OOPPrinciples
+description: "Comprehensive object-oriented programming principles beyond SOLID"
+appliesTo:
+  - "Class design and architecture"
+  - "Object modeling and relationships"
+  - "Inheritance hierarchies"
+  - "Interface design"
+  - "Code organization and structure"
+patterns:
+  - "Favor composition over inheritance"
+  - "Program to interfaces, not implementations"
+  - "Encapsulate what varies"
+  - "Use polymorphism to eliminate conditionals"
+  - "Apply the Law of Demeter (don't talk to strangers)"
+coreOOPPrinciples:
+  - "Encapsulation: Hide internal state and implementation details"
+  - "Inheritance: Extend behavior through is-a relationships"
+  - "Polymorphism: One interface, multiple implementations"
+  - "Abstraction: Focus on essential features, hide complexity"
+bestPractices:
+  - "Keep classes focused on single responsibility"
+  - "Use abstract classes for shared implementation"
+  - "Prefer interfaces for contracts and protocols"
+  - "Implement proper equals() and hashCode() methods"
+  - "Override toString() for debugging and logging"
+  - "Use factory methods for complex object creation"
+  - "Apply builder pattern for objects with many parameters"
+compositionPatterns:
+  - "Delegate behavior to composed objects"
+  - "Use strategy pattern for interchangeable algorithms"
+  - "Apply decorator pattern for extending functionality"
+  - "Implement observer pattern for event handling"
+inheritanceGuidelines:
+  - "Use inheritance only for true is-a relationships"
+  - "Keep inheritance hierarchies shallow (max 3-4 levels)"
+  - "Make base classes abstract when appropriate"
+  - "Override methods consistently with Liskov substitution"
+  - "Use final classes/methods to prevent unwanted extension"
+polymorphismTechniques:
+  - "Method overriding for specialized behavior"
+  - "Method overloading for convenience methods"
+  - "Interface implementation for contracts"
+  - "Generic types for type safety and reusability"
+antiPatterns:
+  - "Avoid deep inheritance hierarchies"
+  - "Don't use inheritance for code reuse alone"
+  - "Avoid exposing internal collections directly"
+  - "Don't break encapsulation with public fields"
+  - "Avoid god objects with too many responsibilities"
+linkedTags:
+  direct_links: ["SOLID", "DRY", "RefactoringPatterns"]
+  cross_category: ["APIDesignPrinciples", "TestingStrategy", "MicroservicesPatterns"]
+  context_triggers: ["object_oriented", "class_hierarchy", "inheritance", "polymorphism", "encapsulation"]
+  semantic_clusters: ["oop_fundamentals", "design_patterns", "code_organization"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["SOLID+OOPPrinciples", "DRY+OOPPrinciples", "RefactoringPatterns+OOPPrinciples"]
+  activation_triggers: ["class_design", "object_modeling", "inheritance_design", "interface_creation", "code_structure"]
+associative_strength:
+  SOLID: 0.95
+  DRY: 0.9
+  RefactoringPatterns: 0.85
+  NamingConventions: 0.8
+  CodeCommentsGuideline: 0.75
+  APIDesignPrinciples: 0.8
+  TestingStrategy: 0.75
+  MicroservicesPatterns: 0.7
+  TechnicalDebtManagement: 0.75
+  YAGNI: 0.7
+pattern_combinations:
+  oop_foundation:
+    tokens: ["SOLID", "DRY", "NamingConventions"]
+    strength: 0.93
+    context: "Complete object-oriented programming foundation"
+  design_quality_stack:
+    tokens: ["RefactoringPatterns", "CodeCommentsGuideline", "TechnicalDebtManagement"]
+    strength: 0.88
+    context: "Quality-focused OOP design and maintenance"
+  service_architecture:
+    tokens: ["APIDesignPrinciples", "MicroservicesPatterns", "TestingStrategy"]
+    strength: 0.82
+    context: "OOP principles applied to service architecture"
+tokenBudget: 85

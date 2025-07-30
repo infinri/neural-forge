@@ -1,0 +1,65 @@
+tag: IdempotencyRules
+description: >
+  Ensure operations can be safely repeated without unintended side effects.
+appliesTo:
+  - API endpoints
+  - Database operations
+  - Payment processing
+  - File operations
+  - Message processing
+patterns:
+  - Idempotency keys for requests
+  - Conditional operations (if-match)
+  - Upsert operations (insert or update)
+  - State machines for workflows
+  - Transaction boundaries
+bestPractices:
+  - Use unique request identifiers
+  - Check existing state before operations
+  - Return same response for duplicate requests
+  - Handle partial failures gracefully
+  - Log idempotency violations
+  - Set appropriate timeouts
+implementation:
+  - HTTP: use PUT over POST when possible
+  - Database: use ON CONFLICT clauses
+  - APIs: accept idempotency-key header
+  - Messaging: use message deduplication
+  - Files: check existence before creation
+linkedTags:
+  direct_links: ["RetrySafety", "ErrorSurfaceReduction", "RateLimitGuard"]
+  cross_category: ["APIDesignPrinciples", "TestingStrategy", "ThreatModel"]
+  context_triggers: ["idempotency", "safe_operations", "retry_safety", "duplicate_prevention"]
+  semantic_clusters: ["reliability_patterns", "safe_operations", "api_design"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["RetrySafety+IdempotencyRules", "ErrorSurfaceReduction+IdempotencyRules", "APIDesignPrinciples+IdempotencyRules"]
+  activation_triggers: ["api_safety", "retry_mechanisms", "duplicate_requests", "operation_safety", "state_consistency"]
+associative_strength:
+  RetrySafety: 0.95
+  ErrorSurfaceReduction: 0.9
+  RateLimitGuard: 0.8
+  APIDesignPrinciples: 0.85
+  TestingStrategy: 0.8
+  ThreatModel: 0.75
+  CircuitBreakerPatterns: 0.8
+  MessageQueuePatterns: 0.75
+  MicroservicesPatterns: 0.75
+  EventSourcingCQRS: 0.7
+pattern_combinations:
+  safe_operations_core:
+    tokens: ["RetrySafety", "ErrorSurfaceReduction", "RateLimitGuard"]
+    strength: 0.88
+    context: "Core idempotency patterns for safe and reliable operations"
+  api_reliability:
+    tokens: ["APIDesignPrinciples", "CircuitBreakerPatterns", "TestingStrategy"]
+    strength: 0.8
+    context: "Idempotent API design with reliability and testing patterns"
+  distributed_safety:
+    tokens: ["MessageQueuePatterns", "MicroservicesPatterns", "EventSourcingCQRS"]
+    strength: 0.73
+    context: "Idempotency for distributed systems and event-driven architectures"
+tokenBudget: 75

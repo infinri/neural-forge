@@ -1,0 +1,87 @@
+tagName: SelfImprovement
+description: "AI self-improvement patterns and autonomous learning triggers"
+appliesTo:
+  - "AI code generation improvement"
+  - "Autonomous learning and adaptation"
+  - "Performance optimization feedback"
+  - "Error pattern recognition"
+  - "User preference learning"
+patterns:
+  - "Analyze code generation outcomes for improvement"
+  - "Track successful patterns and replicate them"
+  - "Learn from user corrections and feedback"
+  - "Identify recurring issues and prevent them"
+  - "Adapt coding style to user preferences"
+bestPractices:
+  - "Monitor code quality metrics over time"
+  - "Learn from successful deployments and failures"
+  - "Adapt rule application based on context outcomes"
+  - "Build domain-specific knowledge incrementally"
+  - "Refine pattern recognition through experience"
+  - "Update mental models based on new information"
+improvementTriggers:
+  - "User provides corrections or feedback"
+  - "Code fails testing or review processes"
+  - "Performance issues identified in production"
+  - "Security vulnerabilities discovered"
+  - "New engineering patterns encountered"
+learningMetrics:
+  - "Code review feedback frequency"
+  - "Bug density in generated code"
+  - "Performance optimization success rate"
+  - "User satisfaction with generated solutions"
+  - "Time to successful implementation"
+adaptationStrategies:
+  - "Adjust rule weights based on success rates"
+  - "Learn user-specific coding preferences"
+  - "Recognize domain-specific patterns"
+  - "Improve context recognition accuracy"
+  - "Refine error prediction capabilities"
+feedbackIntegration:
+  - "Parse user corrections for learning opportunities"
+  - "Identify patterns in successful implementations"
+  - "Track which rules lead to best outcomes"
+  - "Learn from code review comments"
+  - "Adapt to team coding standards"
+selfAssessment:
+  - "Evaluate code quality before submission"
+  - "Predict potential issues and address them"
+  - "Assess rule coverage and completeness"
+  - "Monitor improvement trends over time"
+linkedTags:
+  direct_links: ["ContinuousLearning", "MetaCognition", "RecursiveThinking"]
+  cross_category: ["PerformanceOptimization", "CodeMetrics", "TestingStrategy"]
+  context_triggers: ["self_improvement", "learning_adaptation", "performance_feedback", "autonomous_learning"]
+  semantic_clusters: ["continuous_improvement", "adaptive_learning", "self_optimization"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["ContinuousLearning+SelfImprovement", "MetaCognition+SelfImprovement", "RecursiveThinking+SelfImprovement"]
+  activation_triggers: ["feedback_received", "performance_issues", "learning_opportunities", "adaptation_needed", "quality_improvement"]
+associative_strength:
+  ContinuousLearning: 0.95
+  MetaCognition: 0.9
+  RecursiveThinking: 0.85
+  PerformanceOptimization: 0.8
+  CodeMetrics: 0.8
+  TestingStrategy: 0.75
+  CognitiveArchitecture: 0.8
+  FractalMCPPatterns: 0.75
+  TechnicalDebtManagement: 0.7
+  RefactoringPatterns: 0.75
+pattern_combinations:
+  learning_optimization_core:
+    tokens: ["ContinuousLearning", "MetaCognition", "PerformanceOptimization"]
+    strength: 0.92
+    context: "Core self-improvement with learning and optimization"
+  cognitive_adaptation_stack:
+    tokens: ["RecursiveThinking", "CognitiveArchitecture", "FractalMCPPatterns"]
+    strength: 0.85
+    context: "Cognitive self-improvement and adaptive reasoning"
+  quality_improvement:
+    tokens: ["CodeMetrics", "TestingStrategy", "TechnicalDebtManagement"]
+    strength: 0.82
+    context: "Self-improvement applied to code quality and maintenance"
+tokenBudget: 80

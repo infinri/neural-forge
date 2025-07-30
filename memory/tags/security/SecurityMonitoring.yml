@@ -1,0 +1,104 @@
+tagName: SecurityMonitoring
+description: "Security logging, monitoring, and incident detection patterns"
+appliesTo:
+  - "Security event logging and analysis"
+  - "Intrusion detection and prevention"
+  - "Security incident response"
+  - "Compliance monitoring and reporting"
+  - "Threat intelligence integration"
+patterns:
+  - "Log all security-relevant events with sufficient detail"
+  - "Implement real-time security event correlation"
+  - "Use SIEM systems for centralized security monitoring"
+  - "Implement automated threat detection and response"
+  - "Maintain security event retention for compliance"
+bestPractices:
+  - "Never log sensitive data (passwords, tokens, PII)"
+  - "Use structured logging formats (JSON) for better analysis"
+  - "Implement log integrity protection (digital signatures)"
+  - "Set up automated alerts for critical security events"
+  - "Implement proper log rotation and archival policies"
+  - "Use correlation IDs to track security events across systems"
+  - "Implement rate limiting on logging to prevent DoS"
+securityEvents:
+  - "Authentication attempts (success/failure with context)"
+  - "Authorization failures and privilege escalation attempts"
+  - "Data access patterns and anomalous queries"
+  - "Configuration changes and administrative actions"
+  - "Network connection attempts and firewall blocks"
+  - "File system access and modification events"
+  - "Application errors that might indicate attacks"
+monitoringMetrics:
+  - "Failed login attempts per user/IP/time window"
+  - "Unusual data access patterns or volume spikes"
+  - "Geographic anomalies in user access patterns"
+  - "Time-based access pattern deviations"
+  - "API usage patterns and rate limit violations"
+  - "Error rate spikes that might indicate attacks"
+alertingStrategies:
+  - "Immediate alerts for critical security events"
+  - "Threshold-based alerts for suspicious patterns"
+  - "Machine learning-based anomaly detection"
+  - "Correlation-based alerts for multi-stage attacks"
+  - "Time-based alerts for off-hours activities"
+incidentResponse:
+  - "Automated containment for detected threats"
+  - "Incident escalation procedures and contact lists"
+  - "Evidence preservation for forensic analysis"
+  - "Communication plans for security incidents"
+  - "Post-incident review and improvement processes"
+complianceLogging:
+  - "Audit trails for regulatory compliance (SOX, HIPAA, GDPR)"
+  - "Data access logging for privacy compliance"
+  - "Change management logging for operational compliance"
+  - "Retention policies aligned with regulatory requirements"
+  - "Regular compliance reporting and validation"
+threatIntelligence:
+  - "Integration with threat intelligence feeds"
+  - "IP reputation checking and blocking"
+  - "Malware signature detection and prevention"
+  - "Behavioral analysis for advanced persistent threats"
+  - "Threat hunting and proactive security measures"
+logAnalysis:
+  - "Use ELK stack (Elasticsearch, Logstash, Kibana) for log analysis"
+  - "Implement Splunk or similar SIEM solutions"
+  - "Use machine learning for anomaly detection"
+  - "Implement log correlation and pattern matching"
+  - "Create security dashboards for real-time monitoring"
+linkedTags:
+  direct_links: ["ThreatModel", "AuthBypassPrevention", "EncryptionPatterns"]
+  cross_category: ["PerformanceMonitoring", "ObservabilityPatterns", "TestingStrategy"]
+  context_triggers: ["security_logging", "incident_detection", "threat_monitoring", "compliance_audit"]
+  semantic_clusters: ["security_observability", "threat_detection", "incident_response"]
+usage_metadata:
+  effectiveness_score: 0.0
+  usage_count: 0
+  last_applied: null
+  success_contexts: []
+  common_combinations: ["ThreatModel+SecurityMonitoring", "AuthBypassPrevention+SecurityMonitoring", "EncryptionPatterns+SecurityMonitoring"]
+  activation_triggers: ["security_events", "intrusion_detection", "compliance_logging", "threat_intelligence", "incident_response"]
+associative_strength:
+  ThreatModel: 0.95
+  AuthBypassPrevention: 0.9
+  EncryptionPatterns: 0.85
+  PerformanceMonitoring: 0.8
+  ObservabilityPatterns: 0.85
+  TestingStrategy: 0.75
+  OAuth2JWTPatterns: 0.8
+  SecurityHeaders: 0.75
+  DataPrivacyCompliance: 0.8
+  ErrorSurfaceReduction: 0.7
+pattern_combinations:
+  security_intelligence_stack:
+    tokens: ["ThreatModel", "AuthBypassPrevention", "DataPrivacyCompliance"]
+    strength: 0.92
+    context: "Comprehensive security intelligence and monitoring"
+  observability_foundation:
+    tokens: ["PerformanceMonitoring", "ObservabilityPatterns", "ErrorSurfaceReduction"]
+    strength: 0.88
+    context: "Complete system observability with security focus"
+  compliance_monitoring:
+    tokens: ["DataPrivacyCompliance", "EncryptionPatterns", "TestingStrategy"]
+    strength: 0.85
+    context: "Regulatory compliance monitoring and validation"
+tokenBudget: 90
