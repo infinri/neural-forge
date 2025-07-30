@@ -121,7 +121,6 @@ Neural Forge/
 │   │   ├── data/                      # 4 data management tokens
 │   │   └── testing/                   # 5 testing tokens
 │   └── engineering/                   # Rule set manifests
-└── .localrules                       # Project-specific constraints
 ```
 
 ## 🔧 **Token Architecture**
@@ -158,18 +157,31 @@ pattern_combinations:
 
 ## 🚀 **Getting Started**
 
-### 1. **Deployment**
+### **Quick Implementation**
 
-```bash
-# Copy to Windsurf memories directory
-cp -r "Neural Forge" "/home/infinri/.codeium/windsurf/memories/"
-cp "global_rules.md" "/home/infinri/.codeium/windsurf/memories/"
-```
+1. **Clone the repository:**
 
-### 2. **Auto-Activation**
+   ```bash
+   git clone https://github.com/infinri/neural-forge.git
+   ```
 
+2. **Copy to Windsurf memories directory:**
+
+   ```bash
+   cp -r neural-forge "/home/<your-username>/.codeium/windsurf/memories/Neural Forge"
+   ```
+
+3. **Get the global rules file:**
+   - Copy the global rules from: https://gist.github.com/infinri/2c50f85026807312eaf7305568bafe49
+   - Save as `/home/<your-username>/.codeium/windsurf/memories/global_rules.md`
+
+4. **Customize the configuration:**
+   - Edit `global_rules.md` to update file paths with your username
+   - Change the AI name to your preferred name
+   - Verify all paths point to your actual directories
+
+### **Auto-Activation**
 The system automatically activates on every session:
-
 ```bash
 1. LOAD: global_rules.md (governance policies)
 2. READ: Neural Forge/ARCHITECTURE_SUMMARY.md
@@ -178,8 +190,7 @@ The system automatically activates on every session:
 5. ACTIVATE: Associative memory + autonomous operation
 ```
 
-### 3. **Navigation**
-
+### **Navigation**
 - **Quick Start**: `BIBLE_NAVIGATION.md` - Master navigation system
 - **Concept Search**: `ASSOCIATIVE_INDEX.md` - Human-like memory mapping
 - **Category Browse**: `memory/tags/{category}/README.md` - Category overviews
