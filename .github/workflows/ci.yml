@@ -59,9 +59,9 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U forge -d neural_forge" \
-          --health-interval 5s \
-          --health-timeout 5s \
+          --health-cmd "pg_isready -U forge -d neural_forge"
+          --health-interval 5s
+          --health-timeout 5s
           --health-retries 12
     steps:
       - name: Checkout
