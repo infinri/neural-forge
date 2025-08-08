@@ -2,7 +2,7 @@
 
 ## ⚠️ **Work in Progress**
 
-**Neural Forge is actively evolving!** What started as a simple YAML rule framework has grown into a comprehensive AI engineering system that IS a full MCP server with PostgreSQL persistence and autonomous rule application.
+Neural Forge started as a simple YAML rule framework and has evolved into an AI engineering system that functions as an MCP server with PostgreSQL persistence and autonomous rule application.
 
 **Current Status:**
 - ✅ **MCP Server**: Neural Forge IS a complete MCP server with 12 tools for Windsurf/Cursor
@@ -14,6 +14,15 @@
 ---
 
 Neural Forge is an MCP server that provides autonomous AI engineering intelligence for Windsurf/Cursor integration.
+
+## 🌟 **Key Features**
+
+- **🔄 Infrastructure**: PostgreSQL persistence, Docker deployment, CI/CD pipeline
+- **⚡ Simple Setup**: Works after setup with Windsurf
+- **🧠 Autonomous Operation**: Rule application without manual prompting
+- **🎯 Context Detection**: Attempts to detect engineering scenarios
+- **🔗 Cross-Domain Links**: Connects security, performance, architecture, testing
+- **📊 Comprehensive Coverage**: 63 engineering tokens across 8 major categories
 
 ## 🎯 **What is Neural Forge?**
 
@@ -276,11 +285,11 @@ Neural Forge automatically activates on every session:
 
 ## 🤝 **Contributing**
 
-This system is designed to evolve and improve:
+Contributions are welcome:
 
-1. **Token Enhancement**: Add new engineering tokens or enhance existing ones
+1. **Token Enhancement**: Improve existing engineering tokens or add new ones
 2. **Associative Links**: Strengthen connections between related concepts  
-3. **Usage Analytics**: Contribute usage data to improve effectiveness
+3. **Usage Analytics**: Help improve effectiveness through usage data
 4. **Pattern Recognition**: Identify new successful engineering patterns
 
 ## 📄 **License**
@@ -291,6 +300,6 @@ MIT License - See LICENSE file for details
 
 Neural Forge is an experiment in creating more intelligent AI-assisted software engineering. The goal is to move beyond static rule lists toward a system that can contextually apply engineering knowledge.
 
-**The hypothesis**: By implementing associative memory patterns and context recognition, we can create AI systems that apply engineering principles more intelligently and learn from their usage patterns.
+**The hypothesis**: By implementing associative memory patterns and context recognition, AI systems can apply engineering principles more intelligently and learn from usage patterns.
 
 ---
