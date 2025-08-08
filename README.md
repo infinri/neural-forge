@@ -1,18 +1,33 @@
 # Neural Forge 🧠⚡
 
-> **An Experimental AI Engineering Knowledge System**
+> **AI-Powered Engineering Intelligence with MCP Integration**
 
-An attempt to create a more intelligent approach to engineering knowledge management by implementing associative memory patterns and context-aware rule activation.
+## ⚠️ **Work in Progress**
+
+**Neural Forge is actively evolving!** What started as a simple YAML rule framework has grown into a comprehensive AI engineering system that IS a full MCP server with PostgreSQL persistence and autonomous rule application.
+
+**Current Status:**
+- ✅ **MCP Server**: Neural Forge IS a complete MCP server with 12 tools for Windsurf/Cursor
+- ✅ **Rule Framework**: 63 engineering tokens across 8 categories  
+- ✅ **Infrastructure**: Docker, PostgreSQL, CI/CD, observability
+- 🚧 **Pre-Action Governance**: Autonomous rule activation before AI planning (in development)
+- 🚧 **Cross-Session Learning**: Token effectiveness tracking and adaptation (planned)
+
+**Expect rapid iteration** as we continue building toward true autonomous engineering intelligence.
+
+---
+
+Neural Forge is an MCP server that provides autonomous AI engineering intelligence for Windsurf/Cursor integration.
 
 ## 🎯 **What is Neural Forge?**
 
-Neural Forge is an experimental AI engineering system that attempts to:
+Neural Forge is a complete MCP (Model Context Protocol) server that provides:
 
-- **🧠 Mimic Associative Memory**: Implements cascading activation patterns between related concepts
-- **⚡ Apply Rules Contextually**: Aims to silently apply relevant engineering principles based on context
-- **🔄 Track Usage**: Designed to learn from usage patterns (implementation pending)
-- **🌐 Connect Domains**: Links knowledge across security, performance, architecture, and testing
-- **🎯 Recognize Context**: Attempts to automatically detect engineering scenarios and activate relevant knowledge
+- **🧠 Autonomous Engineering Intelligence**: 63 token-compressed rules that activate automatically based on context
+- **⚡ Full MCP Protocol**: Complete JSON-RPC implementation with 12 tools exposed to Windsurf/Cursor
+- **🔄 PostgreSQL Persistence**: Database with async SQLAlchemy and Alembic migrations
+- **🌐 Comprehensive Coverage**: Security, performance, architecture, testing, AI learning, and more
+- **🎯 Context-Aware Activation**: Automatically detects engineering scenarios and applies relevant best practices
 
 ## 🏗️ **System Architecture**
 
@@ -111,39 +126,91 @@ Tokens are YAML-based, with linked tags and usage metadata. For details and the 
 - `cognitive-engine.md` (how tokens are parsed/applied)
 - `BIBLE_NAVIGATION.md` (canonical index and associative mappings)
 
-## 🚀 **Getting Started**
+## 🚀 **Quick Start**
 
-### **Quick Implementation**
+### **1. Clone and Setup**
 
-1. **Clone the repository:**
+```bash
+git clone https://github.com/infinri/neural-forge.git
+cd neural-forge
 
-   ```bash
-   git clone https://github.com/infinri/neural-forge.git
-   ```
+# Create virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
-2. **Copy to Windsurf memories directory:**
+### **2. Start MCP Server**
 
-   ```bash
-   cp -r neural-forge "/home/<your-username>/.codeium/windsurf/memories/Neural Forge"
-   ```
+```bash
+# Interactive bootstrap (recommended)
+scripts/bootstrap.sh
 
-3. **Get the global rules file:**
-   - Copy the global rules from: https://gist.github.com/infinri/2c50f85026807312eaf7305568bafe49
-   - Save as `/home/<your-username>/.codeium/windsurf/memories/global_rules.md`
+# Manual setup
+docker compose up -d
+make db-upgrade
+python -m server.main
+```
 
-4. **Customize the configuration:**
-   - Edit `global_rules.md` to update file paths with your username
-   - Change the AI name to your preferred name
-   - Verify all paths point to your actual directories
+### **3. Connect to Windsurf**
 
-5. **Connect to your projects (optional):**
-   - Copy the local rules from: https://gist.github.com/infinri/e698ed08f10d8ca8ec9fb99203d7a265
-   - Paste into `.windsurfrules` file in your project root
-   - This enables Neural Forge integration for specific projects
+Add to your `~/.codeium/windsurf/mcp_config.json`:
 
-### **Auto-Activation**
+```json
+{
+  "mcpServers": {
+    "neural-forge": {
+      "serverUrl": "http://127.0.0.1:8081/sse?token=dev"
+    }
+  }
+}
+```
 
-The system automatically activates on every session:
+### **4. Verify Connection**
+
+```bash
+# Test server
+curl http://127.0.0.1:8081/sse?token=dev
+
+# Test tools in Windsurf
+# All 12 Neural Forge tools should be available
+```
+
+## 🛠️ **Available Tools**
+
+Neural Forge exposes 12 tools via the MCP interface:
+
+### **Memory Operations**
+- `add_memory` - Store memories with tags and metadata
+- `get_memory` - Retrieve specific memory by ID  
+- `search_memory` - Semantic search across stored memories
+
+### **Governance & Rules**
+- `get_governance_policies` - Retrieve governance policies
+- `get_active_tokens` - Get all 63 active engineering tokens
+- `get_rules` - Get specific rule categories
+
+### **Task Management**
+- `enqueue_task` - Add tasks to processing queue
+- `get_next_task` - Retrieve next pending task
+- `update_task_status` - Update task status
+
+### **Code Tracking & Logging**
+- `save_diff` - Save code diffs with metadata
+- `list_recent` - List recent diffs/memories/tasks
+- `log_error` - Log errors with context
+
+## 📚 **Documentation**
+
+- **[Installation Guide](docs/INSTALLATION_GUIDE.md)** - Complete setup instructions
+- **[MCP Server Guide](docs/MCP_SERVER_GUIDE.md)** - Server configuration and API reference
+- **[Architecture Summary](ARCHITECTURE_SUMMARY.md)** - System architecture and design
+- **[Cognitive Engine](cognitive-engine.md)** - How autonomous rule application works
+- **[Bible Navigation](BIBLE_NAVIGATION.md)** - Master index of all engineering rules
+
+## 🎯 **Auto-Activation**
+
+Neural Forge automatically activates on every session:
 
 ```bash
 1. LOAD: global_rules.md (governance policies)
@@ -231,5 +298,3 @@ Neural Forge is an experiment in creating more intelligent AI-assisted software 
 **The hypothesis**: By implementing associative memory patterns and context recognition, we can create AI systems that apply engineering principles more intelligently and learn from their usage patterns.
 
 ---
-
-**🧪 Interested in experimenting with associative AI engineering knowledge? Try Neural Forge and help us validate this approach!**
