@@ -1,7 +1,5 @@
 # Neural Forge 🧠⚡
 
-> **AI-Powered Engineering Intelligence with MCP Integration**
-
 ## ⚠️ **Work in Progress**
 
 **Neural Forge is actively evolving!** What started as a simple YAML rule framework has grown into a comprehensive AI engineering system that IS a full MCP server with PostgreSQL persistence and autonomous rule application.
