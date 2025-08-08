@@ -11,8 +11,6 @@
 - 🚧 **Pre-Action Governance**: Autonomous rule activation before AI planning (in development)
 - 🚧 **Cross-Session Learning**: Token effectiveness tracking and adaptation (planned)
 
-**Expect rapid iteration** as we continue building toward true autonomous engineering intelligence.
-
 ---
 
 Neural Forge is an MCP server that provides autonomous AI engineering intelligence for Windsurf/Cursor integration.
