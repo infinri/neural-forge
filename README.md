@@ -17,12 +17,13 @@ Neural Forge is an MCP server that provides autonomous AI engineering intelligen
 
 ## 🌟 **Key Features**
 
-- **🔄 Infrastructure**: PostgreSQL persistence, Docker deployment, CI/CD pipeline
-- **⚡ Simple Setup**: Works after setup with Windsurf
-- **🧠 Autonomous Operation**: Rule application without manual prompting
-- **🎯 Context Detection**: Attempts to detect engineering scenarios
-- **🔗 Cross-Domain Links**: Connects security, performance, architecture, testing
-- **📊 Comprehensive Coverage**: 63 engineering tokens across 8 major categories
+- **🧠 Autonomous Pre-Action Governance**: Automatically detects AI planning/coding activities and provides relevant engineering guidance before implementation
+- **Engineering Rule Framework**: Comprehensive collection of battle-tested engineering principles, patterns, and best practices
+- **Associative Memory System**: Human-like memory with cascading activation and context-aware rule retrieval
+- **MCP Server Integration**: Full Model Context Protocol support for seamless Windsurf/Cursor integration
+- **Real-Time Context Analysis**: Intelligent detection of security, performance, architecture, and code quality concerns
+- **Cross-Session Learning**: Persistent memory and effectiveness tracking across development sessions
+- **Token-Based Architecture**: Modular, reusable knowledge units with associative relationships across 8 major categories
 
 ## 🎯 **What is Neural Forge?**
 
@@ -33,6 +34,28 @@ Neural Forge is a complete MCP (Model Context Protocol) server that provides:
 - **🔄 PostgreSQL Persistence**: Database with async SQLAlchemy and Alembic migrations
 - **🌐 Comprehensive Coverage**: Security, performance, architecture, testing, AI learning, and more
 - **🎯 Context-Aware Activation**: Automatically detects engineering scenarios and applies relevant best practices
+
+## 🧠 **Autonomous Pre-Action Governance**
+
+Neural Forge's flagship feature automatically analyzes AI conversations to detect planning and coding activities, then provides relevant engineering guidance **before** implementation begins.
+
+### How It Works
+
+1. **Context Detection**: Analyzes user messages for engineering activities (API design, security implementation, database design, etc.)
+2. **Confidence Scoring**: Assigns confidence levels to detected activities (0-100%)
+3. **Rule Retrieval**: Dynamically loads relevant governance rules from the Neural Forge knowledge base
+4. **Guidance Synthesis**: Formats actionable recommendations with priority warnings
+5. **Seamless Integration**: Delivers guidance through the MCP protocol to Windsurf/Cursor
+
+### Example Usage
+
+```bash
+# User message: "I want to build a secure REST API with authentication"
+# Neural Forge automatically detects: API Design (40% confidence)
+# Provides guidance on: Security patterns, input validation, authentication best practices
+```
+
+**Result**: AI receives targeted engineering guidance before writing any code, ensuring best practices are applied from the start.
 
 ## 🏗️ **System Architecture**
 

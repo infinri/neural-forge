@@ -98,6 +98,19 @@ async def handle_mcp_message(message: dict) -> dict:
     elif method == "tools/list":
         tools = [
             {
+                "name": "activate_governance",
+                "description": "Activate pre-action governance analysis for AI planning/coding activities",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "user_message": {"type": "string"},
+                        "conversation_history": {"type": "array", "items": {"type": "string"}},
+                        "force_activation": {"type": "boolean"}
+                    },
+                    "required": ["user_message"]
+                }
+            },
+            {
                 "name": "add_memory",
                 "description": "Add a new memory item",
                 "inputSchema": {
@@ -314,6 +327,7 @@ async def metrics():
 
 # Tool registration stubs
 from .tools import (
+    activate_governance,
     add_memory,
     enqueue_task,
     get_active_tokens,
@@ -329,6 +343,7 @@ from .tools import (
 )
 
 TOOLS.update({
+    "activate_governance": activate_governance.activate_governance,
     "add_memory": add_memory.handler,
     "get_memory": get_memory.handler,
     "search_memory": search_memory.handler,

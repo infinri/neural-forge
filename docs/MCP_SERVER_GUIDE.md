@@ -12,6 +12,7 @@ The Neural Forge MCP server provides a JSON-RPC interface over Server-Sent Event
 - `search_memory` - Semantic search across stored memories
 
 ### **Governance & Rules**
+- `activate_governance` - **NEW**: Autonomous pre-action governance analysis for AI planning/coding activities
 - `get_governance_policies` - Retrieve governance policies from memory/*.rules.yml
 - `get_active_tokens` - Get all 63 active engineering tokens from memory/tags/*
 - `get_rules` - Get specific rule categories and their content
@@ -199,3 +200,98 @@ curl -X POST http://127.0.0.1:8081/search_memory \
   -H "Content-Type: application/json" \
   -d '{"query": "search terms", "limit": 10}'
 ```
+
+## 🧠 **Autonomous Pre-Action Governance**
+
+### **Overview**
+
+The `activate_governance` tool is Neural Forge's flagship feature that automatically analyzes AI conversations to detect engineering activities and provides relevant guidance **before** implementation begins.
+
+### **How It Works**
+
+1. **Context Detection**: Analyzes user messages for engineering activities (API design, security, database design, etc.)
+2. **Confidence Scoring**: Assigns confidence levels to detected activities (0-100%)
+3. **Rule Retrieval**: Dynamically loads relevant governance rules from Neural Forge memory/tags
+4. **Guidance Synthesis**: Formats actionable recommendations with priority warnings
+5. **Seamless Integration**: Returns structured guidance for AI planning processes
+
+### **Tool Schema**
+
+```json
+{
+  "name": "activate_governance",
+  "description": "Activate pre-action governance analysis for AI planning/coding activities",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "user_message": {"type": "string"},
+      "conversation_history": {"type": "array", "items": {"type": "string"}},
+      "force_activation": {"type": "boolean"}
+    },
+    "required": ["user_message"]
+  }
+}
+```
+
+### **Example Usage**
+
+#### **MCP JSON-RPC Call**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "activate_governance",
+    "arguments": {
+      "user_message": "I want to build a secure REST API with authentication",
+      "conversation_history": ["I'm starting a new web project", "It needs to handle user data"]
+    }
+  },
+  "id": 1
+}
+```
+
+#### **Response**
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "success": true,
+    "governance_activated": true,
+    "guidance": "🧠 **NEURAL FORGE GOVERNANCE ACTIVATED**\n\n**Activity Detected:** Api Design\n**Confidence:** 40.0%\n\n**Summary:** For Api Design activities, 10 relevant governance rules apply.\n\n**⚠️ Important Warnings:**\n⚠️ API design detected - ensure proper authentication and input validation\n\n**Recommendation:** Apply these governance principles during planning and implementation.",
+    "message": "Neural Forge governance activated - apply these principles during planning and implementation",
+    "timestamp": "2025-08-08T21:16:08.483505Z"
+  },
+  "id": 1
+}
+```
+
+#### **HTTP API Call**
+```bash
+curl -X POST "http://127.0.0.1:8080/tool/activate_governance" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer dev" \
+  -d '{
+    "user_message": "I want to build a secure REST API with authentication"
+  }'
+```
+
+### **Activation Scenarios**
+
+The governance system automatically activates for these engineering activities:
+
+- **API Design**: REST APIs, GraphQL, authentication systems
+- **Security Implementation**: Authentication, authorization, input validation
+- **Database Design**: Schema design, data modeling, migrations
+- **Architecture Planning**: Microservices, system design, scalability
+- **Performance Optimization**: Caching, algorithms, bottlenecks
+- **Code Refactoring**: Clean code, SOLID principles, maintainability
+- **Testing Strategy**: Unit tests, integration tests, test automation
+- **Deployment**: CI/CD, containerization, production deployment
+
+### **Configuration**
+
+- **Activation Threshold**: 10% confidence minimum (configurable)
+- **Rule Sources**: Loads from `memory/tags/*` directory
+- **Response Time**: Typically <10ms for governance analysis
+- **Token Integration**: Uses all 63 Neural Forge engineering tokens
