@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from logging.config import fileConfig
 import os
-from pathlib import Path
+from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config, pool
+
 from alembic import context
 
 # this is the Alembic Config object, which provides

@@ -6,8 +6,8 @@ as an MCP tool that can be called by Windsurf/Cursor to automatically
 apply Neural Forge governance before AI planning and coding activities.
 """
 
-import json
-from typing import Dict, Any, List, Optional
+from typing import Any, Dict
+
 from server.governance.pre_action_engine import activate_pre_action_governance
 from server.utils.logger import log_json
 from server.utils.time import utc_now_iso_z

@@ -1,12 +1,12 @@
 import asyncio
+import json
 import os
 import time
 from typing import Any, Dict
-import json
-from fastapi import FastAPI, Request, Header, HTTPException
-from fastapi.responses import StreamingResponse, Response, JSONResponse
-from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
-import logging
+
+from fastapi import FastAPI, Header, HTTPException, Request
+from fastapi.responses import JSONResponse, Response, StreamingResponse
+from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 
 from server.utils.logger import log_json
 

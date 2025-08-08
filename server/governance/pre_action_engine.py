@@ -6,13 +6,11 @@ It detects when AI is about to plan/code, analyzes context, retrieves relevant
 Neural Forge rules, and provides governance guidance automatically.
 """
 
+import logging
 import re
-import json
-from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
 from enum import Enum
-import asyncio
-import logging
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -140,7 +138,11 @@ class PreActionGovernanceEngine:
             ActivityType.DEPLOYMENT: ["reliability", "security", "performance"]
         }
     
-    async def analyze_context(self, user_message: str, conversation_history: List[str] = None) -> GovernanceContext:
+    async def analyze_context(
+        self, 
+        user_message: str, 
+        conversation_history: Optional[List[str]] = None
+    ) -> GovernanceContext:
         """
         Analyze user message and conversation to detect AI activity context
         
@@ -163,7 +165,7 @@ class PreActionGovernanceEngine:
         detected_keywords = []
         
         for activity_type, patterns in self.activity_patterns.items():
-            score = 0
+            score = 0.0
             activity_keywords = []
             
             for pattern in patterns:
@@ -263,12 +265,11 @@ class PreActionGovernanceEngine:
         """Load rules for a specific domain from Neural Forge memory"""
         try:
             # Import Neural Forge clients to access real rule data
-            import sys
             import os
+            import sys
             sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
             
             from server.nf_client.tokens import fetch_tokens
-            from server.nf_client.governance import fetch_policies
             
             # Map domain names to Neural Forge categories
             domain_mapping = {
@@ -474,7 +475,7 @@ governance_engine = PreActionGovernanceEngine()
 
 async def activate_pre_action_governance(
     user_message: str, 
-    conversation_history: List[str] = None
+    conversation_history: Optional[List[str]] = None
 ) -> Optional[str]:
     """
     Main entry point for pre-action governance activation

@@ -6,12 +6,12 @@ for AI planning and coding activities.
 """
 
 from .pre_action_engine import (
-    PreActionGovernanceEngine,
+    ActivityType,
     GovernanceContext,
     GovernanceRecommendation,
-    ActivityType,
+    PreActionGovernanceEngine,
     activate_pre_action_governance,
-    governance_engine
+    governance_engine,
 )
 
 __all__ = [
