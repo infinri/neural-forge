@@ -1,0 +1,20 @@
+- id: MCP-BOOT-001
+  title: Scaffold FastAPI MCP server
+  status: Queued
+  priority: 10
+  payload:
+    steps:
+      - Create core endpoints and /tool/{name} POST
+      - Wire tool registry and auth
+- id: MCP-BOOT-002
+  title: Implement Postgres schema + migrations
+  status: Queued
+  priority: 9
+- id: MCP-BOOT-003
+  title: Integrate Neural Forge governance API
+  status: Queued
+  priority: 9
+- id: MCP-BOOT-004
+  title: Implement hybrid retrieval (FTS + pgvector)
+  status: Queued
+  priority: 8

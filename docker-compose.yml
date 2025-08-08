@@ -1,0 +1,59 @@
+services:
+  server:
+    build: .
+    container_name: nf-mcp-server
+    environment:
+      - MCP_TOKEN=dev
+      - MCP_DB_PATH=/data/mcp.db
+      - POSTGRES_DB=${POSTGRES_DB:-neural_forge}
+      - POSTGRES_USER=${POSTGRES_USER:-forge}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-forge}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-forge}:${POSTGRES_PASSWORD:-forge}@postgres:5432/${POSTGRES_DB:-neural_forge}
+    volumes:
+      - mcp-data:/data
+    ports:
+      - "8081:8080"
+
+  postgres:
+    image: postgres:16
+    container_name: nf-postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-neural_forge}
+      - POSTGRES_USER=${POSTGRES_USER:-forge}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-forge}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-forge} -d ${POSTGRES_DB:-neural_forge}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: nf-prometheus
+    depends_on:
+      - server
+    volumes:
+      - ./observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: nf-grafana
+    depends_on:
+      - prometheus
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    volumes:
+      - ./observability/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./observability/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./observability/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "3000:3000"
+
+volumes:
+  mcp-data:
+  pg-data:

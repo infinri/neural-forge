@@ -66,24 +66,67 @@ Welcome to the Neural Forge Bible navigation system. This master index provides 
 
 ---
 
-## 📊 **Category Browser**
-
-| Category | Tokens | Maturity | Usage Frequency | Key Focus |
-|----------|--------|----------|-----------------|-----------|
-| **Security** | 10 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | Protection, Authentication, Encryption |
-| **Code Quality** | 9 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | SOLID, DRY, Clean Code, Refactoring |
-| **AI Learning** | 13 | ⭐⭐⭐⭐ | ⭐⭐⭐ | Cognitive Patterns, ML, Automation |
-| **Performance** | 6 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Optimization, Caching, Algorithms |
-| **Reliability** | 8 | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Error Handling, Resilience, Recovery |
-| **Architecture** | 8 | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Microservices, Events, Distributed |
-| **Data** | 4 | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Database, Privacy, Consistency |
-| **Testing** | 5 | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Strategy, Automation, Quality Gates |
-
----
-
 ## 🎯 **Contextual Navigation**
 
 *This associative index transforms the Neural Forge Bible from a static knowledge repository into a dynamic, intelligent system that mirrors human associative memory patterns for enhanced cognitive performance and autonomous operation.*
+
+---
+
+## 🧠 Associative Mappings
+
+### Concept Mappings (canonical)
+
+```yaml
+concept_mappings:
+  performance:
+    primary_tokens: ["O1_PrefRule", "CachingPatterns", "AlgorithmComplexity"]
+    secondary_tokens: ["DRY", "SOLID", "DatabaseOptimization", "MemoryManagement"]
+    context_triggers: ["performance_critical", "scale", "optimization", "bottleneck"]
+    semantic_clusters: ["efficiency", "speed", "resource_usage", "scalability"]
+
+  caching:
+    primary_tokens: ["CachingPatterns", "MemoryManagement"]
+    secondary_tokens: ["DatabaseOptimization", "O1_PrefRule", "PerformanceMonitoring"]
+    context_triggers: ["cache_miss", "memory_pressure", "response_time"]
+    semantic_clusters: ["storage", "retrieval", "invalidation", "consistency"]
+
+  security:
+    primary_tokens: ["ThreatModel", "InputSanitization", "AuthBypassPrevention"]
+    secondary_tokens: ["ErrorSurfaceReduction", "RateLimitGuard", "EncryptionPatterns"]
+    context_triggers: ["security_sensitive", "authentication", "payment_processing", "data_breach"]
+    semantic_clusters: ["protection", "validation", "encryption", "access_control"]
+
+  authentication:
+    primary_tokens: ["OAuth2JWTPatterns", "AuthBypassPrevention", "ZeroTrustArchitecture"]
+    secondary_tokens: ["SecretsManagement", "SecurityHeaders", "SecurityMonitoring"]
+    context_triggers: ["login", "authorization", "token_validation", "session_management"]
+    semantic_clusters: ["identity", "verification", "permissions", "trust"]
+
+  refactoring:
+    primary_tokens: ["DRY", "SOLID", "RefactoringPatterns"]
+    secondary_tokens: ["CodeCommentsGuideline", "TestingStrategy", "TechnicalDebtManagement"]
+    context_triggers: ["legacy_refactoring", "technical_debt", "code_organization", "maintenance"]
+    semantic_clusters: ["abstraction", "modularity", "clarity", "maintainability"]
+```
+
+### Cross-Category Activation Patterns
+
+```yaml
+common_patterns:
+  security_performance:
+    tokens: ["ThreatModel", "O1_PrefRule", "CachingPatterns", "RateLimitGuard"]
+    strength: 0.9
+    context: "secure_high_performance_systems"
+
+  quality_maintainability:
+    tokens: ["DRY", "SOLID", "TestingStrategy", "RefactoringPatterns"]
+    strength: 0.95
+    context: "maintainable_code_development"
+
+  architecture_reliability:
+    tokens: ["MicroservicesPatterns", "CircuitBreaker", "EventSourcing", "HealthChecks"]
+    strength: 0.85
+```
 
 ### **By Project Phase**
 
@@ -150,29 +193,19 @@ problem_domains:
 
 ---
 
-## 📈 **Usage Analytics Dashboard**
+## 📊 **Category Browser**
 
-### **Most Activated Tokens (Simulated Data)**
+| Category | Tokens | Maturity | Usage Frequency | Key Focus |
+|----------|--------|----------|-----------------|-----------|
+| **Security** | 10 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | Protection, Authentication, Encryption |
+| **Code Quality** | 9 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | SOLID, DRY, Clean Code, Refactoring |
+| **AI Learning** | 13 | ⭐⭐⭐⭐ | ⭐⭐⭐ | Cognitive Patterns, ML, Automation |
+| **Performance** | 6 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Optimization, Caching, Algorithms |
+| **Reliability** | 8 | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Error Handling, Resilience, Recovery |
+| **Architecture** | 8 | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Microservices, Events, Distributed |
+| **Data** | 4 | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Database, Privacy, Consistency |
+| **Testing** | 5 | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Strategy, Automation, Quality Gates |
 
-1. **SOLID** - 847 activations (Quality Foundation)
-2. **DRY** - 623 activations (Code Duplication Prevention)
-3. **InputSanitization** - 589 activations (Security Validation)
-4. **TestingStrategy** - 534 activations (Quality Assurance)
-5. **ThreatModel** - 498 activations (Security Planning)
-
-### **Highest Success Rate Combinations**
-
-1. **SOLID + DRY + TestingStrategy** - 94% success rate
-2. **ThreatModel + InputSanitization + SecurityHeaders** - 91% success rate
-3. **CachingPatterns + DatabaseOptimization + O1_PrefRule** - 89% success rate
-4. **MicroservicesPatterns + CircuitBreaker + HealthChecks** - 87% success rate
-5. **RefactoringPatterns + TechnicalDebtManagement + CodeMetrics** - 85% success rate
-
-### **Emerging Patterns**
-
-- **AI-Security Integration**: Growing usage of ML tokens with security patterns
-- **Performance-First Development**: Increased early-stage performance token activation
-- **Resilience by Design**: Higher adoption of reliability patterns in new projects
 
 ---
 
@@ -226,7 +259,7 @@ Based on your current context, the system automatically suggests relevant token 
 
 ## 📚 **Documentation Links**
 
-- **[Associative Index](ASSOCIATIVE_INDEX.md)** - Concept-to-token mappings and activation patterns
+- **Associative Mappings (this file)** - See the "Associative Mappings" section above
 - **[Cognitive Engine](cognitive-engine.md)** - AI instruction manual for autonomous operation
 - **[Architecture Summary](ARCHITECTURE_SUMMARY.md)** - Complete Bible structure overview
 - **[Category READMEs](memory/tags/)** - Detailed category-specific navigation guides

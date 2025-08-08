@@ -103,57 +103,13 @@ learning_mechanisms:
 
 ## 📁 **Project Structure**
 
-```bash
-Neural Forge/
-├── README.md                           # This file
-├── ARCHITECTURE_SUMMARY.md             # Complete system overview
-├── cognitive-engine.md                 # AI instruction manual & associative engine
-├── ASSOCIATIVE_INDEX.md                # Human-like memory mapping system
-├── BIBLE_NAVIGATION.md                 # Master navigation & search
-├── memory/
-│   ├── tags/                          # 63 Optimized Engineering Tokens
-│   │   ├── security/                  # 10 security tokens
-│   │   ├── code-quality/              # 9 code quality tokens
-│   │   ├── ai-learning/               # 13 AI learning tokens
-│   │   ├── architecture/              # 8 architecture tokens
-│   │   ├── performance/               # 6 performance tokens
-│   │   ├── reliability/               # 8 reliability tokens
-│   │   ├── data/                      # 4 data management tokens
-│   │   └── testing/                   # 5 testing tokens
-│   └── engineering/                   # Rule set manifests
-```
+See the full, authoritative layout in `ARCHITECTURE_SUMMARY.md`.
 
 ## 🔧 **Token Architecture**
 
-Each token includes comprehensive associative metadata:
-
-```yaml
-# Example: APIDesignPrinciples.yml
-linkedTags:
-  direct_links: ["MicroservicesPatterns", "EventSourcingCQRS", "OAuth2JWTPatterns"]
-  cross_category: ["InputSanitization", "TestingPrinciples", "PerformanceMonitoring"]
-  context_triggers: ["api_design", "rest_api", "graphql", "microservices"]
-  semantic_clusters: ["architecture_patterns", "api_patterns", "design_principles"]
-
-usage_metadata:
-  effectiveness_score: 0.0
-  usage_count: 0
-  success_contexts: []
-  common_combinations: ["APIDesignPrinciples+MicroservicesPatterns+OAuth2JWTPatterns"]
-
-associative_strength:
-  MicroservicesPatterns: 0.9
-  EventSourcingCQRS: 0.8
-  OAuth2JWTPatterns: 0.8
-  InputSanitization: 0.85
-  TestingPrinciples: 0.8
-
-pattern_combinations:
-  api_security_foundation:
-    tokens: ["APIDesignPrinciples", "InputSanitization", "AuthBypassPrevention"]
-    strength: 0.85
-    context: "Secure API development with authentication and input validation"
-```
+Tokens are YAML-based, with linked tags and usage metadata. For details and the associative model, see:
+- `cognitive-engine.md` (how tokens are parsed/applied)
+- `BIBLE_NAVIGATION.md` (canonical index and associative mappings)
 
 ## 🚀 **Getting Started**
 
@@ -199,8 +155,7 @@ The system automatically activates on every session:
 
 ### **Navigation**
 
-- **Quick Start**: `BIBLE_NAVIGATION.md` - Master navigation system
-- **Concept Search**: `ASSOCIATIVE_INDEX.md` - Human-like memory mapping
+- **Canonical Index**: `BIBLE_NAVIGATION.md` - Master navigation and associative mappings
 - **Category Browse**: `memory/tags/{category}/README.md` - Category overviews
 - **Token Details**: `memory/tags/{category}/{token}.yml` - Individual tokens
 

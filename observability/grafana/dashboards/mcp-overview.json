@@ -1,0 +1,77 @@
+{
+  "annotations": {"list": []},
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Requests (total)",
+      "targets": [
+        {
+          "expr": "sum(increase(mcp_requests_total[5m]))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0}
+    },
+    {
+      "type": "stat",
+      "title": "Errors (total)",
+      "targets": [
+        {
+          "expr": "sum(increase(mcp_errors_total[5m]))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0}
+    },
+    {
+      "type": "timeseries",
+      "title": "Requests by endpoint",
+      "targets": [
+        {
+          "expr": "sum by (endpoint) (rate(mcp_requests_total[1m]))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {"h": 10, "w": 12, "x": 0, "y": 4}
+    },
+    {
+      "type": "timeseries",
+      "title": "Errors by endpoint",
+      "targets": [
+        {
+          "expr": "sum by (endpoint,code) (rate(mcp_errors_total[1m]))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {"h": 10, "w": 12, "x": 12, "y": 4}
+    },
+    {
+      "type": "timeseries",
+      "title": "Latency (p50/p90)",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.5, sum by (le, endpoint) (rate(mcp_request_duration_seconds_bucket[1m])))",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.9, sum by (le, endpoint) (rate(mcp_request_duration_seconds_bucket[1m])))",
+          "refId": "B"
+        }
+      ],
+      "gridPos": {"h": 10, "w": 24, "x": 0, "y": 14}
+    }
+  ],
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": ["mcp", "neural-forge"],
+  "templating": {"list": []},
+  "time": {"from": "now-6h", "to": "now"},
+  "timezone": "",
+  "title": "MCP Overview",
+  "version": 1
+}

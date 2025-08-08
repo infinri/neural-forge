@@ -1,0 +1,191 @@
+# Neural Forge - Security & Privacy .gitignore
+
+# === RUNTIME SECRETS (Generated on setup) ===
+# Environment files with actual secrets/credentials
+.env
+.env.local
+.env.*.local
+
+# Generated API keys and runtime credentials
+*api-key*
+*secret-key*
+*private-key*
+*access-token*
+*refresh-token*
+*.pem
+*.key
+*.crt
+
+# === PROPRIETARY BLUEPRINTS (Keep Neural Forge core docs) ===
+# Only exclude external/proprietary blueprints, not Neural Forge architecture
+*blueprint*.md
+*BLUEPRINT*
+blueprint/
+blueprints/
+# But keep Neural Forge core architecture docs:
+!ARCHITECTURE_SUMMARY.md
+!cognitive-engine.md
+!BIBLE_NAVIGATION.md
+
+# Trade secrets and confidential external docs
+*trade-secret*
+*proprietary*
+*confidential*
+*internal*
+
+# === DEVELOPMENT & BUILD ===
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+.env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.coverage.*
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+tests/
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Linting
+.ruff_cache/
+
+# === DATABASES & DATA ===
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+data/
+*.sql.backup
+
+# Logs
+*.log
+logs/
+
+# === DOCKER & INFRASTRUCTURE ===
+# Docker
+.dockerignore
+
+# === IDE & EDITOR ===
+# VSCode
+.vscode/
+*.code-workspace
+
+# JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Vim
+*.swp
+*.swo
+*~
+
+# === OPERATING SYSTEM ===
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# === TEMPORARY & CACHE ===
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Cache directories
+cache/
+.cache/
+
+# === PROJECT SPECIFIC ===
+# Windsurf brain files (contain session data, but keep config)
+.windsurf/brain/
+.windsurf/memories/
+# Keep: .windsurf/mcp_config.json (if needed)
+
+# Runtime data directories (generated)
+data/
+observability/data/
+grafana/data/
+prometheus/data/
+
+# Generated backup files
+*.backup
+*.bak
+*~
+
+# === KEEP NEURAL FORGE ESSENTIALS ===
+# These are REQUIRED for Neural Forge to function:
+!memory/
+!memory/**/*.yml
+!memory/**/*.yaml
+!server/
+!server/**/*.py
+!tests/
+!tests/**/*.py
+!scripts/
+!scripts/**/*.sh
+!.env.example/home/infinri/Initrix/Projects/Neural Forge/windsurf-mcp-memory-blueprint-v1.3-neural-forge.md
+!requirements.txt
+!Makefile
+!docker-compose.yml
+!Dockerfile
+!alembic.ini
+!alembic/
+!pyproject.toml
+
+# === DOCUMENTATION DRAFTS ===
+# Work-in-progress docs that shouldn't be committed
+*draft*
+*wip*
+*todo*
+NOTES.md
+notes.md
+scratch.md
+windsurf-mcp-memory-blueprint-v1.3-neural-forge.md
