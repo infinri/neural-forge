@@ -35,7 +35,7 @@ jobs:
       - name: Lint
         run: |
           . .venv/bin/activate
-          ruff .
+          ruff check .
           mypy --ignore-missing-imports server
 
       - name: Run tests
