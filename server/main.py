@@ -10,6 +10,11 @@ from fastapi.responses import JSONResponse, Response, StreamingResponse
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 
 from server.core import orchestrator
+from server.observability.tracing import (
+    instrument_fastapi_app,
+    is_tracing_enabled,
+    setup_tracing,
+)
 from server.utils.logger import log_json
 
 MCP_TOKEN = os.getenv("MCP_TOKEN", "change-me")
@@ -33,6 +38,13 @@ async def lifespan(app: FastAPI):
     if env != "dev" and MCP_TOKEN == "change-me":
         log_json("error", "startup.invalid_token_in_prod", env=env)
         raise RuntimeError("MCP_TOKEN must not be 'change-me' when ENV != dev")
+    # Tracing init (optional)
+    try:
+        if is_tracing_enabled():
+            if setup_tracing("neural-forge-mcp", SERVER_VERSION):
+                instrument_fastapi_app(app)
+    except Exception as e:
+        log_json("warning", "otel.init_failed", error=str(e))
     # Start orchestrator if enabled
     orch_flag = os.getenv("ORCHESTRATOR_ENABLED", "true")
     if _truthy(orch_flag):
