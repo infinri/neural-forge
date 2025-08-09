@@ -2,6 +2,7 @@ import asyncio
 import json
 import os
 import time
+from contextlib import asynccontextmanager
 from typing import Any, Dict
 
 from fastapi import FastAPI, Header, HTTPException, Request
@@ -10,8 +11,6 @@ from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_
 
 from server.core import orchestrator
 from server.utils.logger import log_json
-
-app = FastAPI(title="Windsurf MCP Memory/Planning")
 
 MCP_TOKEN = os.getenv("MCP_TOKEN", "change-me")
 TOOLS: Dict[str, Any] = {}
@@ -27,8 +26,8 @@ def _truthy(v: str | None) -> bool:
         return False
     return v.strip().lower() in ("1", "true", "yes", "on")
 
-@app.on_event("startup")
-async def _app_startup() -> None:
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     # Prod-safety: disallow default token when not in dev
     env = os.getenv("ENV", "dev").strip().lower()
     if env != "dev" and MCP_TOKEN == "change-me":
@@ -40,12 +39,14 @@ async def _app_startup() -> None:
         await orchestrator.start()
     else:
         log_json("info", "orchestrator.disabled", reason="ORCHESTRATOR_ENABLED=false")
+    try:
+        yield
+    finally:
+        orch_flag = os.getenv("ORCHESTRATOR_ENABLED", "true")
+        if _truthy(orch_flag) and orchestrator.is_running:
+            await orchestrator.stop()
 
-@app.on_event("shutdown")
-async def _app_shutdown() -> None:
-    orch_flag = os.getenv("ORCHESTRATOR_ENABLED", "true")
-    if _truthy(orch_flag) and orchestrator.is_running:
-        await orchestrator.stop()
+app = FastAPI(title="Windsurf MCP Memory/Planning", lifespan=lifespan)
 
 def require_auth(auth: str | None, request: Request | None = None):
     supplied = None
