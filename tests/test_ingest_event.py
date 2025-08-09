@@ -1,5 +1,4 @@
 import asyncio
-import os
 import uuid as uuidlib
 
 from server.core.events import Event, EventBus

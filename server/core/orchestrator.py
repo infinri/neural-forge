@@ -10,13 +10,13 @@ Phase 1 scope:
 from __future__ import annotations
 
 import asyncio
-from typing import Any, DefaultDict, Dict
 from collections import defaultdict
+from typing import Any, DefaultDict, Dict
+
+from prometheus_client import Counter
 
 from server.core.events import Event, EventBus, bus
 from server.utils.logger import log_json
-from prometheus_client import Counter
-
 
 CONV_MSG = "conversation.message"
 

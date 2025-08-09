@@ -8,8 +8,8 @@ from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse, Response, StreamingResponse
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 
-from server.utils.logger import log_json
 from server.core import orchestrator
+from server.utils.logger import log_json
 
 app = FastAPI(title="Windsurf MCP Memory/Planning")
 
@@ -381,13 +381,13 @@ async def health():
 from .tools import (
     activate_governance,
     add_memory,
-    ingest_event,
     enqueue_task,
     get_active_tokens,
     get_governance_policies,
     get_memory,
     get_next_task,
     get_rules,
+    ingest_event,
     list_recent,
     log_error,
     save_diff,

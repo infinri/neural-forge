@@ -1,6 +1,7 @@
+import asyncio
 import os
 import re
-import asyncio
+
 from fastapi.testclient import TestClient
 
 
@@ -28,7 +29,6 @@ def _client():
 
 
 def test_metrics_publish_consume_increment():
-    from server.core import bus
     with _client() as c:
         before = c.get("/metrics").text
         pub0 = _get_counter(before, "events_published_total", {"type": "conversation.message"})
