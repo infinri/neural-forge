@@ -254,6 +254,47 @@ Neural Forge exposes 12 tools via the MCP interface:
 - **[MCP Server Guide](docs/MCP_SERVER_GUIDE.md)** - Server configuration and API reference
 - **[Architecture Summary](ARCHITECTURE_SUMMARY.md)** - System architecture and design
 - **[Cognitive Engine](cognitive-engine.md)** - How autonomous rule application works
+
+### **Tracing (OpenTelemetry)**
+
+Neural Forge supports optional distributed tracing with OpenTelemetry. When enabled, HTTP endpoints (e.g., `/tool/{name}`, `/sse`) and domain flows (`EventBus.publish` → `Orchestrator.handle`) emit spans with attributes and error status. Logs include `trace_id` and `span_id` for correlation.
+
+Env flags:
+
+```bash
+# Enable/disable tracing
+TRACING_ENABLED=true
+
+# Preferred: OTLP HTTP exporter endpoint (if unset, console exporter is used)
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318/v1/traces
+
+# Optional headers (comma-separated key=value)
+OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer mytoken
+
+# Optional resource
+OTEL_SERVICE_NAME=neural-forge-mcp
+OTEL_RESOURCE_ATTRIBUTES=region=us-east-1,team=forge
+```
+
+Health includes tracing status:
+
+```json
+{
+  "serverVersion": "1.x.y",
+  "orchestratorRunning": true,
+  "tracing": {
+    "enabled": true,
+    "initialized": true,
+    "exporter": "otlp_http"
+  },
+  "status": "ok"
+}
+```
+
+Notes:
+- If no OTLP endpoint is configured, a console exporter is used (dev-friendly).
+- Span linking is used to connect event handling to the originating request.
+- To disable tracing entirely, set `TRACING_ENABLED=false`.
 - **[Bible Navigation](BIBLE_NAVIGATION.md)** - Master index of all engineering rules
 
 ## 🎯 **Auto-Activation**

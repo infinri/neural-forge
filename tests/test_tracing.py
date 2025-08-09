@@ -1,22 +1,19 @@
 import asyncio
 import json
-import os
-from typing import List
 
 import pytest
 
 # Skip entire module if OpenTelemetry not installed
 pytest.importorskip("opentelemetry")
 
-from server.core.events import Event, bus
-from server.core.orchestrator import CONV_MSG, orchestrator
-from server.utils.logger import log_json
-
-# OpenTelemetry test utilities
 from opentelemetry import trace
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import InMemorySpanExporter, SimpleSpanProcessor
+
+from server.core.events import Event, bus
+from server.core.orchestrator import CONV_MSG, orchestrator
+from server.utils.logger import log_json
 
 
 @pytest.fixture()
@@ -99,7 +96,6 @@ async def test_error_span_status_on_handler_exception(otel_memory_provider):
 
 
 def test_log_correlation_in_span(otel_memory_provider, capsys):
-    exporter: InMemorySpanExporter = otel_memory_provider
     tracer = trace.get_tracer("test")
     with tracer.start_as_current_span("log-corr-test"):
         log_json("info", "test.trace.msg", foo="bar")

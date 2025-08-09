@@ -89,6 +89,45 @@ Event/handler metrics:
 - `event_handler_errors_total{type}` - Total handler errors observed by the EventBus
 - `orchestrator_handler_errors_total{type}` - Total handler errors inside orchestrator handlers
 
+### **Tracing (OpenTelemetry)**
+
+Tracing is optional and disabled by default. To enable:
+
+```bash
+export TRACING_ENABLED=true
+# Use OTLP HTTP exporter if available; falls back to console exporter
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318/v1/traces
+# Optional headers (comma-separated)
+export OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer mytoken
+# Optional resource details
+export OTEL_SERVICE_NAME=neural-forge-mcp
+export OTEL_RESOURCE_ATTRIBUTES=region=us-east-1,team=forge
+```
+
+Health exposes tracing status for quick checks:
+
+```bash
+curl http://127.0.0.1:8081/health | jq
+```
+
+Example fields:
+
+```json
+{
+  "tracing": {
+    "enabled": true,
+    "initialized": true,
+    "exporter": "otlp_http"
+  }
+}
+```
+
+Spans:
+- HTTP requests via FastAPI instrumentation
+- Domain spans: `EventBus.publish` and `Orchestrator.handle`
+- Errors mark spans with status=ERROR and record exceptions
+- Span links connect orchestrator spans to originating HTTP request via `traceparent`
+
 ### **Structured Logging**
 JSON logs with fields:
 - `endpoint` - MCP tool endpoint called

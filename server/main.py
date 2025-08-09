@@ -11,6 +11,7 @@ from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_
 
 from server.core import orchestrator
 from server.observability.tracing import (
+    get_tracing_status,
     instrument_fastapi_app,
     is_tracing_enabled,
     setup_tracing,
@@ -384,9 +385,16 @@ async def health():
 
     No auth required: safe to probe by infra/monitoring.
     """
+    tracing = get_tracing_status()
+    # Only return a concise subset in health to keep payload small
     return {
         "serverVersion": SERVER_VERSION,
         "orchestratorRunning": orchestrator.is_running,
+        "tracing": {
+            "enabled": tracing.get("enabled", False),
+            "initialized": tracing.get("initialized", False),
+            "exporter": tracing.get("exporter"),
+        },
         "status": "ok",
     }
 
