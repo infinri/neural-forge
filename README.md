@@ -282,7 +282,7 @@ OTEL_SERVICE_NAME=neural-forge-mcp
 OTEL_RESOURCE_ATTRIBUTES=region=us-east-1,team=forge
 ```
 
-Health includes tracing status:
+Health includes tracing and DB status:
 
 ```json
 {
@@ -293,9 +293,31 @@ Health includes tracing status:
     "initialized": true,
     "exporter": "otlp_http"
   },
+  "db": {"backend": "postgresql", "status": "up"},
   "status": "ok"
 }
 ```
+
+### Admin Endpoints (Diagnostics)
+
+Secure endpoints for observability. Require `Authorization: Bearer <MCP_TOKEN>` (or `?token=`)
+
+- `GET /admin/stats`
+  - Optional: `projectId`
+  - Returns counts for `memory_entries`, `diffs`, `errors`, and `tasks` (queued, inProgress, done, failed, total)
+  - Example:
+    ```bash
+    curl -s "http://127.0.0.1:8081/admin/stats?projectId=nf" -H "Authorization: Bearer dev" | jq
+    ```
+
+- `GET /admin/memory_meta`
+  - Optional: `projectId`, `quarantinedOnly`
+  - Pagination: `limit` (default 100, max 500), `offset` (default 0)
+  - Returns memory metadata only: `id`, `projectId`, `quarantined`, `createdAt`, `size`
+  - Example:
+    ```bash
+    curl -s "http://127.0.0.1:8081/admin/memory_meta?projectId=nf&quarantinedOnly=true&limit=50" -H "Authorization: Bearer dev" | jq
+    ```
 
 Notes:
 - If no OTLP endpoint is configured, a console exporter is used (dev-friendly).

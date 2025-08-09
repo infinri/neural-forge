@@ -1,11 +1,9 @@
 import uuid
 from typing import Any, Dict
 
-import aiosqlite
-
 from server.db.engine import get_async_engine
 from server.db.repo import list_recent_diffs_pg
-from server.utils.db import get_db_path
+from server.utils.db import sqlite_fetch_all
 from server.utils.time import utc_now_iso_z
 
 SERVER_VERSION = "1.3.0"
@@ -45,33 +43,24 @@ async def handler(req: Dict[str, Any]):
         )
     else:
         rows = []
-        async with aiosqlite.connect(get_db_path()) as db:
-            if isinstance(project_id, str) and project_id.strip():
-                async with db.execute(
-                    "SELECT id, project_id, file_path, author, created_at FROM diffs WHERE project_id = ? ORDER BY created_at DESC LIMIT ?",
-                    (project_id, limit),
-                ) as cur:
-                    async for r in cur:
-                        rows.append({
-                            "id": r[0],
-                            "projectId": r[1],
-                            "filePath": r[2],
-                            "author": r[3],
-                            "createdAt": r[4],
-                        })
-            else:
-                async with db.execute(
-                    "SELECT id, project_id, file_path, author, created_at FROM diffs ORDER BY created_at DESC LIMIT ?",
-                    (limit,),
-                ) as cur:
-                    async for r in cur:
-                        rows.append({
-                            "id": r[0],
-                            "projectId": r[1],
-                            "filePath": r[2],
-                            "author": r[3],
-                            "createdAt": r[4],
-                        })
+        if isinstance(project_id, str) and project_id.strip():
+            raw = await sqlite_fetch_all(
+                "SELECT id, project_id, file_path, author, created_at FROM diffs WHERE project_id = ? ORDER BY created_at DESC LIMIT ?",
+                (project_id, limit),
+            )
+        else:
+            raw = await sqlite_fetch_all(
+                "SELECT id, project_id, file_path, author, created_at FROM diffs ORDER BY created_at DESC LIMIT ?",
+                (limit,),
+            )
+        for r in raw:
+            rows.append({
+                "id": r[0],
+                "projectId": r[1],
+                "filePath": r[2],
+                "author": r[3],
+                "createdAt": r[4],
+            })
 
     return {
         "requestId": request_id,

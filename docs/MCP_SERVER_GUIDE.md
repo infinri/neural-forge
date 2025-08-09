@@ -91,11 +91,13 @@ Event/handler metrics:
 
 ### **Tracing (OpenTelemetry)**
 
-Tracing is optional and disabled by default. To enable:
+Tracing defaults to ON in dev when `TRACING_ENABLED` is unset; otherwise OFF. To enable or override:
 
 ```bash
 export TRACING_ENABLED=true
 # Use OTLP HTTP exporter if available; falls back to console exporter
+export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:4318/v1/traces
+# or (fallback)
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318/v1/traces
 # Optional headers (comma-separated)
 export OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer mytoken
@@ -104,7 +106,7 @@ export OTEL_SERVICE_NAME=neural-forge-mcp
 export OTEL_RESOURCE_ATTRIBUTES=region=us-east-1,team=forge
 ```
 
-Health exposes tracing status for quick checks:
+Health exposes tracing and DB status for quick checks:
 
 ```bash
 curl http://127.0.0.1:8081/health | jq
@@ -114,11 +116,15 @@ Example fields:
 
 ```json
 {
+  "serverVersion": "1.x.y",
+  "orchestratorRunning": true,
   "tracing": {
     "enabled": true,
     "initialized": true,
     "exporter": "otlp_http"
-  }
+  },
+  "db": {"backend": "postgresql", "status": "up"},
+  "status": "ok"
 }
 ```
 
@@ -248,6 +254,27 @@ curl -X POST http://127.0.0.1:8081/search_memory \
   -H "Content-Type: application/json" \
   -d '{"query": "search terms", "limit": 10}'
 ```
+
+#### Admin Endpoints (Diagnostics)
+
+Require `Authorization: Bearer <MCP_TOKEN>` (or `?token=`)
+
+- `GET /admin/stats`
+  - Optional: `projectId`
+  - Returns counts for `memory_entries`, `diffs`, `errors`, and `tasks` (queued, inProgress, done, failed, total)
+  - Example:
+    ```bash
+    curl -s "http://127.0.0.1:8081/admin/stats?projectId=nf" -H "Authorization: Bearer dev" | jq
+    ```
+
+- `GET /admin/memory_meta`
+  - Optional: `projectId`, `quarantinedOnly`
+  - Pagination: `limit` (default 100, max 500), `offset` (default 0)
+  - Returns memory metadata only: `id`, `projectId`, `quarantined`, `createdAt`, `size`
+  - Example:
+    ```bash
+    curl -s "http://127.0.0.1:8081/admin/memory_meta?projectId=nf&quarantinedOnly=true&limit=50" -H "Authorization: Bearer dev" | jq
+    ```
 
 ## 🧠 **Autonomous Pre-Action Governance**
 

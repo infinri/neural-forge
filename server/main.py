@@ -17,6 +17,11 @@ from server.observability.tracing import (
     setup_tracing,
 )
 from server.utils.logger import log_json
+import aiosqlite
+from sqlalchemy import text
+from server.db.engine import get_async_engine
+from server.utils.db import get_db_path
+from server.utils.time import utc_now_iso_z
 
 MCP_TOKEN = os.getenv("MCP_TOKEN", "change-me")
 TOOLS: Dict[str, Any] = {}
@@ -386,6 +391,28 @@ async def health():
     No auth required: safe to probe by infra/monitoring.
     """
     tracing = get_tracing_status()
+    # Determine DB backend and status (concise probe)
+    backend = None
+    db_status = "unknown"
+    engine = get_async_engine()
+    if engine is not None:
+        backend = "postgresql"
+        try:
+            async with engine.connect() as conn:
+                await conn.execute(text("SELECT 1"))
+            db_status = "up"
+        except Exception:
+            db_status = "down"
+    else:
+        backend = "sqlite"
+        try:
+            async with aiosqlite.connect(get_db_path()) as db:
+                async with db.execute("SELECT 1") as cur:
+                    await cur.fetchone()
+            db_status = "up"
+        except Exception:
+            db_status = "down"
+
     # Only return a concise subset in health to keep payload small
     return {
         "serverVersion": SERVER_VERSION,
@@ -395,8 +422,220 @@ async def health():
             "initialized": tracing.get("initialized", False),
             "exporter": tracing.get("exporter"),
         },
+        "db": {"backend": backend, "status": db_status},
         "status": "ok",
     }
+
+@app.get("/admin/stats")
+async def admin_stats(
+    request: Request,
+    authorization: str | None = Header(None),
+    projectId: str | None = None,
+):
+    """Admin: aggregate counts for key entities.
+
+    Secured via MCP_TOKEN.
+    Optional filter: projectId
+    """
+    require_auth(authorization, request)
+    endpoint = "admin_stats"
+    REQ_COUNTER.labels(endpoint).inc()
+    try:
+        with REQ_LATENCY.labels(endpoint).time():
+            ts = utc_now_iso_z()
+            engine = get_async_engine()
+            backend = "postgresql" if engine is not None else "sqlite"
+
+            # Defaults
+            mem_count = 0
+            diffs_count = 0
+            errors_count = 0
+            tasks = {"queued": 0, "inProgress": 0, "done": 0, "failed": 0}
+
+            if engine is not None:
+                # Postgres path
+                where = []
+                params: Dict[str, Any] = {}
+                if projectId and projectId.strip():
+                    where.append("project_id = :project_id")
+                    params["project_id"] = projectId
+                w = f" WHERE {' AND '.join(where)}" if where else ""
+                async with engine.connect() as conn:
+                    r = await conn.execute(text(f"SELECT COUNT(*) FROM memory_entries{w}"), params)
+                    row = r.fetchone()
+                    mem_count = int(row[0]) if row and row[0] is not None else 0
+
+                    r = await conn.execute(text(f"SELECT status, COUNT(*) FROM tasks{w} GROUP BY status"), params)
+                    for st, cnt in r.fetchall():
+                        key = "inProgress" if st == "in_progress" else st
+                        if key in tasks:
+                            tasks[key] = int(cnt)
+
+                    r = await conn.execute(text(f"SELECT COUNT(*) FROM diffs{w}"), params)
+                    row = r.fetchone()
+                    diffs_count = int(row[0]) if row and row[0] is not None else 0
+
+                    r = await conn.execute(text(f"SELECT COUNT(*) FROM errors{w}"), params)
+                    row = r.fetchone()
+                    errors_count = int(row[0]) if row and row[0] is not None else 0
+            else:
+                # SQLite path
+                args_base: list[Any] = []
+                where = []
+                if projectId and projectId.strip():
+                    where.append("project_id = ?")
+                    args_base.append(projectId)
+                w = f" WHERE {' AND '.join(where)}" if where else ""
+                async with aiosqlite.connect(get_db_path()) as db:
+                    async with db.execute(f"SELECT COUNT(*) FROM memory_entries{w}", tuple(args_base)) as cur:
+                        row = await cur.fetchone()
+                        mem_count = int(row[0]) if row and row[0] is not None else 0
+
+                    async with db.execute(f"SELECT status, COUNT(*) FROM tasks{w} GROUP BY status", tuple(args_base)) as cur:
+                        async for st, cnt in cur:
+                            key = "inProgress" if st == "in_progress" else st
+                            if key in tasks:
+                                tasks[key] = int(cnt)
+
+                    async with db.execute(f"SELECT COUNT(*) FROM diffs{w}", tuple(args_base)) as cur:
+                        row = await cur.fetchone()
+                        diffs_count = int(row[0]) if row and row[0] is not None else 0
+
+                    async with db.execute(f"SELECT COUNT(*) FROM errors{w}", tuple(args_base)) as cur:
+                        row = await cur.fetchone()
+                        errors_count = int(row[0]) if row and row[0] is not None else 0
+
+            total_tasks = tasks["queued"] + tasks["inProgress"] + tasks["done"] + tasks["failed"]
+            log_json("info", "admin_stats", backend=backend, projectId=projectId, status="ok")
+            return {
+                "serverVersion": SERVER_VERSION,
+                "timestamp": ts,
+                "db": {"backend": backend},
+                "counts": {
+                    "memoryEntries": mem_count,
+                    "diffs": diffs_count,
+                    "errors": errors_count,
+                    "tasks": {
+                        "queued": tasks["queued"],
+                        "inProgress": tasks["inProgress"],
+                        "done": tasks["done"],
+                        "failed": tasks["failed"],
+                        "total": total_tasks,
+                    },
+                },
+            }
+    except HTTPException as e:
+        ERR_COUNTER.labels(endpoint, str(e.status_code)).inc()
+        log_json("error", "admin_stats_http_error", status_code=e.status_code)
+        raise e
+    except Exception as e:
+        ERR_COUNTER.labels(endpoint, "500").inc()
+        log_json("error", "admin_stats_exception", error=str(e))
+        raise HTTPException(status_code=500, detail=f"ERR.UNAVAILABLE: {e}")
+
+@app.get("/admin/memory_meta")
+async def admin_memory_meta(
+    request: Request,
+    authorization: str | None = Header(None),
+    projectId: str | None = None,
+    quarantinedOnly: bool = False,
+    limit: int = 100,
+    offset: int = 0,
+):
+    """Admin: list memory metadata without content.
+
+    Secured via MCP_TOKEN.
+    Filters: projectId (optional), quarantinedOnly (bool)
+    Pagination: limit (<=500), offset
+    """
+    require_auth(authorization, request)
+    endpoint = "admin_memory_meta"
+    REQ_COUNTER.labels(endpoint).inc()
+    # sanitize
+    if limit <= 0 or limit > 500:
+        limit = 100
+    if offset < 0:
+        offset = 0
+    try:
+        with REQ_LATENCY.labels(endpoint).time():
+            ts = utc_now_iso_z()
+            engine = get_async_engine()
+            backend = "postgresql" if engine is not None else "sqlite"
+            items: list[Dict[str, Any]] = []
+
+            if engine is not None:
+                cond = []
+                params: Dict[str, Any] = {"limit": int(limit), "offset": int(offset)}
+                if projectId and projectId.strip():
+                    cond.append("project_id = :project_id")
+                    params["project_id"] = projectId
+                if quarantinedOnly:
+                    cond.append("quarantined = TRUE")
+                where = f" WHERE {' AND '.join(cond)}" if cond else ""
+                q = text(
+                    f"""
+                    SELECT id, project_id, quarantined, created_at, LENGTH(content) AS size
+                    FROM memory_entries
+                    {where}
+                    ORDER BY created_at DESC
+                    LIMIT :limit OFFSET :offset
+                    """
+                )
+                async with engine.connect() as conn:
+                    res = await conn.execute(q, params)
+                    rows = res.fetchall()
+                for r in rows:
+                    created = r[3]
+                    items.append({
+                        "id": r[0],
+                        "projectId": r[1],
+                        "quarantined": bool(r[2]),
+                        "createdAt": created.isoformat() if hasattr(created, "isoformat") else str(created),
+                        "size": int(r[4]) if r[4] is not None else 0,
+                    })
+            else:
+                cond = []
+                args: list[Any] = []
+                if projectId and projectId.strip():
+                    cond.append("project_id = ?")
+                    args.append(projectId)
+                if quarantinedOnly:
+                    cond.append("quarantined = 1")
+                where = f" WHERE {' AND '.join(cond)}" if cond else ""
+                q = (
+                    f"SELECT id, project_id, quarantined, created_at, LENGTH(content) AS size "
+                    f"FROM memory_entries{where} ORDER BY created_at DESC LIMIT ? OFFSET ?"
+                )
+                args_all = tuple(args + [int(limit), int(offset)])
+                async with aiosqlite.connect(get_db_path()) as db:
+                    async with db.execute(q, args_all) as cur:
+                        async for r in cur:
+                            items.append({
+                                "id": r[0],
+                                "projectId": r[1],
+                                "quarantined": bool(r[2]),
+                                "createdAt": r[3],
+                                "size": int(r[4]) if r[4] is not None else 0,
+                            })
+
+            log_json("info", "admin_memory_meta", backend=backend, projectId=projectId, count=len(items))
+            return {
+                "serverVersion": SERVER_VERSION,
+                "timestamp": ts,
+                "db": {"backend": backend},
+                "items": items,
+                "count": len(items),
+                "limit": limit,
+                "offset": offset,
+            }
+    except HTTPException as e:
+        ERR_COUNTER.labels(endpoint, str(e.status_code)).inc()
+        log_json("error", "admin_memory_meta_http_error", status_code=e.status_code)
+        raise e
+    except Exception as e:
+        ERR_COUNTER.labels(endpoint, "500").inc()
+        log_json("error", "admin_memory_meta_exception", error=str(e))
+        raise HTTPException(status_code=500, detail=f"ERR.UNAVAILABLE: {e}")
 
 # Tool registration stubs
 from .tools import (
