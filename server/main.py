@@ -9,6 +9,7 @@ from fastapi.responses import JSONResponse, Response, StreamingResponse
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 
 from server.utils.logger import log_json
+from server.core import orchestrator
 
 app = FastAPI(title="Windsurf MCP Memory/Planning")
 
@@ -20,6 +21,31 @@ SERVER_VERSION = "1.3.0"
 REQ_COUNTER = Counter("mcp_requests_total", "Total MCP requests", ["endpoint"])
 REQ_LATENCY = Histogram("mcp_request_duration_seconds", "Request latency", ["endpoint"])
 ERR_COUNTER = Counter("mcp_errors_total", "Total MCP errors", ["endpoint", "status_code"])
+
+def _truthy(v: str | None) -> bool:
+    if v is None:
+        return False
+    return v.strip().lower() in ("1", "true", "yes", "on")
+
+@app.on_event("startup")
+async def _app_startup() -> None:
+    # Prod-safety: disallow default token when not in dev
+    env = os.getenv("ENV", "dev").strip().lower()
+    if env != "dev" and MCP_TOKEN == "change-me":
+        log_json("error", "startup.invalid_token_in_prod", env=env)
+        raise RuntimeError("MCP_TOKEN must not be 'change-me' when ENV != dev")
+    # Start orchestrator if enabled
+    orch_flag = os.getenv("ORCHESTRATOR_ENABLED", "true")
+    if _truthy(orch_flag):
+        await orchestrator.start()
+    else:
+        log_json("info", "orchestrator.disabled", reason="ORCHESTRATOR_ENABLED=false")
+
+@app.on_event("shutdown")
+async def _app_shutdown() -> None:
+    orch_flag = os.getenv("ORCHESTRATOR_ENABLED", "true")
+    if _truthy(orch_flag) and orchestrator.is_running:
+        await orchestrator.stop()
 
 def require_auth(auth: str | None, request: Request | None = None):
     supplied = None
@@ -122,6 +148,20 @@ async def handle_mcp_message(message: dict) -> dict:
                         "metadata": {"type": "object"}
                     },
                     "required": ["projectId", "content"]
+                }
+            },
+            {
+                "name": "ingest_event",
+                "description": "Ingest a conversation message event and publish to internal EventBus",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "type": {"type": "string", "enum": ["conversation.message"]},
+                        "projectId": {"type": "string"},
+                        "role": {"type": "string"},
+                        "content": {"type": "string"}
+                    },
+                    "required": ["type", "projectId", "content"]
                 }
             },
             {
@@ -325,10 +365,23 @@ async def handle_mcp_message(message: dict) -> dict:
 async def metrics():
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
+@app.get("/health")
+async def health():
+    """Basic health endpoint exposing orchestrator running state.
+
+    No auth required: safe to probe by infra/monitoring.
+    """
+    return {
+        "serverVersion": SERVER_VERSION,
+        "orchestratorRunning": orchestrator.is_running,
+        "status": "ok",
+    }
+
 # Tool registration stubs
 from .tools import (
     activate_governance,
     add_memory,
+    ingest_event,
     enqueue_task,
     get_active_tokens,
     get_governance_policies,
@@ -345,6 +398,7 @@ from .tools import (
 TOOLS.update({
     "activate_governance": activate_governance.activate_governance,
     "add_memory": add_memory.handler,
+    "ingest_event": ingest_event.handler,
     "get_memory": get_memory.handler,
     "search_memory": search_memory.handler,
     "save_diff": save_diff.handler,

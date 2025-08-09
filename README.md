@@ -204,6 +204,26 @@ curl http://127.0.0.1:8081/sse?token=dev
 # All 12 Neural Forge tools should be available
 ```
 
+### **5. Metrics and Health**
+
+```bash
+# Prometheus metrics (no auth required)
+curl http://127.0.0.1:8081/metrics
+
+# Health (no auth required)
+curl http://127.0.0.1:8081/health
+```
+
+Metrics exposed:
+
+- `mcp_requests_total{endpoint}`
+- `mcp_errors_total{endpoint,code}`
+- `mcp_request_duration_seconds{endpoint}`
+- `events_published_total{type}`
+- `events_consumed_total{type}`
+- `event_handler_errors_total{type}`
+- `orchestrator_handler_errors_total{type}`
+
 ## 🛠️ **Available Tools**
 
 Neural Forge exposes 12 tools via the MCP interface:

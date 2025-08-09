@@ -82,6 +82,12 @@ docker run --rm -p 8081:8080 \
 - `mcp_requests_total{endpoint}` - Total requests per endpoint
 - `mcp_errors_total{endpoint,code}` - Total errors per endpoint
 - `mcp_request_duration_seconds{endpoint}` - Request duration histogram
+  
+Event/handler metrics:
+- `events_published_total{type}` - Total events published by type
+- `events_consumed_total{type}` - Total events successfully consumed by handlers
+- `event_handler_errors_total{type}` - Total handler errors observed by the EventBus
+- `orchestrator_handler_errors_total{type}` - Total handler errors inside orchestrator handlers
 
 ### **Structured Logging**
 JSON logs with fields:
@@ -128,6 +134,9 @@ make typecheck
 ```bash
 # Test server health
 curl http://127.0.0.1:8081/sse?token=dev
+
+# Check health endpoint (no auth required)
+curl http://127.0.0.1:8081/health
 
 # Check server logs
 docker compose logs neural-forge-server

@@ -171,7 +171,7 @@ prometheus/data/
 !tests/**/*.py
 !scripts/
 !scripts/**/*.sh
-!.env.example/home/infinri/Initrix/Projects/Neural Forge/windsurf-mcp-memory-blueprint-v1.3-neural-forge.md
+!.env.example
 !requirements.txt
 !Makefile
 !docker-compose.yml
@@ -188,4 +188,4 @@ prometheus/data/
 NOTES.md
 notes.md
 scratch.md
-windsurf-mcp-memory-blueprint-v1.3-neural-forge.md
+NEURAL_FORGE_AUDIT_REMEDIATION_BLUEPRINT.md
