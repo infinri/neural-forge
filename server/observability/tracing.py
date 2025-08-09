@@ -71,6 +71,7 @@ def setup_tracing(service_name: str, service_version: str) -> bool:
         from opentelemetry.sdk.trace.export import (
             BatchSpanProcessor,
             ConsoleSpanExporter,
+            SpanExporter,
         )
     except Exception as e:  # pragma: no cover - only when deps missing
         log_json("warning", "otel.import_failed", error=str(e))
@@ -113,7 +114,7 @@ def setup_tracing(service_name: str, service_version: str) -> bool:
     headers = _parse_headers_env(os.getenv("OTEL_EXPORTER_OTLP_HEADERS"))
 
     if endpoint:
-        exporter = OTLPHTTPSpanExporter(endpoint=endpoint, headers=headers)
+        exporter: SpanExporter = OTLPHTTPSpanExporter(endpoint=endpoint, headers=headers)
         log_json("info", "otel.exporter.otlp_http_configured", endpoint=endpoint)
         exporter_name = "otlp_http"
     else:

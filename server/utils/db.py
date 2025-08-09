@@ -20,8 +20,8 @@ async def sqlite_fetch_all(
     base_delay: float = 0.05,
     max_delay: float = 0.5,
     jitter: float = 0.02,
-    retry_exceptions: Tuple[type, ...] = (aiosqlite.OperationalError, aiosqlite.Error),
-) -> list[tuple]:
+    retry_exceptions: Tuple[type[BaseException], ...] = (aiosqlite.OperationalError, aiosqlite.Error),
+) -> list[tuple[Any, ...]]:
     """Execute a read-only query with retries and return all rows.
 
     - Uses exponential backoff with optional jitter.
@@ -35,7 +35,8 @@ async def sqlite_fetch_all(
             async with aiosqlite.connect(path) as db:
                 async with db.execute(sql, tuple(params)) as cur:
                     rows = await cur.fetchall()
-                    return rows
+                    # Normalize to a concrete list of tuples for stable typing
+                    return [tuple(r) for r in rows]
         except retry_exceptions:
             if attempt >= retries:
                 raise

@@ -462,8 +462,8 @@ async def admin_stats(
                 w = f" WHERE {' AND '.join(where)}" if where else ""
                 async with engine.connect() as conn:
                     r = await conn.execute(text(f"SELECT COUNT(*) FROM memory_entries{w}"), params)
-                    row = r.fetchone()
-                    mem_count = int(row[0]) if row and row[0] is not None else 0
+                    row_pg = r.fetchone()
+                    mem_count = int(row_pg[0]) if row_pg and row_pg[0] is not None else 0
 
                     r = await conn.execute(text(f"SELECT status, COUNT(*) FROM tasks{w} GROUP BY status"), params)
                     for st, cnt in r.fetchall():
@@ -472,12 +472,12 @@ async def admin_stats(
                             tasks[key] = int(cnt)
 
                     r = await conn.execute(text(f"SELECT COUNT(*) FROM diffs{w}"), params)
-                    row = r.fetchone()
-                    diffs_count = int(row[0]) if row and row[0] is not None else 0
+                    row_pg = r.fetchone()
+                    diffs_count = int(row_pg[0]) if row_pg and row_pg[0] is not None else 0
 
                     r = await conn.execute(text(f"SELECT COUNT(*) FROM errors{w}"), params)
-                    row = r.fetchone()
-                    errors_count = int(row[0]) if row and row[0] is not None else 0
+                    row_pg = r.fetchone()
+                    errors_count = int(row_pg[0]) if row_pg and row_pg[0] is not None else 0
             else:
                 # SQLite path
                 args_base: list[Any] = []
@@ -488,8 +488,8 @@ async def admin_stats(
                 w = f" WHERE {' AND '.join(where)}" if where else ""
                 async with aiosqlite.connect(get_db_path()) as db:
                     async with db.execute(f"SELECT COUNT(*) FROM memory_entries{w}", tuple(args_base)) as cur:
-                        row = await cur.fetchone()
-                        mem_count = int(row[0]) if row and row[0] is not None else 0
+                        row_sql = await cur.fetchone()
+                        mem_count = int(row_sql[0]) if row_sql and row_sql[0] is not None else 0
 
                     async with db.execute(f"SELECT status, COUNT(*) FROM tasks{w} GROUP BY status", tuple(args_base)) as cur:
                         async for st, cnt in cur:
@@ -498,12 +498,12 @@ async def admin_stats(
                                 tasks[key] = int(cnt)
 
                     async with db.execute(f"SELECT COUNT(*) FROM diffs{w}", tuple(args_base)) as cur:
-                        row = await cur.fetchone()
-                        diffs_count = int(row[0]) if row and row[0] is not None else 0
+                        row_sql = await cur.fetchone()
+                        diffs_count = int(row_sql[0]) if row_sql and row_sql[0] is not None else 0
 
                     async with db.execute(f"SELECT COUNT(*) FROM errors{w}", tuple(args_base)) as cur:
-                        row = await cur.fetchone()
-                        errors_count = int(row[0]) if row and row[0] is not None else 0
+                        row_sql = await cur.fetchone()
+                        errors_count = int(row_sql[0]) if row_sql and row_sql[0] is not None else 0
 
             total_tasks = tasks["queued"] + tasks["inProgress"] + tasks["done"] + tasks["failed"]
             log_json("info", "admin_stats", backend=backend, projectId=projectId, status="ok")
@@ -572,7 +572,7 @@ async def admin_memory_meta(
                 if quarantinedOnly:
                     cond.append("quarantined = TRUE")
                 where = f" WHERE {' AND '.join(cond)}" if cond else ""
-                q = text(
+                q_pg = text(
                     f"""
                     SELECT id, project_id, quarantined, created_at, LENGTH(content) AS size
                     FROM memory_entries
@@ -582,16 +582,16 @@ async def admin_memory_meta(
                     """
                 )
                 async with engine.connect() as conn:
-                    res = await conn.execute(q, params)
-                    rows = res.fetchall()
-                for r in rows:
-                    created = r[3]
+                    res = await conn.execute(q_pg, params)
+                    rows_pg = res.fetchall()
+                for r_pg in rows_pg:
+                    created = r_pg[3]
                     items.append({
-                        "id": r[0],
-                        "projectId": r[1],
-                        "quarantined": bool(r[2]),
+                        "id": r_pg[0],
+                        "projectId": r_pg[1],
+                        "quarantined": bool(r_pg[2]),
                         "createdAt": created.isoformat() if hasattr(created, "isoformat") else str(created),
-                        "size": int(r[4]) if r[4] is not None else 0,
+                        "size": int(r_pg[4]) if r_pg[4] is not None else 0,
                     })
             else:
                 cond = []
@@ -602,20 +602,20 @@ async def admin_memory_meta(
                 if quarantinedOnly:
                     cond.append("quarantined = 1")
                 where = f" WHERE {' AND '.join(cond)}" if cond else ""
-                q = (
+                q_sql = (
                     f"SELECT id, project_id, quarantined, created_at, LENGTH(content) AS size "
                     f"FROM memory_entries{where} ORDER BY created_at DESC LIMIT ? OFFSET ?"
                 )
                 args_all = tuple(args + [int(limit), int(offset)])
                 async with aiosqlite.connect(get_db_path()) as db:
-                    async with db.execute(q, args_all) as cur:
-                        async for r in cur:
+                    async with db.execute(q_sql, args_all) as cur:
+                        async for row_sql in cur:
                             items.append({
-                                "id": r[0],
-                                "projectId": r[1],
-                                "quarantined": bool(r[2]),
-                                "createdAt": r[3],
-                                "size": int(r[4]) if r[4] is not None else 0,
+                                "id": row_sql[0],
+                                "projectId": row_sql[1],
+                                "quarantined": bool(row_sql[2]),
+                                "createdAt": row_sql[3],
+                                "size": int(row_sql[4]) if row_sql[4] is not None else 0,
                             })
 
             log_json("info", "admin_memory_meta", backend=backend, projectId=projectId, count=len(items))
