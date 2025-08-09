@@ -259,6 +259,9 @@ Neural Forge exposes 12 tools via the MCP interface:
 
 Neural Forge supports optional distributed tracing with OpenTelemetry. When enabled, HTTP endpoints (e.g., `/tool/{name}`, `/sse`) and domain flows (`EventBus.publish` → `Orchestrator.handle`) emit spans with attributes and error status. Logs include `trace_id` and `span_id` for correlation.
 
+Default behavior:
+- If `TRACING_ENABLED` is unset, tracing defaults to ON when `ENV=dev`, OFF otherwise.
+
 Env flags:
 
 ```bash
@@ -266,6 +269,9 @@ Env flags:
 TRACING_ENABLED=true
 
 # Preferred: OTLP HTTP exporter endpoint (if unset, console exporter is used)
+# Both variables are supported; TRACES-specific takes precedence if set
+OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:4318/v1/traces
+# or
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318/v1/traces
 
 # Optional headers (comma-separated key=value)

@@ -25,8 +25,9 @@ def is_tracing_enabled() -> bool:
     explicit = os.getenv("TRACING_ENABLED")
     if explicit is not None:
         return _truthy(explicit)
-    # Default disabled unless explicitly enabled via env
-    return False
+    # Default enabled in dev, disabled otherwise
+    env = os.getenv("ENV", "dev").strip().lower()
+    return env == "dev"
 
 
 def _parse_headers_env(raw: Optional[str]) -> Dict[str, str]:
