@@ -16,6 +16,7 @@ from typing import Any, DefaultDict, Dict
 from prometheus_client import Counter
 
 from server.core.events import Event, EventBus, bus
+from server.observability.tracing import is_tracing_enabled
 from server.utils.logger import log_json
 
 CONV_MSG = "conversation.message"
@@ -74,6 +75,28 @@ class Orchestrator:
     async def _handle_conversation_message(self, event: Event) -> None:
         # Structured log with content length to avoid logging full content by default
         content_len = 0
+        _span_cm = None
+        _span_obj = None
+        if is_tracing_enabled():
+            try:
+                from opentelemetry import trace
+                from opentelemetry.propagate import get_global_textmap
+                from opentelemetry.trace import Link
+
+                tracer = trace.get_tracer("neural-forge")
+                links = []
+                if event.traceparent:
+                    carrier = {"traceparent": event.traceparent}
+                    ctx = get_global_textmap().extract(carrier)
+                    parent_span = trace.get_current_span(ctx)
+                    parent_sc = parent_span.get_span_context()
+                    if parent_sc and parent_sc.is_valid:
+                        links = [Link(parent_sc)]
+                _span_cm = tracer.start_as_current_span("Orchestrator.handle", links=links)
+                _span_obj = _span_cm.__enter__()
+            except Exception:
+                _span_cm = None
+                _span_obj = None
         try:
             payload: Dict[str, Any] = event.payload or {}
             msg = payload.get("content")
@@ -84,6 +107,13 @@ class Orchestrator:
 
             # TODO: parse role, route by role/type in later phases
             self.events_handled_total[event.type] += 1
+            if _span_obj is not None:
+                _span_obj.set_attribute("evt_type", event.type)
+                _span_obj.set_attribute("project_id", event.project_id)
+                if event.request_id:
+                    _span_obj.set_attribute("request_id", event.request_id)
+                _span_obj.set_attribute("content_len", content_len)
+                _span_obj.set_attribute("phase", "consume")
             log_json(
                 "info",
                 "orchestrator.handle",
@@ -95,6 +125,14 @@ class Orchestrator:
         except Exception as e:  # noqa: BLE001 - intended isolation for handlers
             self.handler_errors_total[event.type] += 1
             ORCH_HANDLER_ERRORS.labels(event.type).inc()
+            if _span_obj is not None:
+                try:
+                    from opentelemetry.trace import Status, StatusCode
+
+                    _span_obj.record_exception(e)
+                    _span_obj.set_status(Status(StatusCode.ERROR))
+                except Exception:
+                    pass
             log_json(
                 "error",
                 "orchestrator.handler_error",
@@ -106,6 +144,12 @@ class Orchestrator:
             # Re-raise to allow EventBus to record handler error metrics; EventBus
             # will isolate and continue with other handlers per design.
             raise
+        finally:
+            if _span_cm is not None:
+                try:
+                    _span_cm.__exit__(None, None, None)
+                except Exception:
+                    pass
 
 
 # Singleton orchestrator

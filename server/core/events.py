@@ -18,6 +18,7 @@ from typing import Any, Awaitable, Callable, DefaultDict, Dict, List, Optional
 
 from prometheus_client import Counter
 
+from server.observability.tracing import is_tracing_enabled
 from server.utils.logger import log_json
 
 
@@ -38,6 +39,8 @@ class Event:
     payload: Dict[str, Any]
     ts: float
     request_id: Optional[str] = None
+    # Optional W3C traceparent for span linking across async boundaries
+    traceparent: Optional[str] = None
 
 
 Handler = Callable[[Event], Awaitable[None]]
@@ -97,6 +100,36 @@ class EventBus:
         evt_type = event.type
         self.events_published_total[evt_type] += 1
         EVENTS_PUBLISHED.labels(evt_type).inc()
+        # Attempt tracing span around publish
+        _span_cm = None
+        _span_ctx = None
+        if is_tracing_enabled():
+            try:
+                from opentelemetry import trace
+                from opentelemetry.propagate import get_global_textmap
+
+                tracer = trace.get_tracer("neural-forge")
+                _span_cm = tracer.start_as_current_span("EventBus.publish")
+                _span_ctx = _span_cm.__enter__()
+                # Inject traceparent into event for downstream linking if not present
+                if not event.traceparent:
+                    carrier: Dict[str, str] = {}
+                    get_global_textmap().inject(carrier)
+                    event.traceparent = carrier.get("traceparent")
+                # Set useful attributes
+                payload = event.payload or {}
+                content = payload.get("content") if isinstance(payload, dict) else None
+                content_len = len(content) if isinstance(content, str) else 0
+                _span_ctx.set_attribute("evt_type", evt_type)
+                _span_ctx.set_attribute("project_id", event.project_id)
+                if event.request_id:
+                    _span_ctx.set_attribute("request_id", event.request_id)
+                _span_ctx.set_attribute("content_len", content_len)
+                _span_ctx.set_attribute("phase", "publish")
+            except Exception:
+                # Best-effort tracing: ignore if any otel error occurs
+                _span_cm = None
+                _span_ctx = None
         log_json(
             "info",
             "eventbus.publish",
@@ -132,6 +165,12 @@ class EventBus:
                     error=str(e),
                     phase="error",
                 )
+        # Close span if opened
+        if _span_cm is not None:
+            try:
+                _span_cm.__exit__(None, None, None)
+            except Exception:
+                pass
 
     # Convenience helper for immediate publish without a pre-built Event
     async def publish_simple(

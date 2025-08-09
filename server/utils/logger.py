@@ -10,6 +10,19 @@ class JsonFormatter(logging.Formatter):
             "level": record.levelname.lower(),
             "message": record.getMessage(),
         }
+        # If OpenTelemetry is available and a span is active, enrich with trace/span ids
+        try:
+            from opentelemetry import trace  # type: ignore
+
+            span = trace.get_current_span()
+            sc = span.get_span_context() if span else None
+            if sc and getattr(sc, "is_valid", False):
+                # IDs are integers; format as zero-padded hex per spec
+                base["trace_id"] = f"{sc.trace_id:032x}"
+                base["span_id"] = f"{sc.span_id:016x}"
+        except Exception:
+            # Stay silent if otel missing or context invalid
+            pass
         # Include extras if present
         if hasattr(record, "extra_dict") and isinstance(record.extra_dict, dict):
             base.update(record.extra_dict)
