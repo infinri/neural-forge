@@ -5,22 +5,22 @@ import time
 from contextlib import asynccontextmanager
 from typing import Any, Dict
 
+import aiosqlite
 from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse, Response, StreamingResponse
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
+from sqlalchemy import text
 
 from server.core import orchestrator
+from server.db.engine import get_async_engine
 from server.observability.tracing import (
     get_tracing_status,
     instrument_fastapi_app,
     is_tracing_enabled,
     setup_tracing,
 )
-from server.utils.logger import log_json
-import aiosqlite
-from sqlalchemy import text
-from server.db.engine import get_async_engine
 from server.utils.db import get_db_path
+from server.utils.logger import log_json
 from server.utils.time import utc_now_iso_z
 
 MCP_TOKEN = os.getenv("MCP_TOKEN", "change-me")

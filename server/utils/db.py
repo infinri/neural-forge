@@ -1,7 +1,7 @@
-import os
 import asyncio
+import os
 import random
-from typing import Any, Iterable, Tuple, Optional, Sequence
+from typing import Any, Optional, Sequence, Tuple
 
 import aiosqlite
 
