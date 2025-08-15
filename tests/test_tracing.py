@@ -1,5 +1,6 @@
 import asyncio
 import json
+import sys
 
 import pytest
 
@@ -9,7 +10,11 @@ pytest.importorskip("opentelemetry")
 from opentelemetry import trace
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import InMemorySpanExporter, SimpleSpanProcessor
+from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+try:  # OTel >=1.25 doesn't re-export InMemorySpanExporter at package root
+    from opentelemetry.sdk.trace.export import InMemorySpanExporter  # type: ignore[attr-defined]
+except Exception:  # fallback for versions where it's only in submodule
+    from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
 
 from server.core.events import Event, bus
 from server.core.orchestrator import CONV_MSG, orchestrator
@@ -20,14 +25,23 @@ from server.utils.logger import log_json
 def otel_memory_provider(monkeypatch):
     # Enable tracing gates in code paths
     monkeypatch.setenv("TRACING_ENABLED", "true")
-    # Configure SDK with in-memory exporter
+    # Configure in-memory exporter on whichever provider is active
     exporter = InMemorySpanExporter()
-    provider = TracerProvider(resource=Resource.create({"service.name": "test"}))
-    provider.add_span_processor(SimpleSpanProcessor(exporter))
-    trace.set_tracer_provider(provider)
+    try:
+        # Attempt to set a clean SDK provider (may warn if already set)
+        provider = TracerProvider(resource=Resource.create({"service.name": "test"}))
+        trace.set_tracer_provider(provider)
+    except Exception:
+        provider = None  # fall back to current provider
+    # Always attach exporter to the effective provider
+    current = trace.get_tracer_provider()
+    try:  # type: ignore[attr-defined]
+        current.add_span_processor(SimpleSpanProcessor(exporter))  # pyright: ignore[reportAttributeAccessIssue]
+    except Exception:
+        if provider is not None:
+            provider.add_span_processor(SimpleSpanProcessor(exporter))
     yield exporter
-    # Reset provider after test to avoid cross-test contamination
-    trace.set_tracer_provider(TracerProvider(resource=Resource.create({"service.name": "reset"})))
+    # Do not attempt to reset global provider; just detach by dropping exporter ref
 
 
 @pytest.mark.asyncio
@@ -100,6 +114,7 @@ def test_log_correlation_in_span(otel_memory_provider, capsys):
     with tracer.start_as_current_span("log-corr-test"):
         log_json("info", "test.trace.msg", foo="bar")
     # Capture stdout and parse JSON lines, find our message
+    sys.stdout.flush()
     out = capsys.readouterr().out.strip().splitlines()
     records = [json.loads(line) for line in out if line.strip()]
     ours = [r for r in records if r.get("message") == "test.trace.msg"]

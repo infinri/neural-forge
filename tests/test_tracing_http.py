@@ -4,32 +4,61 @@ import pytest
 pytest.importorskip("opentelemetry")
 
 from fastapi.testclient import TestClient
+import os
 from opentelemetry import trace
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import InMemorySpanExporter, SimpleSpanProcessor
+from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+try:  # OTel >=1.25 doesn't re-export InMemorySpanExporter at package root
+    from opentelemetry.sdk.trace.export import InMemorySpanExporter  # type: ignore[attr-defined]
+except Exception:
+    from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
 
+# Ensure env is set before importing the app (prevent app tracing init; we'll control provider/exporter)
+os.environ.setdefault("MCP_TOKEN", "dev")
+os.environ.setdefault("TRACING_ENABLED", "false")
 from server.main import app
 
 
 @pytest.fixture()
 def otel_http_memory_provider(monkeypatch):
-    # Prevent app lifespan from overriding provider/exporter
+    # Keep app tracing init disabled; we will enable domain gating via monkeypatch
     monkeypatch.setenv("TRACING_ENABLED", "false")
-    # Configure in-memory exporter and provider for test
+    # Ensure auth works in tests
+    monkeypatch.setenv("MCP_TOKEN", "dev")
+    # Force gating in domain code regardless of env to create spans
+    import server.observability.tracing as tracingmod
+    import server.core.events as eventsmod
+    import server.core.orchestrator as orchmod
+    monkeypatch.setattr(tracingmod, "is_tracing_enabled", lambda: True, raising=False)
+    monkeypatch.setattr(eventsmod, "is_tracing_enabled", lambda: True, raising=False)
+    monkeypatch.setattr(orchmod, "is_tracing_enabled", lambda: True, raising=False)
+    # Configure a clean SDK provider and attach in-memory exporter BEFORE instrumentation
     exporter = InMemorySpanExporter()
-    provider = TracerProvider(resource=Resource.create({"service.name": "test-http"}))
-    provider.add_span_processor(SimpleSpanProcessor(exporter))
-    trace.set_tracer_provider(provider)
+    try:
+        provider = TracerProvider(resource=Resource.create({"service.name": "test-http"}))
+        trace.set_tracer_provider(provider)
+    except Exception:
+        provider = None
+    # Always attach exporter to the effective provider in use
+    current = trace.get_tracer_provider()
+    try:  # type: ignore[attr-defined]
+        current.add_span_processor(SimpleSpanProcessor(exporter))
+    except Exception:
+        if provider is not None:
+            provider.add_span_processor(SimpleSpanProcessor(exporter))
 
     # Instrument FastAPI at test-time (since app lifespan won't)
-    FastAPIInstrumentor.instrument_app(app)
+    try:
+        FastAPIInstrumentor.instrument_app(app)
+    except Exception:
+        # Ignore if already instrumented
+        pass
 
     yield exporter
 
-    # Reset provider after test
-    trace.set_tracer_provider(TracerProvider(resource=Resource.create({"service.name": "reset"})))
+    # No teardown of global provider here to avoid cross-test interference
 
 
 def _post_ingest(client: TestClient, content: str, force_error: bool = False):

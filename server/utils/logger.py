@@ -33,6 +33,15 @@ _logger = None
 def get_logger() -> logging.Logger:
     global _logger
     if _logger is not None:
+        # Ensure handler streams follow the current sys.stdout (important for tests/capsys)
+        for h in _logger.handlers:
+            try:
+                h.setStream(sys.stdout)  # type: ignore[attr-defined]
+            except Exception:
+                try:
+                    h.stream = sys.stdout  # type: ignore[attr-defined]
+                except Exception:
+                    pass
         return _logger
     logger = logging.getLogger("mcp")
     logger.setLevel(logging.INFO)

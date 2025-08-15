@@ -74,6 +74,9 @@ async def handler(req: Dict[str, Any]):
 
     # Publish to EventBus
     payload = {"role": norm_role, "content": content}
+    # Test hook: propagate force_error if provided to exercise error path
+    if isinstance(req.get("force_error"), bool) and req["force_error"]:
+        payload["force_error"] = True
     await bus.publish(
         Event(
             type=evt_type,

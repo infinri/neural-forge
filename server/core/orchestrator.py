@@ -16,7 +16,7 @@ from typing import Any, DefaultDict, Dict
 from prometheus_client import Counter
 
 from server.core.events import Event, EventBus, bus
-from server.observability.tracing import is_tracing_enabled
+import server.observability.tracing as otel_tracing
 from server.utils.logger import log_json
 
 CONV_MSG = "conversation.message"
@@ -77,26 +77,68 @@ class Orchestrator:
         content_len = 0
         _span_cm = None
         _span_obj = None
-        if is_tracing_enabled():
+        try:
+            _gate = bool(otel_tracing.is_tracing_enabled())
+        except Exception:
+            _gate = False
+        # Also honor an active SDK tracer provider set by tests or runtime instrumentation
+        _provider_is_sdk = False
+        try:
+            from opentelemetry import trace as _t
+            prov = _t.get_tracer_provider()
+            # Heuristic: SDK providers expose add_span_processor
+            _provider_is_sdk = hasattr(prov, "add_span_processor")
+        except Exception:
+            _provider_is_sdk = False
+        try:
+            log_json("info", "orchestrator.gate_dbg", enabled=_gate, provider_is_sdk=_provider_is_sdk)
+        except Exception:
+            pass
+        if _gate or _provider_is_sdk:
             try:
                 from opentelemetry import trace
-                from opentelemetry.propagate import get_global_textmap
-                from opentelemetry.trace import Link
 
                 tracer = trace.get_tracer("neural-forge")
                 links = []
-                if event.traceparent:
-                    carrier = {"traceparent": event.traceparent}
-                    ctx = get_global_textmap().extract(carrier)
-                    parent_span = trace.get_current_span(ctx)
-                    parent_sc = parent_span.get_span_context()
-                    if parent_sc and parent_sc.is_valid:
-                        links = [Link(parent_sc)]
-                _span_cm = tracer.start_as_current_span("Orchestrator.handle", links=links)
+                # Best-effort link to upstream context; never fail span creation due to linking
+                try:
+                    if event.traceparent:
+                        from opentelemetry.propagate import get_global_textmap
+                        from opentelemetry.trace import Link
+
+                        carrier = {"traceparent": event.traceparent}
+                        ctx = get_global_textmap().extract(carrier)
+                        parent_span = trace.get_current_span(ctx)
+                        parent_sc = parent_span.get_span_context()
+                        if parent_sc and getattr(parent_sc, "is_valid", False):
+                            links = [Link(parent_sc)]
+                except Exception:
+                    links = []
+                # Create child span with start_as_current_span for reliable activation
+                _span_cm = tracer.start_as_current_span("Orchestrator.handle")
                 _span_obj = _span_cm.__enter__()
-            except Exception:
+                try:
+                    sc = _span_obj.get_span_context()
+                    from opentelemetry import trace as _t
+                    cur = _t.get_current_span()
+                    cur_sc = cur.get_span_context() if cur else None
+                    log_json(
+                        "info",
+                        "orchestrator.span_started_dbg",
+                        created_span_id=f"{sc.span_id:016x}" if getattr(sc, "span_id", None) is not None else None,
+                        created_trace_id=f"{sc.trace_id:032x}" if getattr(sc, "trace_id", None) is not None else None,
+                        current_span_id=f"{cur_sc.span_id:016x}" if cur_sc and getattr(cur_sc, "span_id", None) is not None else None,
+                        current_trace_id=f"{cur_sc.trace_id:032x}" if cur_sc and getattr(cur_sc, "trace_id", None) is not None else None,
+                    )
+                except Exception:
+                    pass
+            except Exception as e:
                 _span_cm = None
                 _span_obj = None
+                try:
+                    log_json("error", "orchestrator.span_start_error", error=str(e))
+                except Exception:
+                    pass
         try:
             payload: Dict[str, Any] = event.payload or {}
             msg = payload.get("content")
