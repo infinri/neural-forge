@@ -73,7 +73,7 @@ async def handler(req: Dict[str, Any]):
     norm_role = role.lower() if isinstance(role, str) else None
 
     # Publish to EventBus
-    payload = {"role": norm_role, "content": content}
+    payload: Dict[str, Any] = {"role": norm_role, "content": content}
     # Test hook: propagate force_error if provided to exercise error path
     if isinstance(req.get("force_error"), bool) and req["force_error"]:
         payload["force_error"] = True
