@@ -15,8 +15,8 @@ from typing import Any, DefaultDict, Dict
 
 from prometheus_client import Counter
 
-from server.core.events import Event, EventBus, bus
 import server.observability.tracing as otel_tracing
+from server.core.events import Event, EventBus, bus
 from server.utils.logger import log_json
 
 CONV_MSG = "conversation.message"
@@ -115,7 +115,7 @@ class Orchestrator:
                 except Exception:
                     links = []
                 # Create child span with start_as_current_span for reliable activation
-                _span_cm = tracer.start_as_current_span("Orchestrator.handle")
+                _span_cm = tracer.start_as_current_span("Orchestrator.handle", links=links)
                 _span_obj = _span_cm.__enter__()
                 try:
                     sc = _span_obj.get_span_context()

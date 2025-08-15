@@ -3,13 +3,15 @@ import pytest
 # Skip if OpenTelemetry not installed
 pytest.importorskip("opentelemetry")
 
-from fastapi.testclient import TestClient
 import os
+
+from fastapi.testclient import TestClient
 from opentelemetry import trace
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+
 try:  # OTel >=1.25 doesn't re-export InMemorySpanExporter at package root
     from opentelemetry.sdk.trace.export import InMemorySpanExporter  # type: ignore[attr-defined]
 except Exception:
@@ -28,9 +30,9 @@ def otel_http_memory_provider(monkeypatch):
     # Ensure auth works in tests
     monkeypatch.setenv("MCP_TOKEN", "dev")
     # Force gating in domain code regardless of env to create spans
-    import server.observability.tracing as tracingmod
     import server.core.events as eventsmod
     import server.core.orchestrator as orchmod
+    import server.observability.tracing as tracingmod
     monkeypatch.setattr(tracingmod, "is_tracing_enabled", lambda: True, raising=False)
     monkeypatch.setattr(eventsmod, "is_tracing_enabled", lambda: True, raising=False)
     monkeypatch.setattr(orchmod, "is_tracing_enabled", lambda: True, raising=False)
