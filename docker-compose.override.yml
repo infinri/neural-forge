@@ -1,0 +1,10 @@
+services:
+  server:
+    environment:
+      - ORCHESTRATOR_ENABLED=true
+      - TASK_WATCHDOG_ENABLED=true
+      - TASK_WATCHDOG_ACTION=requeue
+      - TASK_WATCHDOG_TTL_SECONDS=1
+      - TASK_WATCHDOG_INTERVAL_SECONDS=2
+      - TASK_WATCHDOG_BATCH_LIMIT=100
+      - TASK_WATCHDOG_PROJECT_ID=wdg-debug

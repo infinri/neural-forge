@@ -5,6 +5,8 @@ import pytest
 
 from server.utils.db import sqlite_fetch_all
 
+pytestmark = pytest.mark.skip(reason="SQLite utilities removed; PostgreSQL-only")
+
 
 @pytest.mark.asyncio
 async def test_sqlite_fetch_all_select_one():

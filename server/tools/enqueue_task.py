@@ -2,11 +2,8 @@ import json
 import uuid
 from typing import Any, Dict
 
-import aiosqlite
-
 from server.db.engine import get_async_engine
 from server.db.repo import enqueue_task_pg
-from server.utils.db import get_db_path
 from server.utils.time import utc_now_iso_z
 
 SERVER_VERSION = "1.3.0"
@@ -44,15 +41,12 @@ async def handler(req: Dict[str, Any]):
     if engine is not None:
         await enqueue_task_pg(engine, task_id=task_id, project_id=project_id.strip(), payload=payload)
     else:
-        async with aiosqlite.connect(get_db_path()) as db:
-            await db.execute(
-                """
-                INSERT INTO tasks (id, project_id, status, payload)
-                VALUES (?, ?, 'queued', ?)
-                """,
-                (task_id, project_id, json.dumps(payload or {})),
-            )
-            await db.commit()
+        return {
+            "error": {"code": "ERR.DB_UNAVAILABLE", "message": "DATABASE_URL not configured"},
+            "requestId": request_id,
+            "serverVersion": SERVER_VERSION,
+            "timestamp": ts,
+        }
 
     return {
         "requestId": request_id,

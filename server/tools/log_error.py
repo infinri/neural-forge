@@ -1,9 +1,6 @@
 import json
-import os
 import uuid
 from typing import Any, Dict
-
-import aiosqlite
 
 from server.db.engine import get_async_engine
 from server.db.repo import log_error_pg
@@ -51,26 +48,21 @@ async def handler(req: Dict[str, Any]):
 
     row_id = str(uuid.uuid4())
     engine = get_async_engine()
-    if engine is not None:
-        await log_error_pg(
-            engine,
-            row_id=row_id,
-            level=level,
-            message=message,
-            project_id=project_id if isinstance(project_id, str) else None,
-            context=context if isinstance(context, dict) else None,
-        )
-    else:
-        db_path = os.getenv("MCP_DB_PATH", "data/mcp.db")
-        async with aiosqlite.connect(db_path) as db:
-            await db.execute(
-                """
-                INSERT INTO errors (id, project_id, level, message, context)
-                VALUES (?, ?, ?, ?, ?)
-                """,
-                (row_id, project_id, level, message, json.dumps(context or {})),
-            )
-            await db.commit()
+    if engine is None:
+        return {
+            "error": {"code": "ERR.DB_UNAVAILABLE", "message": "DATABASE_URL not configured"},
+            "requestId": request_id,
+            "serverVersion": SERVER_VERSION,
+            "timestamp": ts,
+        }
+    await log_error_pg(
+        engine,
+        row_id=row_id,
+        level=level,
+        message=message,
+        project_id=project_id if isinstance(project_id, str) else None,
+        context=context if isinstance(context, dict) else None,
+    )
 
     return {
         "requestId": request_id,

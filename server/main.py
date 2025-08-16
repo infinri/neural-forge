@@ -5,21 +5,31 @@ import time
 from contextlib import asynccontextmanager
 from typing import Any, Dict
 
-import aiosqlite
 from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse, Response, StreamingResponse
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 from sqlalchemy import text
 
 from server.core import orchestrator
+from server.core.orchestrator import (
+    WATCHDOG_ACTIONS_TOTAL,
+    WATCHDOG_DURATION,
+    WATCHDOG_ERRORS_TOTAL,
+    WATCHDOG_SCANS_TOTAL,
+)
 from server.db.engine import get_async_engine
+from server.db.repo import (
+    watchdog_fail_stale_inprogress_pg,
+    watchdog_requeue_stale_inprogress_pg,
+    watchdog_count_stale_inprogress_pg,
+    watchdog_list_stale_inprogress_pg,
+)
 from server.observability.tracing import (
     get_tracing_status,
     instrument_fastapi_app,
     is_tracing_enabled,
     setup_tracing,
 )
-from server.utils.db import get_db_path
 from server.utils.logger import log_json
 from server.utils.time import utc_now_iso_z
 
@@ -392,11 +402,10 @@ async def health():
     """
     tracing = get_tracing_status()
     # Determine DB backend and status (concise probe)
-    backend = None
+    backend = "postgresql"
     db_status = "unknown"
     engine = get_async_engine()
     if engine is not None:
-        backend = "postgresql"
         try:
             async with engine.connect() as conn:
                 await conn.execute(text("SELECT 1"))
@@ -404,14 +413,8 @@ async def health():
         except Exception:
             db_status = "down"
     else:
-        backend = "sqlite"
-        try:
-            async with aiosqlite.connect(get_db_path()) as db:
-                async with db.execute("SELECT 1") as cur:
-                    await cur.fetchone()
-            db_status = "up"
-        except Exception:
-            db_status = "down"
+        # PostgreSQL-only mode: if no engine configured, report down
+        db_status = "down"
 
     # Only return a concise subset in health to keep payload small
     return {
@@ -444,7 +447,7 @@ async def admin_stats(
         with REQ_LATENCY.labels(endpoint).time():
             ts = utc_now_iso_z()
             engine = get_async_engine()
-            backend = "postgresql" if engine is not None else "sqlite"
+            backend = "postgresql"
 
             # Defaults
             mem_count = 0
@@ -452,58 +455,34 @@ async def admin_stats(
             errors_count = 0
             tasks = {"queued": 0, "inProgress": 0, "done": 0, "failed": 0}
 
-            if engine is not None:
-                # Postgres path
-                where = []
-                params: Dict[str, Any] = {}
-                if projectId and projectId.strip():
-                    where.append("project_id = :project_id")
-                    params["project_id"] = projectId
-                w = f" WHERE {' AND '.join(where)}" if where else ""
-                async with engine.connect() as conn:
-                    r = await conn.execute(text(f"SELECT COUNT(*) FROM memory_entries{w}"), params)
-                    row_pg = r.fetchone()
-                    mem_count = int(row_pg[0]) if row_pg and row_pg[0] is not None else 0
+            if engine is None:
+                raise HTTPException(status_code=503, detail="ERR.DB_UNAVAILABLE: DATABASE_URL not configured")
 
-                    r = await conn.execute(text(f"SELECT status, COUNT(*) FROM tasks{w} GROUP BY status"), params)
-                    for st, cnt in r.fetchall():
-                        key = "inProgress" if st == "in_progress" else st
-                        if key in tasks:
-                            tasks[key] = int(cnt)
+            # Postgres path
+            where = []
+            params: Dict[str, Any] = {}
+            if projectId and projectId.strip():
+                where.append("project_id = :project_id")
+                params["project_id"] = projectId
+            w = f" WHERE {' AND '.join(where)}" if where else ""
+            async with engine.connect() as conn:
+                r = await conn.execute(text(f"SELECT COUNT(*) FROM memory_entries{w}"), params)
+                row_pg = r.fetchone()
+                mem_count = int(row_pg[0]) if row_pg and row_pg[0] is not None else 0
 
-                    r = await conn.execute(text(f"SELECT COUNT(*) FROM diffs{w}"), params)
-                    row_pg = r.fetchone()
-                    diffs_count = int(row_pg[0]) if row_pg and row_pg[0] is not None else 0
+                r = await conn.execute(text(f"SELECT status, COUNT(*) FROM tasks{w} GROUP BY status"), params)
+                for st, cnt in r.fetchall():
+                    key = "inProgress" if st == "in_progress" else st
+                    if key in tasks:
+                        tasks[key] = int(cnt)
 
-                    r = await conn.execute(text(f"SELECT COUNT(*) FROM errors{w}"), params)
-                    row_pg = r.fetchone()
-                    errors_count = int(row_pg[0]) if row_pg and row_pg[0] is not None else 0
-            else:
-                # SQLite path
-                args_base: list[Any] = []
-                where = []
-                if projectId and projectId.strip():
-                    where.append("project_id = ?")
-                    args_base.append(projectId)
-                w = f" WHERE {' AND '.join(where)}" if where else ""
-                async with aiosqlite.connect(get_db_path()) as db:
-                    async with db.execute(f"SELECT COUNT(*) FROM memory_entries{w}", tuple(args_base)) as cur:
-                        row_sql = await cur.fetchone()
-                        mem_count = int(row_sql[0]) if row_sql and row_sql[0] is not None else 0
+                r = await conn.execute(text(f"SELECT COUNT(*) FROM diffs{w}"), params)
+                row_pg = r.fetchone()
+                diffs_count = int(row_pg[0]) if row_pg and row_pg[0] is not None else 0
 
-                    async with db.execute(f"SELECT status, COUNT(*) FROM tasks{w} GROUP BY status", tuple(args_base)) as cur:
-                        async for st, cnt in cur:
-                            key = "inProgress" if st == "in_progress" else st
-                            if key in tasks:
-                                tasks[key] = int(cnt)
-
-                    async with db.execute(f"SELECT COUNT(*) FROM diffs{w}", tuple(args_base)) as cur:
-                        row_sql = await cur.fetchone()
-                        diffs_count = int(row_sql[0]) if row_sql and row_sql[0] is not None else 0
-
-                    async with db.execute(f"SELECT COUNT(*) FROM errors{w}", tuple(args_base)) as cur:
-                        row_sql = await cur.fetchone()
-                        errors_count = int(row_sql[0]) if row_sql and row_sql[0] is not None else 0
+                r = await conn.execute(text(f"SELECT COUNT(*) FROM errors{w}"), params)
+                row_pg = r.fetchone()
+                errors_count = int(row_pg[0]) if row_pg and row_pg[0] is not None else 0
 
             total_tasks = tasks["queued"] + tasks["inProgress"] + tasks["done"] + tasks["failed"]
             log_json("info", "admin_stats", backend=backend, projectId=projectId, status="ok")
@@ -563,60 +542,38 @@ async def admin_memory_meta(
             backend = "postgresql" if engine is not None else "sqlite"
             items: list[Dict[str, Any]] = []
 
-            if engine is not None:
-                cond = []
-                params: Dict[str, Any] = {"limit": int(limit), "offset": int(offset)}
-                if projectId and projectId.strip():
-                    cond.append("project_id = :project_id")
-                    params["project_id"] = projectId
-                if quarantinedOnly:
-                    cond.append("quarantined = TRUE")
-                where = f" WHERE {' AND '.join(cond)}" if cond else ""
-                q_pg = text(
-                    f"""
-                    SELECT id, project_id, quarantined, created_at, LENGTH(content) AS size
-                    FROM memory_entries
-                    {where}
-                    ORDER BY created_at DESC
-                    LIMIT :limit OFFSET :offset
-                    """
-                )
-                async with engine.connect() as conn:
-                    res = await conn.execute(q_pg, params)
-                    rows_pg = res.fetchall()
-                for r_pg in rows_pg:
-                    created = r_pg[3]
-                    items.append({
-                        "id": r_pg[0],
-                        "projectId": r_pg[1],
-                        "quarantined": bool(r_pg[2]),
-                        "createdAt": created.isoformat() if hasattr(created, "isoformat") else str(created),
-                        "size": int(r_pg[4]) if r_pg[4] is not None else 0,
-                    })
-            else:
-                cond = []
-                args: list[Any] = []
-                if projectId and projectId.strip():
-                    cond.append("project_id = ?")
-                    args.append(projectId)
-                if quarantinedOnly:
-                    cond.append("quarantined = 1")
-                where = f" WHERE {' AND '.join(cond)}" if cond else ""
-                q_sql = (
-                    f"SELECT id, project_id, quarantined, created_at, LENGTH(content) AS size "
-                    f"FROM memory_entries{where} ORDER BY created_at DESC LIMIT ? OFFSET ?"
-                )
-                args_all = tuple(args + [int(limit), int(offset)])
-                async with aiosqlite.connect(get_db_path()) as db:
-                    async with db.execute(q_sql, args_all) as cur:
-                        async for row_sql in cur:
-                            items.append({
-                                "id": row_sql[0],
-                                "projectId": row_sql[1],
-                                "quarantined": bool(row_sql[2]),
-                                "createdAt": row_sql[3],
-                                "size": int(row_sql[4]) if row_sql[4] is not None else 0,
-                            })
+            if engine is None:
+                raise HTTPException(status_code=503, detail="ERR.DB_UNAVAILABLE: DATABASE_URL not configured")
+
+            cond = []
+            params: Dict[str, Any] = {"limit": int(limit), "offset": int(offset)}
+            if projectId and projectId.strip():
+                cond.append("project_id = :project_id")
+                params["project_id"] = projectId
+            if quarantinedOnly:
+                cond.append("quarantined = TRUE")
+            where = f" WHERE {' AND '.join(cond)}" if cond else ""
+            q_pg = text(
+                f"""
+                SELECT id, project_id, quarantined, created_at, LENGTH(content) AS size
+                FROM memory_entries
+                {where}
+                ORDER BY created_at DESC
+                LIMIT :limit OFFSET :offset
+                """
+            )
+            async with engine.connect() as conn:
+                res = await conn.execute(q_pg, params)
+                rows_pg = res.fetchall()
+            for r_pg in rows_pg:
+                created = r_pg[3]
+                items.append({
+                    "id": r_pg[0],
+                    "projectId": r_pg[1],
+                    "quarantined": bool(r_pg[2]),
+                    "createdAt": created.isoformat() if hasattr(created, "isoformat") else str(created),
+                    "size": int(r_pg[4]) if r_pg[4] is not None else 0,
+                })
 
             log_json("info", "admin_memory_meta", backend=backend, projectId=projectId, count=len(items))
             return {
@@ -635,6 +592,167 @@ async def admin_memory_meta(
     except Exception as e:
         ERR_COUNTER.labels(endpoint, "500").inc()
         log_json("error", "admin_memory_meta_exception", error=str(e))
+        raise HTTPException(status_code=500, detail=f"ERR.UNAVAILABLE: {e}")
+
+@app.post("/admin/watchdog/scan")
+async def admin_watchdog_scan(
+    request: Request,
+    authorization: str | None = Header(None),
+    action: str | None = None,
+    ttlSeconds: int | None = None,
+    limit: int | None = None,
+    projectId: str | None = None,
+):
+    """Admin: manually trigger a Postgres watchdog scan.
+
+    Secured via MCP_TOKEN. Parameters can be provided via query or defaulted from env:
+    - action: 'requeue' | 'fail' (default from TASK_WATCHDOG_ACTION or 'requeue')
+    - ttlSeconds: staleness threshold (default from TASK_WATCHDOG_TTL_SECONDS or 600)
+    - limit: maximum tasks to process (default from TASK_WATCHDOG_BATCH_LIMIT or 100)
+    - projectId: optional filter (default from TASK_WATCHDOG_PROJECT_ID)
+    """
+    require_auth(authorization, request)
+    endpoint = "admin_watchdog_scan"
+    REQ_COUNTER.labels(endpoint).inc()
+    try:
+        with REQ_LATENCY.labels(endpoint).time():
+            engine = get_async_engine()
+            if engine is None:
+                raise HTTPException(status_code=503, detail="ERR.DB_UNAVAILABLE: DATABASE_URL not configured")
+
+            # Resolve parameters from args or environment
+            act = (action or os.getenv("TASK_WATCHDOG_ACTION", "requeue") or "requeue").strip().lower()
+            ttl_s = int(ttlSeconds) if ttlSeconds is not None else int(os.getenv("TASK_WATCHDOG_TTL_SECONDS", "600"))
+            limit_n = int(limit) if limit is not None else int(os.getenv("TASK_WATCHDOG_BATCH_LIMIT", "100"))
+            proj = projectId if (projectId and projectId.strip()) else os.getenv("TASK_WATCHDOG_PROJECT_ID")
+            proj = proj if (proj and proj.strip()) else None
+
+            start = time.perf_counter()
+            affected = 0
+            if act == "fail":
+                affected = await watchdog_fail_stale_inprogress_pg(
+                    engine,
+                    ttl_seconds=ttl_s,
+                    limit=limit_n,
+                    project_id=proj,
+                    reason="manual_admin",
+                )
+            else:
+                affected = await watchdog_requeue_stale_inprogress_pg(
+                    engine,
+                    ttl_seconds=ttl_s,
+                    limit=limit_n,
+                    project_id=proj,
+                )
+
+            duration = time.perf_counter() - start
+            WATCHDOG_SCANS_TOTAL.labels(act).inc()
+            WATCHDOG_DURATION.labels(act).observe(duration)
+            outcome = "ok" if affected > 0 else "none"
+            WATCHDOG_ACTIONS_TOTAL.labels(act, outcome).inc()
+
+            log_json(
+                "info",
+                "admin_watchdog_scan",
+                action=act,
+                ttlSeconds=int(ttl_s),
+                limit=int(limit_n),
+                affected=int(affected),
+                projectId=proj,
+                durationMs=int(duration * 1000),
+            )
+            return {
+                "serverVersion": SERVER_VERSION,
+                "status": "ok",
+                "action": act,
+                "ttlSeconds": int(ttl_s),
+                "limit": int(limit_n),
+                "projectId": proj,
+                "affected": int(affected),
+                "durationMs": int(duration * 1000),
+            }
+    except HTTPException as e:
+        ERR_COUNTER.labels(endpoint, str(e.status_code)).inc()
+        log_json("error", "admin_watchdog_scan_http_error", status_code=e.status_code)
+        raise e
+    except Exception as e:
+        # Best-effort to attribute watchdog error to an action label
+        try:
+            label_val = (action or os.getenv("TASK_WATCHDOG_ACTION", "requeue") or "requeue").strip().lower()
+            WATCHDOG_ERRORS_TOTAL.labels(label_val).inc()
+        except Exception:
+            pass
+        ERR_COUNTER.labels(endpoint, "500").inc()
+        log_json("error", "admin_watchdog_scan_exception", error=str(e))
+        raise HTTPException(status_code=500, detail=f"ERR.UNAVAILABLE: {e}")
+
+@app.get("/admin/watchdog/preview")
+async def admin_watchdog_preview(
+    request: Request,
+    authorization: str | None = Header(None),
+    ttlSeconds: int | None = None,
+    limit: int | None = None,
+    projectId: str | None = None,
+):
+    """Admin: preview stale in-progress tasks targeted by the watchdog.
+
+    Secured via MCP_TOKEN. Parameters can be provided via query or defaulted from env:
+    - ttlSeconds: staleness threshold (default from TASK_WATCHDOG_TTL_SECONDS or 600)
+    - limit: maximum tasks to list (default from TASK_WATCHDOG_BATCH_LIMIT or 100)
+    - projectId: optional filter (default from TASK_WATCHDOG_PROJECT_ID)
+    """
+    require_auth(authorization, request)
+    endpoint = "admin_watchdog_preview"
+    REQ_COUNTER.labels(endpoint).inc()
+    try:
+        with REQ_LATENCY.labels(endpoint).time():
+            engine = get_async_engine()
+            if engine is None:
+                raise HTTPException(status_code=503, detail="ERR.DB_UNAVAILABLE: DATABASE_URL not configured")
+
+            # Resolve parameters from args or environment
+            ttl_s = int(ttlSeconds) if ttlSeconds is not None else int(os.getenv("TASK_WATCHDOG_TTL_SECONDS", "600"))
+            limit_n = int(limit) if limit is not None else int(os.getenv("TASK_WATCHDOG_BATCH_LIMIT", "100"))
+            proj = projectId if (projectId and projectId.strip()) else os.getenv("TASK_WATCHDOG_PROJECT_ID")
+            proj = proj if (proj and proj.strip()) else None
+
+            count = await watchdog_count_stale_inprogress_pg(
+                engine,
+                ttl_seconds=ttl_s,
+                project_id=proj,
+            )
+            items = await watchdog_list_stale_inprogress_pg(
+                engine,
+                ttl_seconds=ttl_s,
+                limit=limit_n,
+                project_id=proj,
+            )
+
+            log_json(
+                "info",
+                "admin_watchdog_preview",
+                ttlSeconds=int(ttl_s),
+                limit=int(limit_n),
+                projectId=proj,
+                count=int(count),
+                sampleCount=len(items),
+            )
+            return {
+                "serverVersion": SERVER_VERSION,
+                "status": "ok",
+                "ttlSeconds": int(ttl_s),
+                "limit": int(limit_n),
+                "projectId": proj,
+                "count": int(count),
+                "items": items,
+            }
+    except HTTPException as e:
+        ERR_COUNTER.labels(endpoint, str(e.status_code)).inc()
+        log_json("error", "admin_watchdog_preview_http_error", status_code=e.status_code)
+        raise e
+    except Exception as e:
+        ERR_COUNTER.labels(endpoint, "500").inc()
+        log_json("error", "admin_watchdog_preview_exception", error=str(e))
         raise HTTPException(status_code=500, detail=f"ERR.UNAVAILABLE: {e}")
 
 # Tool registration stubs

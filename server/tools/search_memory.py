@@ -1,24 +1,24 @@
-import json
 import uuid
 from typing import Any, Dict
 
-import aiosqlite
-
 from server.db.engine import get_async_engine
-from server.db.repo import search_memory_pg
-from server.utils.db import get_db_path
+from server.db.repo import search_memory_pg, semantic_search_memory_pg
+from server.memory.semantic import compute_embedding, is_semantic_enabled
 from server.utils.time import utc_now_iso_z
 
 SERVER_VERSION = "1.3.0"
 async def handler(req: Dict[str, Any]):
-    """Search memory entries by content substring.
+    """Search memory entries.
 
     Request:
       {
-        "query": "string",                 # required
+        "query": "string",                 # required (used for keyword or to embed)
         "projectId": "string" | null,      # optional filter
-        "limit": number | null,             # optional (default 20, max 200)
-        "includeQuarantined": bool | null   # optional (default false)
+        "limit": number | null,             # optional (default 20, max 200) for keyword mode
+        "includeQuarantined": bool | null,  # optional (default false)
+        "mode": "keyword"|"semantic"|"hybrid" | null,  # optional (default keyword)
+        "k": number | null,                 # optional top-k for semantic/hybrid (default = limit)
+        "threshold": number | null          # optional max cosine distance for semantic/hybrid
       }
     """
     request_id = str(uuid.uuid4())
@@ -28,6 +28,9 @@ async def handler(req: Dict[str, Any]):
     project_id = req.get("projectId")
     limit = req.get("limit", 20)
     include_quarantined = bool(req.get("includeQuarantined", False))
+    mode = (req.get("mode") or "keyword").strip().lower() if isinstance(req.get("mode"), str) else "keyword"
+    k = req.get("k")
+    threshold = req.get("threshold")
 
     def bad(msg: str):
         return {
@@ -45,60 +48,81 @@ async def handler(req: Dict[str, Any]):
         return bad("limit must be an integer")
     if limit <= 0 or limit > 200:
         limit = 20
+    if k is None:
+        k = limit
+    else:
+        try:
+            k = int(k)
+        except Exception:
+            return bad("k must be an integer if provided")
+        if k <= 0 or k > 200:
+            k = limit
 
     engine = get_async_engine()
-    rows = []
-    if engine is not None:
-        rows = await search_memory_pg(
+    if engine is None:
+        return {
+            "error": {"code": "ERR.DB_UNAVAILABLE", "message": "DATABASE_URL not configured"},
+            "requestId": request_id,
+            "serverVersion": SERVER_VERSION,
+            "timestamp": ts,
+        }
+    rows: list[Dict[str, Any]] = []
+
+    # Helper: keyword search via PostgreSQL
+    async def keyword_search() -> list[Dict[str, Any]]:
+        return await search_memory_pg(
             engine,
             query=query.strip(),
             project_id=project_id if isinstance(project_id, str) else None,
             limit=limit,
             include_quarantined=include_quarantined,
         )
-    else:
-        like = f"%{query}%"
-        async with aiosqlite.connect(get_db_path()) as db:
-            params: tuple[Any, ...]
-            if isinstance(project_id, str) and project_id.strip():
-                if include_quarantined:
-                    sql = (
-                        "SELECT id, project_id, content, metadata, quarantined, created_at "
-                        "FROM memory_entries WHERE project_id = ? AND content LIKE ? "
-                        "ORDER BY created_at DESC LIMIT ?"
-                    )
-                    params = (project_id, like, limit)
-                else:
-                    sql = (
-                        "SELECT id, project_id, content, metadata, quarantined, created_at "
-                        "FROM memory_entries WHERE project_id = ? AND quarantined=0 AND content LIKE ? "
-                        "ORDER BY created_at DESC LIMIT ?"
-                    )
-                    params = (project_id, like, limit)
-            else:
-                if include_quarantined:
-                    sql = (
-                        "SELECT id, project_id, content, metadata, quarantined, created_at "
-                        "FROM memory_entries WHERE content LIKE ? ORDER BY created_at DESC LIMIT ?"
-                    )
-                    params = (like, limit)
-                else:
-                    sql = (
-                        "SELECT id, project_id, content, metadata, quarantined, created_at "
-                        "FROM memory_entries WHERE quarantined=0 AND content LIKE ? ORDER BY created_at DESC LIMIT ?"
-                    )
-                    params = (like, limit)
 
-            async with db.execute(sql, params) as cur:
-                async for r in cur:
-                    rows.append({
-                        "id": r[0],
-                        "projectId": r[1],
-                        "content": r[2],
-                        "metadata": json.loads(r[3]) if r[3] else {},
-                        "quarantined": bool(r[4]),
-                        "createdAt": r[5],
-                    })
+    def dedupe_merge(primary: list[Dict[str, Any]], secondary: list[Dict[str, Any]]) -> list[Dict[str, Any]]:
+        seen = set()
+        merged: list[Dict[str, Any]] = []
+        for lst in (primary, secondary):
+            for it in lst:
+                mid = it.get("id")
+                if mid in seen:
+                    continue
+                seen.add(mid)
+                merged.append(it)
+        return merged[: max(limit, k)]
+
+    # Execute according to mode
+    if mode == "semantic" and is_semantic_enabled():
+        # Semantic only; fallback to keyword if embedding unavailable
+        qemb = compute_embedding(query) if isinstance(query, str) else None
+        if qemb is not None:
+            rows = await semantic_search_memory_pg(
+                engine,
+                query_embedding=qemb,
+                project_id=project_id if isinstance(project_id, str) else None,
+                k=k,
+                include_quarantined=include_quarantined,
+                threshold=float(threshold) if isinstance(threshold, (int, float)) else None,
+            )
+        else:
+            rows = await keyword_search()
+    elif mode == "hybrid" and is_semantic_enabled():
+        kw = await keyword_search()
+        qemb = compute_embedding(query) if isinstance(query, str) else None
+        if qemb is not None:
+            sem = await semantic_search_memory_pg(
+                engine,
+                query_embedding=qemb,
+                project_id=project_id if isinstance(project_id, str) else None,
+                k=k,
+                include_quarantined=include_quarantined,
+                threshold=float(threshold) if isinstance(threshold, (int, float)) else None,
+            )
+            rows = dedupe_merge(sem, kw)
+        else:
+            rows = kw
+    else:
+        # default keyword
+        rows = await keyword_search()
 
     return {
         "requestId": request_id,

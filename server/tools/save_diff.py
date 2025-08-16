@@ -1,11 +1,8 @@
 import uuid
 from typing import Any, Dict
 
-import aiosqlite
-
 from server.db.engine import get_async_engine
 from server.db.repo import save_diff_pg
-from server.utils.db import get_db_path
 from server.utils.time import utc_now_iso_z
 
 SERVER_VERSION = "1.3.0"
@@ -48,25 +45,21 @@ async def handler(req: Dict[str, Any]):
 
     row_id = str(uuid.uuid4())
     engine = get_async_engine()
-    if engine is not None:
-        await save_diff_pg(
-            engine,
-            row_id=row_id,
-            project_id=project_id,
-            file_path=file_path,
-            diff_text=diff_text,
-            author=author,
-        )
-    else:
-        async with aiosqlite.connect(get_db_path()) as db:
-            await db.execute(
-                """
-                INSERT INTO diffs (id, project_id, file_path, diff, author)
-                VALUES (?, ?, ?, ?, ?)
-                """,
-                (row_id, project_id, file_path, diff_text, author),
-            )
-            await db.commit()
+    if engine is None:
+        return {
+            "error": {"code": "ERR.DB_UNAVAILABLE", "message": "DATABASE_URL not configured"},
+            "requestId": request_id,
+            "serverVersion": SERVER_VERSION,
+            "timestamp": ts,
+        }
+    await save_diff_pg(
+        engine,
+        row_id=row_id,
+        project_id=project_id,
+        file_path=file_path,
+        diff_text=diff_text,
+        author=author,
+    )
 
     return {
         "requestId": request_id,

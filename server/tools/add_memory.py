@@ -2,11 +2,9 @@ import json
 import uuid
 from typing import Any, Dict
 
-import aiosqlite
-
 from server.db.engine import get_async_engine
 from server.db.repo import add_memory_pg
-from server.utils.db import get_db_path
+from server.memory.semantic import compute_embedding, is_semantic_enabled
 from server.utils.time import utc_now_iso_z
 
 SERVER_VERSION = "1.3.0"
@@ -51,6 +49,12 @@ async def handler(req: Dict[str, Any]):
     engine = get_async_engine()
     if engine is not None:
         # Use PostgreSQL via SQLAlchemy
+        emb = None
+        if is_semantic_enabled():
+            try:
+                emb = compute_embedding(content)
+            except Exception:
+                emb = None
         await add_memory_pg(
             engine,
             mem_id=mem_id,
@@ -58,18 +62,16 @@ async def handler(req: Dict[str, Any]):
             content=content,
             metadata=metadata,
             quarantined=bool(quarantined),
+            embedding=emb,
+            group_id=None,
         )
     else:
-        # Fallback to SQLite for local tests
-        async with aiosqlite.connect(get_db_path()) as db:
-            await db.execute(
-                """
-                INSERT INTO memory_entries (id, project_id, content, metadata, quarantined)
-                VALUES (?, ?, ?, ?, ?)
-                """,
-                (mem_id, project_id, content, json.dumps(metadata or {}), 1 if quarantined else 0),
-            )
-            await db.commit()
+        return {
+            "error": {"code": "ERR.DB_UNAVAILABLE", "message": "DATABASE_URL not configured"},
+            "requestId": request_id,
+            "serverVersion": SERVER_VERSION,
+            "timestamp": ts,
+        }
 
     return {
         "requestId": request_id,

@@ -8,6 +8,20 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: neural_forge
+          POSTGRES_USER: forge
+          POSTGRES_PASSWORD: forge
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U forge -d neural_forge"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,6 +46,21 @@ jobs:
           pip install -U pip
           pip install -r requirements.txt
 
+      - name: Wait for Postgres
+        run: |
+          for i in {1..30}; do
+            pg_isready -h 127.0.0.1 -p 5432 -U forge && exit 0
+            sleep 2
+          done
+          exit 1
+
+      - name: Run Alembic migrations
+        env:
+          DATABASE_URL: postgresql+asyncpg://forge:forge@127.0.0.1:5432/neural_forge
+        run: |
+          . .venv/bin/activate
+          alembic upgrade head
+
       - name: Lint
         run: |
           . .venv/bin/activate
@@ -41,17 +70,16 @@ jobs:
       - name: Run tests
         env:
           MCP_TOKEN: dev
-          MCP_DB_PATH: data/mcp.ci.db
+          DATABASE_URL: postgresql+asyncpg://forge:forge@127.0.0.1:5432/neural_forge
         run: |
           . .venv/bin/activate
-          mkdir -p data
           pytest -q
 
   migrations:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:16
+        image: pgvector/pgvector:pg16
         env:
           POSTGRES_DB: neural_forge
           POSTGRES_USER: forge

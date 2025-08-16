@@ -4,13 +4,10 @@ services:
     container_name: nf-mcp-server
     environment:
       - MCP_TOKEN=dev
-      - MCP_DB_PATH=/data/mcp.db
       - POSTGRES_DB=${POSTGRES_DB:-neural_forge}
       - POSTGRES_USER=${POSTGRES_USER:-forge}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-forge}
       - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-forge}:${POSTGRES_PASSWORD:-forge}@postgres:5432/${POSTGRES_DB:-neural_forge}
-    volumes:
-      - mcp-data:/data
     ports:
       - "8081:8080"
 
@@ -55,5 +52,4 @@ services:
       - "3000:3000"
 
 volumes:
-  mcp-data:
   pg-data:

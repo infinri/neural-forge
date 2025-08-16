@@ -3,7 +3,6 @@
 PY?=python3
 VENv=.venv
 ACTIVATE=$(VENv)/bin/activate
-DB_PATH?=data/mcp.db
 
 setup:
 	$(PY) -m venv $(VENv)
@@ -19,12 +18,8 @@ run:
 dev:
 	. $(ACTIVATE) && uvicorn server.main:app --reload --host 127.0.0.1 --port 8080
 
-db-init:
-	mkdir -p $(dir $(DB_PATH))
-	. $(ACTIVATE) && $(PY) server/db/init_db.py --db $(DB_PATH) --schema server/db/schema.sql
-
 test:
-	. $(ACTIVATE) && MCP_TOKEN=dev MCP_DB_PATH=$(DB_PATH) pytest -q
+	. $(ACTIVATE) && MCP_TOKEN=dev pytest -q
 
 fmt:
 	. $(ACTIVATE) && ruff check --fix .

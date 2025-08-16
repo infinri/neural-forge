@@ -36,9 +36,6 @@ The Neural Forge MCP server provides a JSON-RPC interface over Server-Sent Event
 # Required
 MCP_TOKEN=dev                    # Authentication token
 DATABASE_URL=postgresql+asyncpg://forge:forge@localhost:5432/neural_forge
-
-# Optional
-MCP_DB_PATH=data/mcp.db         # SQLite fallback for tests
 ```
 
 ### **Windsurf Configuration**
@@ -156,8 +153,8 @@ make db-current
 make db-downgrade
 ```
 
-### **SQLite (Testing)**
-Automatically used when `DATABASE_URL` is not set. Database file location controlled by `MCP_DB_PATH`.
+### **SQLite (Removed)**
+SQLite support has been removed. PostgreSQL is required and `DATABASE_URL` must be set.
 
 ## 🧪 **Testing**
 
