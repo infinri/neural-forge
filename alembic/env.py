@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from typing import Any, cast
 import os
 from logging.config import fileConfig
+from typing import Any, cast
 
 from sqlalchemy import engine_from_config, pool
 
