@@ -1,5 +1,5 @@
-import os
 import hashlib
+import os
 from typing import Callable, Optional
 
 _DIM = 384  # all-MiniLM-L6-v2 dimension; used for mock too

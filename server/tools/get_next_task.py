@@ -1,13 +1,13 @@
-import json
 import uuid
 from typing import Any, Dict
 
+from prometheus_client import Counter
+
+import server.observability.tracing as otel_tracing
 from server.db.engine import get_async_engine
 from server.db.repo import claim_next_task_pg
-from server.utils.time import utc_now_iso_z
-from prometheus_client import Counter
 from server.utils.logger import log_json
-import server.observability.tracing as otel_tracing
+from server.utils.time import utc_now_iso_z
 
 SERVER_VERSION = "1.3.0"
 

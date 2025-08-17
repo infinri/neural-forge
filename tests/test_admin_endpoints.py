@@ -1,8 +1,8 @@
 import os
-import psycopg
-from psycopg.types.json import Json
 
+import psycopg
 from fastapi.testclient import TestClient
+from psycopg.types.json import Json
 
 # Ensure token for app auth
 os.environ.setdefault("MCP_TOKEN", "dev")

@@ -1,13 +1,14 @@
 import os
 import uuid
+
 import pytest
 from sqlalchemy import text
 
 from server.db.engine import get_async_engine
 from server.db.repo import (
     enqueue_task_pg,
-    watchdog_requeue_stale_inprogress_pg,
     watchdog_fail_stale_inprogress_pg,
+    watchdog_requeue_stale_inprogress_pg,
 )
 
 

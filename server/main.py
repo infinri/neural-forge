@@ -19,10 +19,10 @@ from server.core.orchestrator import (
 )
 from server.db.engine import get_async_engine
 from server.db.repo import (
-    watchdog_fail_stale_inprogress_pg,
-    watchdog_requeue_stale_inprogress_pg,
     watchdog_count_stale_inprogress_pg,
+    watchdog_fail_stale_inprogress_pg,
     watchdog_list_stale_inprogress_pg,
+    watchdog_requeue_stale_inprogress_pg,
 )
 from server.observability.tracing import (
     get_tracing_status,
