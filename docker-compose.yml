@@ -10,6 +10,11 @@ services:
       - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-forge}:${POSTGRES_PASSWORD:-forge}@postgres:5432/${POSTGRES_DB:-neural_forge}
     ports:
       - "8081:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
 
   postgres:
     image: pgvector/pgvector:pg16
@@ -27,6 +32,18 @@ services:
       - pg-data:/var/lib/postgresql/data
     ports:
       - "55432:5432"
+
+  migrate:
+    build: .
+    container_name: nf-migrate
+    environment:
+      - ALEMBIC_DATABASE_URL=postgresql+psycopg://${POSTGRES_USER:-forge}:${POSTGRES_PASSWORD:-forge}@postgres:5432/${POSTGRES_DB:-neural_forge}
+      - DATABASE_URL=postgresql+psycopg://${POSTGRES_USER:-forge}:${POSTGRES_PASSWORD:-forge}@postgres:5432/${POSTGRES_DB:-neural_forge}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: alembic upgrade head
+    restart: "no"
 
   prometheus:
     image: prom/prometheus:latest

@@ -20,9 +20,10 @@ if config.config_file_name is not None:
 # We don't use ORM models here; run migrations with raw SQL.
 target_metadata = None
 
-# Allow DATABASE_URL from env to override ini
-if "DATABASE_URL" in os.environ:
-    url = os.environ["DATABASE_URL"]
+# Allow DATABASE_URL (or ALEMBIC_DATABASE_URL) from env to override ini
+env_url = os.environ.get("DATABASE_URL") or os.environ.get("ALEMBIC_DATABASE_URL")
+if env_url:
+    url = env_url
     # Alembic runs in sync mode; map asyncpg URL to sync psycopg
     if url.startswith("postgresql+asyncpg://"):
         url = url.replace("postgresql+asyncpg://", "postgresql+psycopg://", 1)
