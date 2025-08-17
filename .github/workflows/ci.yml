@@ -54,9 +54,9 @@ jobs:
           done
           exit 1
 
-      - name: Run Alembic migrations
+      - name: Run Alembic migrations (sync driver)
         env:
-          DATABASE_URL: postgresql+asyncpg://forge:forge@127.0.0.1:5432/neural_forge
+          ALEMBIC_DATABASE_URL: postgresql+psycopg://forge:forge@127.0.0.1:5432/neural_forge
         run: |
           . .venv/bin/activate
           alembic upgrade head
@@ -115,9 +115,9 @@ jobs:
           done
           exit 1
 
-      - name: Run Alembic migrations
+      - name: Run Alembic migrations (sync driver)
         env:
-          DATABASE_URL: postgresql+asyncpg://forge:forge@127.0.0.1:5432/neural_forge
+          ALEMBIC_DATABASE_URL: postgresql+psycopg://forge:forge@127.0.0.1:5432/neural_forge
         run: |
           . .venv/bin/activate
           alembic upgrade head

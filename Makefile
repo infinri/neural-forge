@@ -31,11 +31,16 @@ clean:
 	rm -rf $(VENv) __pycache__ .pytest_cache
 
 # --- Alembic (Postgres) ---
+# Host migrations using sync driver (psycopg). Requires ALEMBIC_DATABASE_URL.
 db-upgrade:
-	. $(ACTIVATE) && DATABASE_URL=$${DATABASE_URL} alembic upgrade head
+	. $(ACTIVATE) && ALEMBIC_DATABASE_URL=$${ALEMBIC_DATABASE_URL} alembic upgrade head
 
 db-downgrade:
-	. $(ACTIVATE) && DATABASE_URL=$${DATABASE_URL} alembic downgrade -1
+	. $(ACTIVATE) && ALEMBIC_DATABASE_URL=$${ALEMBIC_DATABASE_URL} alembic downgrade -1
 
 db-current:
-	. $(ACTIVATE) && DATABASE_URL=$${DATABASE_URL} alembic current -v
+	. $(ACTIVATE) && ALEMBIC_DATABASE_URL=$${ALEMBIC_DATABASE_URL} alembic current -v
+
+# Containerized migrations (recommended): runs inside Compose network.
+db-upgrade-docker:
+	docker compose run --rm migrate

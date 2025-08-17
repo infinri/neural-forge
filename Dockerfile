@@ -30,5 +30,5 @@ ENV PATH="/opt/venv/bin:$PATH" \
 
 EXPOSE 8080
 
-# Require DATABASE_URL and apply Alembic migrations
-CMD /bin/sh -c "set -e; if [ -z \"$DATABASE_URL\" ]; then echo 'DATABASE_URL is required' >&2; exit 1; fi; alembic upgrade head || alembic stamp head; exec uvicorn server.main:app --host 0.0.0.0 --port 8080"
+# Require DATABASE_URL and start server (migrations run via dedicated migrate service)
+CMD /bin/sh -c "set -e; if [ -z \"$DATABASE_URL\" ]; then echo 'DATABASE_URL is required' >&2; exit 1; fi; exec uvicorn server.main:app --host 0.0.0.0 --port 8080"

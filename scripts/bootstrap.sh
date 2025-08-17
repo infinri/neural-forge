@@ -46,8 +46,8 @@ POSTGRES_USER=${PG_USER:-forge}
 POSTGRES_PASSWORD=${PG_PASS:-forge}
 ENV
 
-say "Starting Docker Compose stack"
-( cd "$ROOT_DIR" && docker compose up -d )
+say "Starting PostgreSQL"
+( cd "$ROOT_DIR" && docker compose up -d postgres )
 
 say "Waiting for Postgres to be healthy"
 for i in {1..30}; do
@@ -57,13 +57,11 @@ for i in {1..30}; do
   sleep 2
 done
 
-say "Applying database migrations (Alembic)"
-if command -v alembic >/dev/null 2>&1; then
-  ( cd "$ROOT_DIR" && DATABASE_URL="$DATABASE_URL" alembic upgrade head )
-else
-  say "Alembic not found; applying raw pg_schema.sql as fallback"
-  docker exec -i nf-postgres psql -U "$PG_USER" -d "$PG_DB" -v ON_ERROR_STOP=1 < "$ROOT_DIR/server/db/pg_schema.sql"
-fi
+say "Applying database migrations (Alembic inside container)"
+( cd "$ROOT_DIR" && docker compose run --rm migrate )
+
+say "Starting services"
+( cd "$ROOT_DIR" && docker compose up -d server prometheus grafana )
 
 say "Validating MCP server"
 BASE="http://127.0.0.1:8081"

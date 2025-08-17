@@ -176,7 +176,7 @@ scripts/bootstrap.sh
 
 # Manual setup
 docker compose up -d
-make db-upgrade
+make db-upgrade-docker
 python -m server.main
 ```
 

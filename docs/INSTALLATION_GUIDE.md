@@ -45,7 +45,7 @@ scripts/bootstrap.sh
 # This will:
 # 1. Generate .env file with credentials
 # 2. Start Docker Compose stack (PostgreSQL, Prometheus, Grafana)
-# 3. Run Alembic database migrations
+# 3. Run Alembic database migrations inside the Docker network
 # 4. Start MCP server
 # 5. Print Windsurf configuration snippet
 ```
@@ -111,16 +111,19 @@ cp -r neural-forge "/home/<your-username>/.codeium/windsurf/memories/Neural Forg
 # Start PostgreSQL only
 docker compose up -d postgres
 
-# Run migrations manually
-export DATABASE_URL='postgresql+asyncpg://forge:forge@localhost:5432/neural_forge'
-make db-upgrade
+# Run migrations inside Docker (recommended)
+make db-upgrade-docker
+
+# Or run migrations on host (sync driver)
+export ALEMBIC_DATABASE_URL='postgresql+psycopg://forge:forge@localhost:55432/neural_forge'
+alembic upgrade head
 ```
 
 ### **Server Setup**
 ```bash
 # Set environment variables
 export MCP_TOKEN=dev
-export DATABASE_URL='postgresql+asyncpg://forge:forge@localhost:5432/neural_forge'
+export DATABASE_URL='postgresql+asyncpg://forge:forge@localhost:55432/neural_forge'
 
 # Start server
 python -m server.main
@@ -163,8 +166,8 @@ make typecheck     # Type checking
 # Create new migration
 alembic revision --autogenerate -m "Description"
 
-# Apply migrations
-make db-upgrade
+# Apply migrations (inside Docker recommended)
+make db-upgrade-docker
 
 # Rollback migration
 make db-downgrade
@@ -196,7 +199,7 @@ docker compose logs postgres
 # Reset database
 docker compose down -v
 docker compose up -d postgres
-make db-upgrade
+make db-upgrade-docker
 ```
 
 **Windsurf Not Connecting**
@@ -216,7 +219,7 @@ pip install -r requirements.txt
 
 ### **Getting Help**
 
-1. Check server logs: `docker compose logs neural-forge-server`
+1. Check server logs: `docker compose logs server`
 2. Review installation steps above
 3. Verify all prerequisites are installed
 4. Check GitHub issues: https://github.com/infinri/neural-forge/issues

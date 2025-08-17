@@ -35,7 +35,12 @@ The Neural Forge MCP server provides a JSON-RPC interface over Server-Sent Event
 ```bash
 # Required
 MCP_TOKEN=dev                    # Authentication token
-DATABASE_URL=postgresql+asyncpg://forge:forge@localhost:5432/neural_forge
+# App (async driver)
+# If using Docker Compose Postgres from host, use port 55432
+DATABASE_URL=postgresql+asyncpg://forge:forge@localhost:55432/neural_forge
+
+# Alembic (sync driver) — used only when running migrations on host
+ALEMBIC_DATABASE_URL=postgresql+psycopg://forge:forge@localhost:55432/neural_forge
 ```
 
 ### **Windsurf Configuration**
@@ -63,6 +68,7 @@ docker compose up -d
 # - Prometheus: http://127.0.0.1:9090  
 # - Grafana: http://127.0.0.1:3000
 ```
+Migrations run automatically via the `migrate` service inside the Compose network. The `server` service waits until migrations complete successfully.
 
 ### **Server Only**
 ```bash
@@ -143,14 +149,19 @@ JSON logs with fields:
 
 ### **PostgreSQL (Production)**
 ```bash
-# Run migrations
-make db-upgrade
+# Run migrations inside Docker (recommended)
+make db-upgrade-docker
 
 # Check current migration
 make db-current
 
 # Rollback one migration
 make db-downgrade
+```
+Host-based migrations (optional):
+```bash
+export ALEMBIC_DATABASE_URL=postgresql+psycopg://forge:forge@127.0.0.1:55432/neural_forge
+alembic upgrade head
 ```
 
 ### **SQLite (Removed)**
@@ -170,7 +181,7 @@ make lint
 make typecheck
 ```
 
-## 🔍 **Troubleshooting**
+## **Troubleshooting**
 
 ### **Connection Issues**
 ```bash
@@ -181,7 +192,7 @@ curl http://127.0.0.1:8081/sse?token=dev
 curl http://127.0.0.1:8081/health
 
 # Check server logs
-docker compose logs neural-forge-server
+docker compose logs server
 
 # Verify Windsurf config
 cat ~/.codeium/windsurf/mcp_config.json
@@ -195,7 +206,7 @@ docker compose exec postgres psql -U forge -d neural_forge -c "\dt"
 # Reset database
 docker compose down -v
 docker compose up -d
-make db-upgrade
+make db-upgrade-docker
 ```
 
 ### **Authentication Issues**
