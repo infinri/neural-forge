@@ -10,3 +10,8 @@ ignore = ["E501"]
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:pkg_resources is deprecated as an API:UserWarning:opentelemetry.instrumentation.dependencies",
+]

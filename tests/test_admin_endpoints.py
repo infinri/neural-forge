@@ -31,66 +31,80 @@ def seed_data_pg():
         with conn.cursor() as cur:
             # memory_entries
             cur.execute(
-                "INSERT INTO memory_entries (id, project_id, content, metadata, quarantined) VALUES (%s,%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO memory_entries (id, project_id, content, metadata, quarantined) VALUES (%s,%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, content = EXCLUDED.content, metadata = EXCLUDED.metadata, quarantined = EXCLUDED.quarantined",
                 ("m1_admin", P_MAIN, "alpha text", Json({}), False),
             )
             cur.execute(
-                "INSERT INTO memory_entries (id, project_id, content, metadata, quarantined) VALUES (%s,%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO memory_entries (id, project_id, content, metadata, quarantined) VALUES (%s,%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, content = EXCLUDED.content, metadata = EXCLUDED.metadata, quarantined = EXCLUDED.quarantined",
                 ("m2_admin", P_MAIN, "beta text", Json({}), True),
             )
             cur.execute(
-                "INSERT INTO memory_entries (id, project_id, content, metadata, quarantined) VALUES (%s,%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO memory_entries (id, project_id, content, metadata, quarantined) VALUES (%s,%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, content = EXCLUDED.content, metadata = EXCLUDED.metadata, quarantined = EXCLUDED.quarantined",
                 ("m3_admin", P_OTHER, "gamma text", Json({}), False),
             )
 
             # tasks for P_MAIN: queued=1, in_progress=2, done=1, failed=1 (total=5)
             cur.execute(
-                "INSERT INTO tasks (id, project_id, status, payload) VALUES (%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO tasks (id, project_id, status, payload) VALUES (%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, status = EXCLUDED.status, payload = EXCLUDED.payload, updated_at = NOW()",
                 ("tq_admin", P_MAIN, "queued", Json({})),
             )
             cur.execute(
-                "INSERT INTO tasks (id, project_id, status, payload) VALUES (%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO tasks (id, project_id, status, payload) VALUES (%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, status = EXCLUDED.status, payload = EXCLUDED.payload, updated_at = NOW()",
                 ("ti1_admin", P_MAIN, "in_progress", Json({})),
             )
             cur.execute(
-                "INSERT INTO tasks (id, project_id, status, payload) VALUES (%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO tasks (id, project_id, status, payload) VALUES (%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, status = EXCLUDED.status, payload = EXCLUDED.payload, updated_at = NOW()",
                 ("ti2_admin", P_MAIN, "in_progress", Json({})),
             )
             cur.execute(
-                "INSERT INTO tasks (id, project_id, status, payload) VALUES (%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO tasks (id, project_id, status, payload) VALUES (%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, status = EXCLUDED.status, payload = EXCLUDED.payload, updated_at = NOW()",
                 ("td_admin", P_MAIN, "done", Json({})),
             )
             cur.execute(
-                "INSERT INTO tasks (id, project_id, status, payload) VALUES (%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO tasks (id, project_id, status, payload) VALUES (%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, status = EXCLUDED.status, payload = EXCLUDED.payload, updated_at = NOW()",
                 ("tf_admin", P_MAIN, "failed", Json({})),
             )
             # tasks other project
             cur.execute(
-                "INSERT INTO tasks (id, project_id, status, payload) VALUES (%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO tasks (id, project_id, status, payload) VALUES (%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, status = EXCLUDED.status, payload = EXCLUDED.payload, updated_at = NOW()",
                 ("tq_o_admin", P_OTHER, "queued", Json({})),
             )
 
             # diffs: P_MAIN=2, other=1
             cur.execute(
-                "INSERT INTO diffs (id, project_id, file_path, diff, author) VALUES (%s,%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO diffs (id, project_id, file_path, diff, author) VALUES (%s,%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, file_path = EXCLUDED.file_path, diff = EXCLUDED.diff, author = EXCLUDED.author",
                 ("d1_admin", P_MAIN, "a.py", "+a", "u"),
             )
             cur.execute(
-                "INSERT INTO diffs (id, project_id, file_path, diff, author) VALUES (%s,%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO diffs (id, project_id, file_path, diff, author) VALUES (%s,%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, file_path = EXCLUDED.file_path, diff = EXCLUDED.diff, author = EXCLUDED.author",
                 ("d2_admin", P_MAIN, "b.py", "+b", "u"),
             )
             cur.execute(
-                "INSERT INTO diffs (id, project_id, file_path, diff, author) VALUES (%s,%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO diffs (id, project_id, file_path, diff, author) VALUES (%s,%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, file_path = EXCLUDED.file_path, diff = EXCLUDED.diff, author = EXCLUDED.author",
                 ("d3_admin", P_OTHER, "c.py", "+c", "u"),
             )
 
             # errors: P_MAIN=1, other=1
             cur.execute(
-                "INSERT INTO errors (id, project_id, level, message) VALUES (%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO errors (id, project_id, level, message) VALUES (%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, level = EXCLUDED.level, message = EXCLUDED.message",
                 ("e1_admin", P_MAIN, "error", "bad"),
             )
             cur.execute(
-                "INSERT INTO errors (id, project_id, level, message) VALUES (%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING",
+                "INSERT INTO errors (id, project_id, level, message) VALUES (%s,%s,%s,%s) "
+                "ON CONFLICT (id) DO UPDATE SET project_id = EXCLUDED.project_id, level = EXCLUDED.level, message = EXCLUDED.message",
                 ("e2_admin", P_OTHER, "error", "worse"),
             )
         conn.commit()

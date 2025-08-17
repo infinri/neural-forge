@@ -12,7 +12,7 @@ services:
       - "8081:8080"
 
   postgres:
-    image: postgres:16
+    image: pgvector/pgvector:pg16
     container_name: nf-postgres
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-neural_forge}
@@ -25,6 +25,8 @@ services:
       retries: 12
     volumes:
       - pg-data:/var/lib/postgresql/data
+    ports:
+      - "55432:5432"
 
   prometheus:
     image: prom/prometheus:latest
