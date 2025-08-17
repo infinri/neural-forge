@@ -4,6 +4,7 @@ import pytest
 pytest.importorskip("opentelemetry")
 
 import os
+from typing import Any, Dict
 
 from fastapi.testclient import TestClient
 from opentelemetry import trace
@@ -64,7 +65,7 @@ def otel_http_memory_provider(monkeypatch):
 
 
 def _post_ingest(client: TestClient, content: str, force_error: bool = False):
-    payload = {
+    payload: Dict[str, Any] = {
         "type": "conversation.message",
         "projectId": "p-http",
         "role": "user",

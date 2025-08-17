@@ -114,7 +114,9 @@ async def handler(req: Dict[str, Any]):
             if _span_obj is not None:
                 try:
                     _span_obj.set_attribute("claimed", True)
-                    _span_obj.set_attribute("task_id", claimed.get("id"))
+                    tid = claimed.get("id")
+                    if tid is not None:
+                        _span_obj.set_attribute("task_id", str(tid))
                 except Exception:
                     pass
             TASK_CLAIMS_TOTAL.labels("claimed").inc()

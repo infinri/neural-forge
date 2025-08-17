@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from typing import Any, cast
 import os
 from logging.config import fileConfig
 
@@ -42,8 +43,9 @@ def run_migrations_offline() -> None:
 
 
 def run_migrations_online() -> None:
+    section = config.get_section(config.config_ini_section)
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
+        cast(dict[str, Any], section or {}),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
