@@ -55,9 +55,12 @@ Add the printed configuration to `~/.codeium/windsurf/mcp_config.json`:
 
 ```json
 {
-  "mcpServers": {
+"mcpServers": {
     "neural-forge": {
-      "serverUrl": "http://127.0.0.1:8081/sse?token=dev"
+      "serverUrl": "http://127.0.0.1:8081/sse",
+      "headers": {
+        "Authorization": "Bearer dev"
+      }
     }
   }
 }
@@ -66,7 +69,7 @@ Add the printed configuration to `~/.codeium/windsurf/mcp_config.json`:
 ### **Step 5: Verify Installation**
 ```bash
 # Test server
-curl http://127.0.0.1:8081/sse?token=dev
+curl http://127.0.0.1:8081/sse -H "Authorization: Bearer dev"
 
 # Should return: event: ready
 ```
@@ -204,7 +207,7 @@ make db-upgrade-docker
 
 **Windsurf Not Connecting**
 1. Verify MCP config syntax in `~/.codeium/windsurf/mcp_config.json`
-2. Check server is running: `curl http://127.0.0.1:8081/sse?token=dev`
+2. Check server is running: `curl http://127.0.0.1:8081/sse -H "Authorization: Bearer dev"`
 3. Restart Windsurf after config changes
 4. Check for duplicate server entries in config
 

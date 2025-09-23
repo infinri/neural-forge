@@ -70,6 +70,7 @@ curl -fsS "$BASE/get_capabilities" -H "Authorization: Bearer $MCP_TOKEN" >/dev/n
 echo "\nDone. Connect to MCP using:"
 echo "  URL: $BASE"
 echo "  Bearer token: $MCP_TOKEN"
+echo "  Header: Authorization: Bearer $MCP_TOKEN"
 echo "Prometheus: http://localhost:9090"
 echo "Grafana:    http://localhost:3000 (anonymous)"
 echo "\nWindsurf/Cursor config snippet (paste into: $HOME/.codeium/windsurf/mcp_config.json):"
@@ -77,7 +78,10 @@ cat <<JSON
 {
   "mcpServers": {
     "neural-forge": {
-      "serverUrl": "${BASE}/sse?token=${MCP_TOKEN}",
+      "serverUrl": "${BASE}/sse",
+      "headers": {
+        "Authorization": "Bearer ${MCP_TOKEN}"
+      },
       "env": { "MCP_TOKEN": "${MCP_TOKEN}" }
     }
   }
@@ -90,7 +94,7 @@ cat <<JSON
   "mcpServers": {
     "neural-forge": {
       "command": "npx",
-      "args": ["-y", "supergateway", "--sse", "${BASE}/sse?token=${MCP_TOKEN}"]
+      "args": ["-y", "supergateway", "--sse", "${BASE}/sse", "--header", "Authorization: Bearer ${MCP_TOKEN}"]
     }
   }
 }
