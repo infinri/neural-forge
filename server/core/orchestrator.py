@@ -16,8 +16,8 @@ from __future__ import annotations
 import asyncio
 import os
 import time
-from collections import defaultdict, deque
-from typing import Any, DefaultDict, Dict
+from collections import OrderedDict, defaultdict, deque
+from typing import Any, DefaultDict, Deque, Dict
 
 from prometheus_client import Counter, Histogram
 
@@ -34,6 +34,8 @@ from server.utils.logger import log_json
 CONV_MSG = "conversation.message"
 GOVERNANCE_GUIDANCE = "governance.guidance"
 _HISTORY_MAX_LEN = 5
+_HISTORY_MAX_PROJECTS = int(os.getenv("ORCH_HISTORY_MAX_PROJECTS", "512"))
+_HISTORY_IDLE_TTL_SECONDS = int(os.getenv("ORCH_HISTORY_IDLE_TTL_SECONDS", "3600"))
 
 
 class Orchestrator:
@@ -46,9 +48,8 @@ class Orchestrator:
         # Metrics: Phase 1 in-memory
         self.events_handled_total: DefaultDict[str, int] = defaultdict(int)
         self.handler_errors_total: DefaultDict[str, int] = defaultdict(int)
-        self._recent_history: DefaultDict[str, deque[str]] = defaultdict(
-            lambda: deque(maxlen=_HISTORY_MAX_LEN)
-        )
+        self._recent_history: Dict[str, Deque[str]] = {}
+        self._history_access: OrderedDict[str, float] = OrderedDict()
 
     @property
     def is_running(self) -> bool:
@@ -244,6 +245,45 @@ class Orchestrator:
         except asyncio.CancelledError:
             pass
 
+    def _evict_stale_histories(self, now: float) -> None:
+        if _HISTORY_IDLE_TTL_SECONDS <= 0:
+            return
+        cutoff = now - _HISTORY_IDLE_TTL_SECONDS
+        while self._history_access:
+            project_id, last_seen = next(iter(self._history_access.items()))
+            if last_seen >= cutoff:
+                break
+            self._history_access.popitem(last=False)
+            self._recent_history.pop(project_id, None)
+
+    def _evict_oldest_history(self) -> None:
+        if self._history_access:
+            project_id, _ = self._history_access.popitem(last=False)
+            self._recent_history.pop(project_id, None)
+            return
+        if self._recent_history:
+            project_id = next(iter(self._recent_history))
+            self._recent_history.pop(project_id, None)
+
+    def _get_project_history(self, project_id: str) -> Deque[str]:
+        key = project_id.strip().lower() if isinstance(project_id, str) else str(project_id)
+        if _HISTORY_MAX_PROJECTS <= 0:
+            return deque(maxlen=_HISTORY_MAX_LEN)
+
+        now = time.monotonic()
+        self._evict_stale_histories(now)
+
+        history = self._recent_history.get(key)
+        if history is None:
+            while len(self._recent_history) >= _HISTORY_MAX_PROJECTS:
+                self._evict_oldest_history()
+            history = deque(maxlen=_HISTORY_MAX_LEN)
+            self._recent_history[key] = history
+
+        self._history_access[key] = now
+        self._history_access.move_to_end(key)
+        return history
+
     async def _handle_conversation_message(self, event: Event) -> None:
         # Structured log with content length to avoid logging full content by default
         content_len = 0
@@ -371,7 +411,7 @@ class Orchestrator:
         if not isinstance(content, str) or not content.strip():
             return
 
-        history = self._recent_history[event.project_id]
+        history = self._get_project_history(event.project_id)
         history_snapshot = list(history)
         guidance: str | None
         try:
