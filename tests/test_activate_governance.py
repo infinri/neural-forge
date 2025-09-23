@@ -3,8 +3,11 @@ import os
 from fastapi.testclient import TestClient
 
 
+TOKEN = os.environ["MCP_TOKEN"]
+
+
 def make_client():
-    os.environ.setdefault("MCP_TOKEN", "dev")
+    os.environ.setdefault("MCP_TOKEN", TOKEN)
     os.environ.setdefault(
         "DATABASE_URL",
         "postgresql+asyncpg://forge:forge@127.0.0.1:5432/neural_forge",
@@ -27,7 +30,7 @@ def test_activate_governance_includes_request_id(monkeypatch):
 
     response = client.post(
         "/tool/activate_governance",
-        headers={"Authorization": "Bearer dev"},
+        headers={"Authorization": f"Bearer {TOKEN}"},
         json={"user_message": "Let's plan a new feature"},
     )
 

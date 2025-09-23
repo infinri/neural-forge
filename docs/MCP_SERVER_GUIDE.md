@@ -34,7 +34,11 @@ The Neural Forge MCP server provides a JSON-RPC interface over Server-Sent Event
 ### **Environment Variables**
 ```bash
 # Required
-MCP_TOKEN=dev                    # Authentication token
+# Generate once: `openssl rand -hex 32`
+MCP_TOKEN=<your-unique-token>     # Authentication token shared with clients
+# Optional: bypass placeholder enforcement for local debugging only (never use in prod)
+# ALLOW_INSECURE_DEV=true
+
 # App (async driver)
 # If using Docker Compose Postgres from host, use port 55432
 DATABASE_URL=postgresql+asyncpg://forge:forge@localhost:55432/neural_forge
@@ -53,10 +57,7 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 {
 "mcpServers": {
     "neural-forge": {
-      "serverUrl": "http://127.0.0.1:8081/sse",
-      "headers": {
-        "Authorization": "Bearer dev"
-      }
+      "serverUrl": "http://127.0.0.1:8081/sse?token=<your-unique-token>"
     }
   }
 }
@@ -66,6 +67,9 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 
 ### **Full Stack (Recommended)**
 ```bash
+# Generate (or export) a token once per environment
+export MCP_TOKEN=$(openssl rand -hex 32)
+
 # Start PostgreSQL + MCP Server + Observability
 docker compose up -d
 
@@ -78,12 +82,17 @@ Migrations run automatically via the `migrate` service inside the Compose networ
 
 ### **Server Only**
 ```bash
+TOKEN=$(openssl rand -hex 32)
 docker build -t neural-forge-mcp .
 docker run --rm -p 8081:8080 \
-  -e MCP_TOKEN=dev \
+  -e MCP_TOKEN=$TOKEN \
   -e DATABASE_URL=postgresql+asyncpg://user:pass@host:5432/db \
   neural-forge-mcp
 ```
+
+If the server starts without `MCP_TOKEN`, or with a placeholder such as `dev`/`change-me`, startup logs
+`startup.placeholder_token_blocked` and exits. For local experiments only, set `ALLOW_INSECURE_DEV=true` to acknowledge the
+risk and allow placeholder tokens.
 
 ## 📊 **Observability**
 
@@ -192,7 +201,7 @@ make typecheck
 ### **Connection Issues**
 ```bash
 # Test server health
-curl http://127.0.0.1:8081/sse -H "Authorization: Bearer dev"
+curl "http://127.0.0.1:8081/sse?token=$MCP_TOKEN"
 
 # Check health endpoint (no auth required)
 curl http://127.0.0.1:8081/health
@@ -258,13 +267,13 @@ All tools are also available as direct HTTP endpoints:
 ```bash
 # Add memory
 curl -X POST http://127.0.0.1:8081/add_memory \
-  -H "Authorization: Bearer dev" \
+  -H "Authorization: Bearer $MCP_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"content": "Memory content", "tags": ["tag1"]}'
 
-# Search memories  
+# Search memories
 curl -X POST http://127.0.0.1:8081/search_memory \
-  -H "Authorization: Bearer dev" \
+  -H "Authorization: Bearer $MCP_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"query": "search terms", "limit": 10}'
 ```
@@ -278,7 +287,7 @@ Require `Authorization: Bearer <MCP_TOKEN>`
   - Returns counts for `memory_entries`, `diffs`, `errors`, and `tasks` (queued, inProgress, done, failed, total)
   - Example:
     ```bash
-    curl -s "http://127.0.0.1:8081/admin/stats?projectId=nf" -H "Authorization: Bearer dev" | jq
+    curl -s "http://127.0.0.1:8081/admin/stats?projectId=nf" -H "Authorization: Bearer $MCP_TOKEN" | jq
     ```
 
 - `GET /admin/memory_meta`
@@ -287,7 +296,7 @@ Require `Authorization: Bearer <MCP_TOKEN>`
   - Returns memory metadata only: `id`, `projectId`, `quarantined`, `createdAt`, `size`
   - Example:
     ```bash
-    curl -s "http://127.0.0.1:8081/admin/memory_meta?projectId=nf&quarantinedOnly=true&limit=50" -H "Authorization: Bearer dev" | jq
+    curl -s "http://127.0.0.1:8081/admin/memory_meta?projectId=nf&quarantinedOnly=true&limit=50" -H "Authorization: Bearer $MCP_TOKEN" | jq
     ```
 
 ## 🧠 **Autonomous Pre-Action Governance**
@@ -359,7 +368,7 @@ The `activate_governance` tool is Neural Forge's flagship feature that automatic
 ```bash
 curl -X POST "http://127.0.0.1:8080/tool/activate_governance" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer dev" \
+  -H "Authorization: Bearer $MCP_TOKEN" \
   -d '{
     "user_message": "I want to build a secure REST API with authentication"
   }'

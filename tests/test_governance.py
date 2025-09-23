@@ -7,8 +7,11 @@ from fastapi.testclient import TestClient
 from server.governance.pre_action_engine import PreActionGovernanceEngine
 
 
+TOKEN = os.environ["MCP_TOKEN"]
+
+
 def make_client_pg():
-    os.environ.setdefault("MCP_TOKEN", "dev")
+    os.environ.setdefault("MCP_TOKEN", TOKEN)
     os.environ.setdefault("DATABASE_URL", "postgresql+asyncpg://forge:forge@127.0.0.1:5432/neural_forge")
     from server.main import app  # import after env set
     return TestClient(app)
@@ -16,7 +19,7 @@ def make_client_pg():
 
 def test_get_governance_policies_validation_and_success():
     client = make_client_pg()
-    H = {"Authorization": "Bearer dev"}
+    H = {"Authorization": f"Bearer {TOKEN}"}
 
     # Missing projectId -> returns error envelope (200 with error)
     r = client.post("/tool/get_governance_policies", headers=H, json={"scopes": ["memory"]})
@@ -44,7 +47,7 @@ def test_get_governance_policies_validation_and_success():
 
 def test_get_active_tokens_validation_and_success():
     client = make_client_pg()
-    H = {"Authorization": "Bearer dev"}
+    H = {"Authorization": f"Bearer {TOKEN}"}
 
     r = client.post("/tool/get_active_tokens", headers=H, json={"kinds": ["governance"]})
     assert r.status_code == 200
@@ -72,7 +75,7 @@ def test_get_active_tokens_validation_and_success():
 
 def test_get_rules_validation_and_success():
     client = make_client_pg()
-    H = {"Authorization": "Bearer dev"}
+    H = {"Authorization": f"Bearer {TOKEN}"}
 
     r = client.post("/tool/get_rules", headers=H, json={"scopes": ["memory"]})
     assert r.status_code == 200

@@ -17,8 +17,15 @@ say "Neural Forge MCP bootstrap"
 
 MCP_TOKEN=${MCP_TOKEN:-}
 if [[ -z "${MCP_TOKEN}" ]]; then
-  MCP_TOKEN=$(ask "Enter MCP_TOKEN (default: dev): ")
-  MCP_TOKEN=${MCP_TOKEN:-dev}
+  MCP_TOKEN=$(ask "Enter MCP_TOKEN (leave blank to auto-generate): ")
+fi
+if [[ -z "${MCP_TOKEN}" ]]; then
+  MCP_TOKEN=$(python - <<'PY'
+import secrets
+print(secrets.token_hex(32))
+PY
+  )
+  say "Generated secure MCP_TOKEN"
 fi
 
 # Default to PostgreSQL for real usage

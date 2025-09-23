@@ -6,6 +6,9 @@ from fastapi.testclient import TestClient
 from server.utils.logger import get_logger
 
 
+TOKEN = os.environ["MCP_TOKEN"]
+
+
 class _CaptureHandler(logging.Handler):
     def __init__(self) -> None:
         super().__init__()
@@ -21,7 +24,7 @@ class _CaptureHandler(logging.Handler):
 
 def _client():
     os.environ["ENV"] = "dev"
-    os.environ["MCP_TOKEN"] = "dev"
+    os.environ["MCP_TOKEN"] = TOKEN
     os.environ["ORCHESTRATOR_ENABLED"] = "true"
     from server.main import app
     return TestClient(app)
@@ -40,7 +43,7 @@ def test_ingest_event_to_orchestrator_log_and_metrics_flow():
                 "projectId": "p-e2e",
                 "content": content,
             }
-            r = c.post("/tool/ingest_event", headers={"Authorization": "Bearer dev"}, json=payload)
+            r = c.post("/tool/ingest_event", headers={"Authorization": f"Bearer {TOKEN}"}, json=payload)
             assert r.status_code == 200
 
             # Verify publish and consume markers present
