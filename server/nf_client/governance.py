@@ -1,10 +1,11 @@
+import logging
 import os
-import re
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
-_TAGSET_RE = re.compile(r"^\s*tagSet:\s*(?P<val>.+?)\s*$")
-_VERSION_RE = re.compile(r"^\s*version:\s*\"?(?P<val>[^\"\n]+)\"?\s*$")
-_INCLUDE_ITEM_RE = re.compile(r"^\s*-\s*(?P<val>[^#\n]+?)\s*(#.*)?$")
+import yaml
+
+
+logger = logging.getLogger(__name__)
 
 
 def _project_root() -> str:
@@ -26,37 +27,40 @@ def _iter_rule_files() -> List[str]:
     return paths
 
 
-def _parse_rules_file(path: str) -> Tuple[str, str, List[str]]:
-    tagset = ""
-    version = ""
-    includes: List[str] = []
-    in_includes = False
-    with open(path, "r", encoding="utf-8") as fh:
-        for line in fh:
-            if not tagset:
-                m = _TAGSET_RE.match(line)
-                if m:
-                    tagset = m.group("val").strip()
-                    continue
-            if not version:
-                m = _VERSION_RE.match(line)
-                if m:
-                    version = m.group("val").strip()
-                    continue
-            if line.strip().startswith("includes:"):
-                in_includes = True
-                continue
-            if in_includes:
-                if line.strip().startswith("#") or not line.strip():
-                    continue
-                if line.startswith(" ") or line.startswith("\t") or line.strip().startswith("-"):
-                    m = _INCLUDE_ITEM_RE.match(line)
-                    if m:
-                        includes.append(m.group("val").strip())
-                else:
-                    # left the includes block
-                    in_includes = False
-    return tagset, version, includes
+def _parse_rules_file(path: str) -> Dict[str, Any]:
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            loaded = yaml.safe_load(fh)
+    except FileNotFoundError:
+        return {}
+    except Exception as exc:  # pragma: no cover - defensive logging
+        logger.warning("failed to parse governance rules from %s: %s", path, exc)
+        return {}
+
+    if not isinstance(loaded, dict):
+        logger.warning("unexpected structure in rules file %s", path)
+        return {}
+
+    normalized: Dict[str, Any] = {}
+    for key, value in loaded.items():
+        key_norm = "tagSet" if key.lower() == "tagset" else key
+        if key_norm == "includes":
+            normalized[key_norm] = _ensure_string_list(value)
+        elif key_norm in {"principles", "threats", "practices", "patterns"}:
+            normalized[key_norm] = _ensure_string_list(value)
+        elif key_norm == "description":
+            normalized[key_norm] = str(value) if value is not None else ""
+        elif key_norm == "version":
+            normalized[key_norm] = str(value) if value is not None else ""
+        else:
+            normalized[key_norm] = value
+
+    normalized.setdefault("tagSet", "")
+    normalized.setdefault("version", "")
+    normalized.setdefault("description", "")
+    normalized.setdefault("includes", [])
+
+    return normalized
 
 
 def fetch_policies(project_id: str, scopes: List[str]):
@@ -64,14 +68,39 @@ def fetch_policies(project_id: str, scopes: List[str]):
     policies: List[Dict[str, Any]] = []
     graph: Dict[str, List[str]] = {}
     for p in _iter_rule_files():
-        tagset, version, includes = _parse_rules_file(p)
+        parsed = _parse_rules_file(p)
+        tagset = parsed.get("tagSet", "").strip()
         if not tagset:
             continue
-        policies.append({
-            "tagSet": tagset,
-            "version": version or "",
-            "includes": includes,
-            "source": os.path.relpath(p, _project_root()),
-        })
+        includes = _ensure_string_list(parsed.get("includes"))
+        policy = dict(parsed)
+        policy["tagSet"] = tagset
+        policy["includes"] = includes
+        policy.setdefault("description", "")
+        policy.setdefault("version", "")
+        policy["source"] = os.path.relpath(p, _project_root())
+        policies.append(policy)
         graph[tagset] = includes
     return {"policies": policies, "resolutionGraph": graph}
+
+
+def _ensure_list(value: Any) -> List[Any]:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return list(value)
+    if isinstance(value, (tuple, set)):
+        return list(value)
+    return [value]
+
+
+def _ensure_string_list(value: Any) -> List[str]:
+    result: List[str] = []
+    for item in _ensure_list(value):
+        if isinstance(item, str):
+            candidate = item.strip()
+            if candidate:
+                result.append(candidate)
+        elif item is not None:
+            result.append(str(item))
+    return result
