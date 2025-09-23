@@ -4,7 +4,6 @@ from typing import Any, Dict, List
 
 import yaml
 
-
 logger = logging.getLogger(__name__)
 
 

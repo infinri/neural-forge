@@ -8,8 +8,8 @@ Neural Forge rules, and provides governance guidance automatically.
 
 import logging
 import re
-from datetime import datetime, timezone
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
@@ -395,7 +395,7 @@ class PreActionGovernanceEngine:
     
     def _get_fallback_rules(self, domain: str) -> List[Dict[str, Any]]:
         """Fallback rules if real Neural Forge data is unavailable"""
-        fallback_rules = {
+        fallback_rules: Dict[str, List[Dict[str, Any]]] = {
             "security": [
                 {
                     "name": "InputValidation",
