@@ -46,7 +46,7 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
                 "success": False,
                 "error": "user_message is required",
                 "timestamp": start_time,
-                "request_id": request_id,
+                "requestId": request_id,
             }
         
         # Activate pre-action governance
@@ -74,7 +74,7 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
                 "guidance": governance_output,
                 "message": "Neural Forge governance activated - apply these principles during planning and implementation",
                 "timestamp": start_time,
-                "request_id": request_id,
+                "requestId": request_id,
             }
         else:
             result = {
@@ -83,7 +83,7 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
                 "guidance": None,
                 "message": "No governance activation needed for this context",
                 "timestamp": start_time,
-                "request_id": request_id,
+                "requestId": request_id,
             }
 
         # Log the tool call
@@ -94,7 +94,7 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
             governance_activated=result["governance_activated"],
             message_length=len(user_message),
             history_length=len(conversation_history),
-            request_id=request_id,
+            requestId=request_id,
         )
         
         return result
@@ -108,12 +108,12 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
             success=False,
             start_time=start_time,
             error=error_msg,
-            request_id=request_id,
+            requestId=request_id,
         )
 
         return {
             "success": False,
             "error": error_msg,
             "timestamp": start_time,
-            "request_id": request_id,
+            "requestId": request_id,
         }
