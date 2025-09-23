@@ -375,7 +375,9 @@ class Orchestrator:
         history_snapshot = list(history)
         guidance: str | None
         try:
-            guidance = await activate_pre_action_governance(content, history_snapshot)
+            guidance = await activate_pre_action_governance(
+                content, history_snapshot, project_id=event.project_id
+            )
         except Exception as exc:  # noqa: BLE001 - best-effort governance
             guidance = None
             try:

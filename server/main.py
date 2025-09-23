@@ -5,7 +5,7 @@ import time
 from contextlib import asynccontextmanager
 from typing import Any, Dict
 
-from fastapi import FastAPI, Header, HTTPException, Request
+from fastapi import FastAPI, Header, HTTPException, Query, Request
 from fastapi.responses import JSONResponse, Response, StreamingResponse
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 from sqlalchemy import text
@@ -19,6 +19,7 @@ from server.core.orchestrator import (
 )
 from server.db.engine import get_async_engine
 from server.db.repo import (
+    fetch_governance_token_metrics_pg,
     watchdog_count_stale_inprogress_pg,
     watchdog_fail_stale_inprogress_pg,
     watchdog_list_stale_inprogress_pg,
@@ -237,6 +238,19 @@ async def handle_mcp_message(message: dict) -> dict:
                         "projectId": {"type": "string"}
                     },
                     "required": ["projectId"]
+                }
+            },
+            {
+                "name": "get_token_metrics",
+                "description": "Inspect historical governance token effectiveness metrics",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "projectId": {"type": "string"},
+                        "tokenIds": {"type": "array", "items": {"type": "string"}},
+                        "minActivations": {"type": "integer"},
+                        "limit": {"type": "integer"}
+                    }
                 }
             },
             {
@@ -755,6 +769,81 @@ async def admin_watchdog_preview(
         log_json("error", "admin_watchdog_preview_exception", error=str(e))
         raise HTTPException(status_code=500, detail=f"ERR.UNAVAILABLE: {e}")
 
+@app.get("/admin/token_metrics")
+async def admin_token_metrics(
+    request: Request,
+    authorization: str | None = Header(None),
+    projectId: str | None = None,
+    tokenId: list[str] | None = Query(None),
+    minActivations: int = 0,
+    limit: int = 50,
+):
+    """Admin: inspect governance token effectiveness metrics."""
+
+    require_auth(authorization, request)
+    endpoint = "admin_token_metrics"
+    REQ_COUNTER.labels(endpoint).inc()
+
+    try:
+        with REQ_LATENCY.labels(endpoint).time():
+            ts = utc_now_iso_z()
+            engine = get_async_engine()
+            if engine is None:
+                raise HTTPException(status_code=503, detail="ERR.DB_UNAVAILABLE: DATABASE_URL not configured")
+
+            try:
+                limit_val = int(limit)
+            except Exception:
+                limit_val = 50
+            limit_val = max(1, min(limit_val, 500))
+
+            try:
+                min_act = max(0, int(minActivations))
+            except Exception:
+                min_act = 0
+
+            token_filters = None
+            if tokenId:
+                token_filters = [tid for tid in tokenId if isinstance(tid, str) and tid.strip()]
+                if token_filters:
+                    token_filters = [tid.strip() for tid in token_filters]
+
+            metrics = await fetch_governance_token_metrics_pg(
+                engine,
+                token_ids=token_filters,
+                project_id=projectId,
+                min_activation_count=min_act,
+                limit=limit_val,
+            )
+
+            log_json(
+                "info",
+                "admin_token_metrics",
+                projectId=projectId,
+                count=len(metrics),
+                minActivations=min_act,
+                limit=limit_val,
+            )
+
+            return {
+                "serverVersion": SERVER_VERSION,
+                "timestamp": ts,
+                "projectId": projectId or "global",
+                "minActivations": min_act,
+                "limit": limit_val,
+                "count": len(metrics),
+                "items": metrics,
+                "tokenIds": token_filters,
+            }
+    except HTTPException as e:
+        ERR_COUNTER.labels(endpoint, str(e.status_code)).inc()
+        log_json("error", "admin_token_metrics_http_error", status_code=e.status_code)
+        raise e
+    except Exception as e:
+        ERR_COUNTER.labels(endpoint, "500").inc()
+        log_json("error", "admin_token_metrics_exception", error=str(e))
+        raise HTTPException(status_code=500, detail=f"ERR.UNAVAILABLE: {e}")
+
 # Tool registration stubs
 from .tools import (
     activate_governance,
@@ -771,6 +860,7 @@ from .tools import (
     save_diff,
     search_memory,
     update_task_status,
+    get_token_metrics,
 )
 
 TOOLS.update({
@@ -788,6 +878,7 @@ TOOLS.update({
     "get_rules": get_rules.handler,
     "get_governance_policies": get_governance_policies.handler,
     "get_active_tokens": get_active_tokens.handler,
+    "get_token_metrics": get_token_metrics.handler,
 })
 
 @app.post("/tool/{name}")
