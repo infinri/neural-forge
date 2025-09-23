@@ -19,7 +19,7 @@ dev:
 	. $(ACTIVATE) && uvicorn server.main:app --reload --host 127.0.0.1 --port 8080
 
 test:
-	. $(ACTIVATE) && MCP_TOKEN=dev pytest -q
+. $(ACTIVATE) && MCP_TOKEN=test-token pytest -q
 
 fmt:
 	. $(ACTIVATE) && ruff check --fix .

@@ -178,10 +178,14 @@ pip install -r requirements.txt
 scripts/bootstrap.sh
 
 # Manual setup
+export MCP_TOKEN=$(openssl rand -hex 32)
 docker compose up -d
 make db-upgrade-docker
 python -m server.main
 ```
+> **Note:** If `MCP_TOKEN` is missing or set to a placeholder (`dev`/`change-me`), the server logs `startup.placeholder_token_blocked`
+> and exits. For ad-hoc local experiments you can opt-in with `ALLOW_INSECURE_DEV=true`, but never use this override in shared
+> environments.
 
 ### **3. Connect to Windsurf**
 
@@ -191,17 +195,18 @@ Add to your `~/.codeium/windsurf/mcp_config.json`:
 {
   "mcpServers": {
     "neural-forge": {
-      "serverUrl": "http://127.0.0.1:8081/sse?token=dev"
+      "serverUrl": "http://127.0.0.1:8081/sse?token=<your-unique-token>"
     }
   }
 }
 ```
+Replace `<your-unique-token>` with the value you exported as `MCP_TOKEN` in the previous step.
 
 ### **4. Verify Connection**
 
 ```bash
 # Test server
-curl http://127.0.0.1:8081/sse?token=dev
+curl "http://127.0.0.1:8081/sse?token=$MCP_TOKEN"
 
 # Test tools in Windsurf
 # All 12 Neural Forge tools should be available
@@ -310,7 +315,7 @@ Secure endpoints for observability. Require `Authorization: Bearer <MCP_TOKEN>` 
   - Returns counts for `memory_entries`, `diffs`, `errors`, and `tasks` (queued, inProgress, done, failed, total)
   - Example:
     ```bash
-    curl -s "http://127.0.0.1:8081/admin/stats?projectId=nf" -H "Authorization: Bearer dev" | jq
+    curl -s "http://127.0.0.1:8081/admin/stats?projectId=nf" -H "Authorization: Bearer $MCP_TOKEN" | jq
     ```
 
 - `GET /admin/memory_meta`
@@ -319,7 +324,7 @@ Secure endpoints for observability. Require `Authorization: Bearer <MCP_TOKEN>` 
   - Returns memory metadata only: `id`, `projectId`, `quarantined`, `createdAt`, `size`
   - Example:
     ```bash
-    curl -s "http://127.0.0.1:8081/admin/memory_meta?projectId=nf&quarantinedOnly=true&limit=50" -H "Authorization: Bearer dev" | jq
+    curl -s "http://127.0.0.1:8081/admin/memory_meta?projectId=nf&quarantinedOnly=true&limit=50" -H "Authorization: Bearer $MCP_TOKEN" | jq
     ```
 
 Notes:

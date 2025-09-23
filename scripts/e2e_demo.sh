@@ -2,7 +2,11 @@
 set -euo pipefail
 HOST=${HOST:-127.0.0.1}
 PORT=${PORT:-8081}
-TOKEN=${MCP_TOKEN:-dev}
+TOKEN=${MCP_TOKEN:-}
+if [[ -z "$TOKEN" ]]; then
+  echo "MCP_TOKEN must be set to authenticate with the server" >&2
+  exit 1
+fi
 BASE="http://$HOST:$PORT"
 
 hdr=( -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" )

@@ -3,9 +3,12 @@ import os
 from fastapi.testclient import TestClient
 
 
+TOKEN = os.environ["MCP_TOKEN"]
+
+
 def test_health_reports_running_when_enabled():
     os.environ["ENV"] = "dev"
-    os.environ["MCP_TOKEN"] = "dev"
+    os.environ["MCP_TOKEN"] = TOKEN
     os.environ["ORCHESTRATOR_ENABLED"] = "true"
     from server.core import orchestrator
     from server.main import app
@@ -22,7 +25,7 @@ def test_health_reports_running_when_enabled():
 
 def test_health_reports_not_running_when_disabled():
     os.environ["ENV"] = "dev"
-    os.environ["MCP_TOKEN"] = "dev"
+    os.environ["MCP_TOKEN"] = TOKEN
     os.environ["ORCHESTRATOR_ENABLED"] = "false"
     from server.core import orchestrator
     from server.main import app

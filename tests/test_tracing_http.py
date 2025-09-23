@@ -19,9 +19,12 @@ except Exception:
     from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
 
 # Ensure env is set before importing the app (prevent app tracing init; we'll control provider/exporter)
-os.environ.setdefault("MCP_TOKEN", "dev")
+os.environ.setdefault("MCP_TOKEN", "test-token")
 os.environ.setdefault("TRACING_ENABLED", "false")
 from server.main import app
+
+
+TOKEN = os.environ["MCP_TOKEN"]
 
 
 @pytest.fixture()
@@ -29,7 +32,7 @@ def otel_http_memory_provider(monkeypatch):
     # Keep app tracing init disabled; we will enable domain gating via monkeypatch
     monkeypatch.setenv("TRACING_ENABLED", "false")
     # Ensure auth works in tests
-    monkeypatch.setenv("MCP_TOKEN", "dev")
+    monkeypatch.setenv("MCP_TOKEN", TOKEN)
     # Force gating in domain code regardless of env to create spans
     import server.core.events as eventsmod
     import server.core.orchestrator as orchmod
@@ -73,7 +76,7 @@ def _post_ingest(client: TestClient, content: str, force_error: bool = False):
     }
     if force_error:
         payload["force_error"] = True
-    return client.post("/tool/ingest_event", headers={"Authorization": "Bearer dev"}, json=payload)
+    return client.post("/tool/ingest_event", headers={"Authorization": f"Bearer {TOKEN}"}, json=payload)
 
 
 def test_http_ingest_event_emits_http_and_domain_spans(otel_http_memory_provider):

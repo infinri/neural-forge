@@ -1,11 +1,13 @@
 import os
 
 import psycopg
+import pytest
 from fastapi.testclient import TestClient
 from psycopg.types.json import Json
 
 # Ensure token for app auth
-os.environ.setdefault("MCP_TOKEN", "dev")
+os.environ.setdefault("MCP_TOKEN", "test-token")
+TOKEN = os.environ["MCP_TOKEN"]
 
 
 def _sync_dsn() -> str:
@@ -15,6 +17,13 @@ def _sync_dsn() -> str:
     if url.startswith("postgresql+psycopg://"):
         url = url.replace("postgresql+psycopg://", "postgresql://", 1)
     return url
+
+
+try:
+    with psycopg.connect(_sync_dsn()):
+        pass
+except psycopg.OperationalError:
+    pytest.skip("Postgres is required for admin endpoint tests", allow_module_level=True)
 
 
 def make_client_pg():
@@ -123,7 +132,7 @@ def test_admin_endpoints_require_auth():
 def test_admin_stats_and_memory_meta_pg():
     seed_data_pg()
     client = make_client_pg()
-    H = {"Authorization": "Bearer dev"}
+    H = {"Authorization": f"Bearer {TOKEN}"}
 
     # Stats filtered by project nf_admin
     rs = client.get("/admin/stats", headers=H, params={"projectId": "nf_admin"})
