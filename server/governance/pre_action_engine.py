@@ -8,9 +8,16 @@ Neural Forge rules, and provides governance guidance automatically.
 
 import logging
 import re
+from datetime import datetime, timezone
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, List, Optional
+
+from server.db.engine import get_async_engine
+from server.db.repo import (
+    fetch_governance_token_metrics_pg,
+    record_governance_token_metric_pg,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -38,6 +45,7 @@ class GovernanceContext:
     detected_keywords: List[str]
     user_intent: str
     relevant_domains: List[str]
+    project_id: Optional[str] = None
 
 
 @dataclass
@@ -64,6 +72,7 @@ class PreActionGovernanceEngine:
         self.activity_patterns = self._initialize_activity_patterns()
         self.domain_mappings = self._initialize_domain_mappings()
         self.rule_cache = {}
+        self.token_metrics_cache: Dict[str, Dict[str, Any]] = {}
         
     def _initialize_activity_patterns(self) -> Dict[ActivityType, List[str]]:
         """Initialize regex patterns for detecting different AI activities"""
@@ -139,9 +148,10 @@ class PreActionGovernanceEngine:
         }
     
     async def analyze_context(
-        self, 
-        user_message: str, 
-        conversation_history: Optional[List[str]] = None
+        self,
+        user_message: str,
+        conversation_history: Optional[List[str]] = None,
+        project_id: Optional[str] = None,
     ) -> GovernanceContext:
         """
         Analyze user message and conversation to detect AI activity context
@@ -194,7 +204,8 @@ class PreActionGovernanceEngine:
             confidence=confidence,
             detected_keywords=list(set(detected_keywords)),  # Remove duplicates
             user_intent=user_message,
-            relevant_domains=relevant_domains
+            relevant_domains=relevant_domains,
+            project_id=project_id,
         )
     
     async def should_activate_governance(self, context: GovernanceContext) -> bool:
@@ -239,7 +250,12 @@ class PreActionGovernanceEngine:
         summary = self._generate_summary(context, relevant_rules)
         key_principles = self._extract_key_principles(context, relevant_rules)
         warnings = self._generate_warnings(context, relevant_rules)
-        
+
+        try:
+            await self._record_token_metrics(context, relevant_rules)
+        except Exception as exc:
+            logger.debug("Failed to update governance token metrics: %s", exc)
+
         return GovernanceRecommendation(
             activity_type=context.activity_type,
             relevant_rules=relevant_rules,
@@ -290,8 +306,13 @@ class PreActionGovernanceEngine:
                 categories = domain_mapping[domain]
                 tokens_response = fetch_tokens("neural-forge", categories)
                 tokens_data = tokens_response.get("tokens", [])
-                
+                metrics_overlay: Dict[str, Dict[str, Any]] = {}
+                if tokens_data:
+                    metrics_overlay = await self._load_metrics_for_tokens(tokens_data)
+
                 for token in tokens_data:
+                    token_ref = self._token_metric_key(token)
+                    overlay = metrics_overlay.get(token_ref) or self.token_metrics_cache.get(token_ref)
                     # Extract rule information from token structure
                     rule = {
                         "name": token.get("name", "Unknown"),
@@ -299,17 +320,31 @@ class PreActionGovernanceEngine:
                         "priority": self._determine_priority(token),
                         "triggers": self._extract_triggers(token),
                         "category": token.get("kind", domain),  # Use 'kind' from token structure
-                        "rules": token.get("rules", [])
+                        "rules": token.get("rules", []),
+                        "tokenRef": token_ref,
+                        "source": token.get("source"),
                     }
+                    if overlay:
+                        rule["usageMetrics"] = overlay
+                        self.token_metrics_cache[token_ref] = overlay
                     rules.append(rule)
-            
+
             return rules
-            
+
         except Exception as e:
             logger.warning(f"Failed to load real Neural Forge rules for {domain}: {e}")
             # Fallback to essential mock rules if real data fails
             return self._get_fallback_rules(domain)
-    
+
+    def _token_metric_key(self, token: Dict[str, Any]) -> str:
+        """Derive a stable identifier for a token for metric storage."""
+        source = token.get("source")
+        if isinstance(source, str) and source.strip():
+            return source.strip()
+        kind = token.get("kind") or token.get("category") or "unknown"
+        name = token.get("name") or token.get("tag") or "unknown"
+        return f"{kind}::{name}"
+
     def _determine_priority(self, token: Dict[str, Any]) -> str:
         """Determine rule priority based on token metadata"""
         # Check for priority indicators in token data
@@ -366,28 +401,129 @@ class PreActionGovernanceEngine:
                     "name": "InputValidation",
                     "description": "Always validate and sanitize user inputs",
                     "priority": "critical",
-                    "triggers": ["input", "validation", "sanitization"]
+                    "triggers": ["input", "validation", "sanitization"],
                 }
             ],
             "performance": [
                 {
-                    "name": "AlgorithmComplexity", 
+                    "name": "AlgorithmComplexity",
                     "description": "Consider algorithm complexity and optimize for performance",
                     "priority": "high",
-                    "triggers": ["algorithm", "performance", "optimization"]
+                    "triggers": ["algorithm", "performance", "optimization"],
                 }
             ],
             "code-quality": [
                 {
                     "name": "CodeQuality",
                     "description": "Follow coding best practices and maintain clean code",
-                    "priority": "high", 
-                    "triggers": ["code quality", "refactoring", "maintainability"]
+                    "priority": "high",
+                    "triggers": ["code quality", "refactoring", "maintainability"],
                 }
-            ]
+            ],
         }
-        
-        return fallback_rules.get(domain, [])
+
+        selected = fallback_rules.get(domain, [])
+        enriched: List[Dict[str, Any]] = []
+        for rule in selected:
+            item = dict(rule)
+            token_ref = f"fallback::{domain}::{item.get('name', 'Unknown')}"
+            item["tokenRef"] = token_ref
+            item["source"] = None
+            overlay = self.token_metrics_cache.get(token_ref)
+            if overlay:
+                item["usageMetrics"] = overlay
+            enriched.append(item)
+
+        return enriched
+
+    async def _load_metrics_for_tokens(
+        self, tokens: List[Dict[str, Any]]
+    ) -> Dict[str, Dict[str, Any]]:
+        engine = get_async_engine()
+        if engine is None or not tokens:
+            return {}
+
+        seen: Dict[str, None] = {}
+        token_ids: List[str] = []
+        for token in tokens:
+            key = self._token_metric_key(token)
+            if key and key not in seen:
+                seen[key] = None
+                token_ids.append(key)
+
+        if not token_ids:
+            return {}
+
+        try:
+            rows = await fetch_governance_token_metrics_pg(
+                engine,
+                token_ids=token_ids,
+            )
+        except Exception as exc:
+            logger.debug("Failed to fetch token metrics overlay: %s", exc)
+            return {}
+
+        overlay = {row["tokenId"]: row for row in rows if row.get("tokenId")}
+        if overlay:
+            self.token_metrics_cache.update(overlay)
+        return overlay
+
+    def _priority_weight(self, priority: str | None) -> float:
+        weights = {
+            "critical": 1.0,
+            "high": 0.85,
+            "medium": 0.65,
+            "low": 0.5,
+        }
+        if not priority:
+            return 0.6
+        return weights.get(priority.lower(), 0.6)
+
+    def _compute_effectiveness_sample(
+        self, context: GovernanceContext, rule: Dict[str, Any]
+    ) -> float:
+        base = max(0.0, min(context.confidence, 1.0))
+        weight = self._priority_weight(rule.get("priority"))
+        triggers = rule.get("triggers") or []
+        if triggers and context.detected_keywords:
+            lower_triggers = {t.lower() for t in triggers}
+            overlap = len(lower_triggers.intersection({k.lower() for k in context.detected_keywords}))
+            if overlap:
+                weight = min(1.0, weight + min(overlap * 0.05, 0.15))
+        return max(0.0, min(base * weight, 1.0))
+
+    async def _record_token_metrics(
+        self, context: GovernanceContext, rules: List[Dict[str, Any]]
+    ) -> None:
+        if not rules:
+            return
+
+        engine = get_async_engine()
+        if engine is None:
+            return
+
+        now = datetime.now(timezone.utc)
+        project_id = context.project_id
+
+        for rule in rules:
+            token_ref = rule.get("tokenRef") or rule.get("source")
+            if not token_ref:
+                continue
+            try:
+                sample = self._compute_effectiveness_sample(context, rule)
+                record = await record_governance_token_metric_pg(
+                    engine,
+                    token_id=str(token_ref),
+                    project_id=project_id,
+                    sample_effectiveness=sample,
+                    applied_at=now,
+                )
+            except Exception as exc:
+                logger.debug("Failed to record token metrics for %s: %s", token_ref, exc)
+                continue
+            if record:
+                self.token_metrics_cache[record["tokenId"]] = record
+                rule["usageMetrics"] = record
     
     def _generate_summary(self, context: GovernanceContext, rules: List[Dict[str, Any]]) -> str:
         """Generate a summary of governance recommendations"""
@@ -474,8 +610,9 @@ governance_engine = PreActionGovernanceEngine()
 
 
 async def activate_pre_action_governance(
-    user_message: str, 
-    conversation_history: Optional[List[str]] = None
+    user_message: str,
+    conversation_history: Optional[List[str]] = None,
+    project_id: Optional[str] = None,
 ) -> Optional[str]:
     """
     Main entry point for pre-action governance activation
@@ -486,6 +623,7 @@ async def activate_pre_action_governance(
     Args:
         user_message: Current user message to analyze
         conversation_history: Previous conversation messages for context
+        project_id: Optional project identifier to scope governance metrics
         
     Returns:
         Formatted governance guidance string or None if no activation needed
@@ -494,7 +632,9 @@ async def activate_pre_action_governance(
         conversation_history = []
     
     # Analyze context
-    context = await governance_engine.analyze_context(user_message, conversation_history)
+    context = await governance_engine.analyze_context(
+        user_message, conversation_history, project_id=project_id
+    )
     
     # Only activate if confidence is above threshold (lowered for better coverage)
     if context.confidence < 0.10:  # 10% confidence threshold

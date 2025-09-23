@@ -1,5 +1,6 @@
 import json
-from typing import Any, Dict
+from datetime import datetime, timezone
+from typing import Any, Dict, Sequence
 
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncEngine
@@ -14,6 +15,53 @@ def _to_pgvector_literal(vec: list[float]) -> str:
     """
     # Use a compact but precise repr to avoid huge payloads; 6 decimal places is plenty
     return "[" + ", ".join(f"{float(v):.6f}" for v in vec) + "]"
+
+
+def _normalize_project_id(project_id: str | None) -> str:
+    if project_id and project_id.strip():
+        return project_id.strip()
+    return "global"
+
+
+def _dt_to_iso(value: Any) -> str | None:
+    if value is None:
+        return None
+    if hasattr(value, "isoformat"):
+        try:
+            return value.isoformat()
+        except Exception:
+            return str(value)
+    return str(value)
+
+
+def _row_to_metric(row: Any) -> Dict[str, Any]:
+    mapping = getattr(row, "_mapping", None)
+    if mapping is not None:
+        token_id = mapping.get("token_id") or mapping.get("tokenId")
+        project_id = mapping.get("project_id") or mapping.get("projectId")
+        activation = mapping.get("activation_count")
+        effectiveness = mapping.get("effectiveness_score")
+        last_applied = mapping.get("last_applied_at")
+        created = mapping.get("created_at")
+        updated = mapping.get("updated_at")
+    else:
+        token_id = row[0] if len(row) > 0 else None
+        project_id = row[1] if len(row) > 1 else None
+        activation = row[2] if len(row) > 2 else None
+        effectiveness = row[3] if len(row) > 3 else None
+        last_applied = row[4] if len(row) > 4 else None
+        created = row[5] if len(row) > 5 else None
+        updated = row[6] if len(row) > 6 else None
+
+    return {
+        "tokenId": token_id,
+        "projectId": project_id,
+        "activationCount": int(activation) if activation is not None else 0,
+        "effectivenessScore": float(effectiveness) if effectiveness is not None else 0.0,
+        "lastAppliedAt": _dt_to_iso(last_applied),
+        "createdAt": _dt_to_iso(created),
+        "updatedAt": _dt_to_iso(updated),
+    }
 
 
 async def add_memory_pg(
@@ -606,3 +654,116 @@ async def enqueue_task_pg(
                 "payload": json.dumps(payload or {}),
             },
         )
+
+
+async def record_governance_token_metric_pg(
+    engine: AsyncEngine,
+    *,
+    token_id: str,
+    project_id: str | None,
+    sample_effectiveness: float | None,
+    applied_at: datetime | None = None,
+) -> Dict[str, Any] | None:
+    token = (token_id or "").strip()
+    if not token:
+        return None
+    project = _normalize_project_id(project_id)
+    effectiveness = float(sample_effectiveness) if sample_effectiveness is not None else 0.0
+    applied = applied_at or datetime.now(timezone.utc)
+    params = {
+        "token_id": token,
+        "project_id": project,
+        "effectiveness_score": effectiveness,
+        "last_applied_at": applied,
+        "updated_at": applied,
+    }
+    q = text(
+        """
+        INSERT INTO governance_token_metrics (
+            token_id, project_id, activation_count, effectiveness_score, last_applied_at, updated_at
+        )
+        VALUES (:token_id, :project_id, 1, :effectiveness_score, :last_applied_at, :updated_at)
+        ON CONFLICT (token_id, project_id) DO UPDATE SET
+            activation_count = governance_token_metrics.activation_count + 1,
+            effectiveness_score = (
+                (COALESCE(governance_token_metrics.effectiveness_score, 0) * governance_token_metrics.activation_count)
+                + :effectiveness_score
+            ) / (governance_token_metrics.activation_count + 1.0),
+            last_applied_at = CASE
+                WHEN governance_token_metrics.last_applied_at IS NULL THEN :last_applied_at
+                WHEN :last_applied_at IS NULL THEN governance_token_metrics.last_applied_at
+                WHEN governance_token_metrics.last_applied_at < :last_applied_at THEN :last_applied_at
+                ELSE governance_token_metrics.last_applied_at
+            END,
+            updated_at = :updated_at
+        RETURNING token_id, project_id, activation_count, effectiveness_score, last_applied_at, created_at, updated_at
+        """
+    )
+    async with engine.begin() as conn:
+        res = await conn.execute(q, params)
+        row = res.first()
+        if not row:
+            return None
+        return _row_to_metric(row)
+
+
+async def fetch_governance_token_metrics_pg(
+    engine: AsyncEngine,
+    *,
+    token_ids: Sequence[str] | None = None,
+    project_id: str | None = None,
+    min_activation_count: int = 0,
+    limit: int | None = None,
+) -> list[Dict[str, Any]]:
+    clauses: list[str] = []
+    params: Dict[str, Any] = {}
+
+    if token_ids:
+        filtered = [tid.strip() for tid in token_ids if tid and tid.strip()]
+        if filtered:
+            placeholders = []
+            for idx, tid in enumerate(filtered):
+                key = f"token_id_{idx}"
+                placeholders.append(f":{key}")
+                params[key] = tid
+            clauses.append(f"token_id IN ({', '.join(placeholders)})")
+
+    if project_id is not None:
+        params["project_id"] = _normalize_project_id(project_id)
+        clauses.append("project_id = :project_id")
+
+    if min_activation_count and min_activation_count > 0:
+        params["min_activation"] = int(min_activation_count)
+        clauses.append("activation_count >= :min_activation")
+
+    where = f" WHERE {' AND '.join(clauses)}" if clauses else ""
+
+    limit_clause = ""
+    if limit is not None:
+        try:
+            limit_val = int(limit)
+        except Exception:
+            limit_val = None
+        if limit_val is not None and limit_val > 0:
+            params["limit"] = limit_val
+            limit_clause = " LIMIT :limit"
+
+    q = text(
+        f"""
+        SELECT token_id,
+               project_id,
+               activation_count,
+               effectiveness_score,
+               last_applied_at,
+               created_at,
+               updated_at
+        FROM governance_token_metrics{where}
+        ORDER BY activation_count DESC, updated_at DESC{limit_clause}
+        """
+    )
+
+    async with engine.connect() as conn:
+        res = await conn.execute(q, params)
+        rows = res.fetchall()
+
+    return [_row_to_metric(row) for row in rows]

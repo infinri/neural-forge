@@ -47,3 +47,17 @@ CREATE TABLE IF NOT EXISTS errors (
 );
 CREATE INDEX IF NOT EXISTS idx_errors_level_created ON errors(level, created_at);
 
+-- Governance token effectiveness metrics
+CREATE TABLE IF NOT EXISTS governance_token_metrics (
+  token_id TEXT NOT NULL,
+  project_id TEXT NOT NULL DEFAULT 'global',
+  activation_count INTEGER NOT NULL DEFAULT 0,
+  effectiveness_score REAL NOT NULL DEFAULT 0,
+  last_applied_at TEXT,
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  PRIMARY KEY (token_id, project_id)
+);
+CREATE INDEX IF NOT EXISTS idx_token_metrics_project_updated ON governance_token_metrics(project_id, updated_at);
+CREATE INDEX IF NOT EXISTS idx_token_metrics_activation ON governance_token_metrics(activation_count);
+

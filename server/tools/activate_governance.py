@@ -36,6 +36,7 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
         # Extract parameters
         user_message = args.get("user_message", "")
         conversation_history = args.get("conversation_history", [])
+        project_id = args.get("projectId")
         force_activation = args.get("force_activation", False)
         
         if not user_message:
@@ -48,7 +49,8 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
         # Activate pre-action governance
         governance_output = await activate_pre_action_governance(
             user_message=user_message,
-            conversation_history=conversation_history
+            conversation_history=conversation_history,
+            project_id=project_id,
         )
         
         # Handle force activation
@@ -56,7 +58,9 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
             # Force activation even if confidence is low
             from server.governance.pre_action_engine import governance_engine
             
-            context = await governance_engine.analyze_context(user_message, conversation_history)
+            context = await governance_engine.analyze_context(
+                user_message, conversation_history, project_id=project_id
+            )
             recommendation = await governance_engine.get_governance_recommendations(context)
             governance_output = await governance_engine.format_governance_output(recommendation)
         
