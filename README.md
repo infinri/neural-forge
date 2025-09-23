@@ -189,9 +189,12 @@ Add to your `~/.codeium/windsurf/mcp_config.json`:
 
 ```json
 {
-  "mcpServers": {
+"mcpServers": {
     "neural-forge": {
-      "serverUrl": "http://127.0.0.1:8081/sse?token=dev"
+      "serverUrl": "http://127.0.0.1:8081/sse",
+      "headers": {
+        "Authorization": "Bearer dev"
+      }
     }
   }
 }
@@ -201,7 +204,7 @@ Add to your `~/.codeium/windsurf/mcp_config.json`:
 
 ```bash
 # Test server
-curl http://127.0.0.1:8081/sse?token=dev
+curl http://127.0.0.1:8081/sse -H "Authorization: Bearer dev"
 
 # Test tools in Windsurf
 # All 12 Neural Forge tools should be available
@@ -303,7 +306,7 @@ Health includes tracing and DB status:
 
 ### Admin Endpoints (Diagnostics)
 
-Secure endpoints for observability. Require `Authorization: Bearer <MCP_TOKEN>` (or `?token=`)
+Secure endpoints for observability. Require `Authorization: Bearer <MCP_TOKEN>`.
 
 - `GET /admin/stats`
   - Optional: `projectId`
