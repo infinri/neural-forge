@@ -55,7 +55,7 @@ Add the printed configuration to `~/.codeium/windsurf/mcp_config.json`:
 
 ```json
 {
-  "mcpServers": {
+"mcpServers": {
     "neural-forge": {
       "serverUrl": "http://127.0.0.1:8081/sse?token=<your-unique-token>"
     }

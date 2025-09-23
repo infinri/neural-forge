@@ -96,6 +96,43 @@ def test_ingest_event_role_normalization(monkeypatch):
     assert seen[0].payload["role"] == "user"
 
 
+def test_ingest_event_project_id_normalization(monkeypatch):
+    bus = EventBus()
+    monkeypatch.setattr(ingest_event, "bus", bus)
+    seen = asyncio.run(_capture(bus, "conversation.message"))
+
+    req = {
+        "type": "conversation.message",
+        "projectId": "  Project-XYZ  ",
+        "role": "user",
+        "content": "hi",
+    }
+
+    resp = asyncio.run(ingest_event.handler(req))
+
+    assert resp["status"] == "ok"
+    assert resp["projectId"] == "project-xyz"
+    assert len(seen) == 1
+    assert seen[0].project_id == "project-xyz"
+
+
+def test_ingest_event_project_id_invalid_rejected(monkeypatch):
+    bus = EventBus()
+    monkeypatch.setattr(ingest_event, "bus", bus)
+
+    req = {
+        "type": "conversation.message",
+        "projectId": "Invalid Project!",
+        "role": "user",
+        "content": "hi",
+    }
+
+    resp = asyncio.run(ingest_event.handler(req))
+
+    assert "error" in resp
+    assert resp["error"]["code"] == "ERR.BAD_REQUEST"
+    assert "projectId" in resp["error"]["message"]
+
 def test_conversation_event_emits_governance_guidance(monkeypatch):
     bus = EventBus()
     orch = Orchestrator(bus)

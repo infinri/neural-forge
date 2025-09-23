@@ -6,20 +6,40 @@ It detects when AI is about to plan/code, analyzes context, retrieves relevant
 Neural Forge rules, and provides governance guidance automatically.
 """
 
+import copy
 import logging
+import os
 import re
+import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional
 
 from server.db.engine import get_async_engine
 from server.db.repo import (
     fetch_governance_token_metrics_pg,
     record_governance_token_metric_pg,
 )
+from server.nf_client.tokens import fetch_tokens
 
 logger = logging.getLogger(__name__)
+
+
+TokenLoader = Callable[[str, List[str]], Dict[str, Any]]
+
+
+DOMAIN_CATEGORY_MAPPING: Dict[str, List[str]] = {
+    "security": ["security"],
+    "performance": ["performance"],
+    "code-quality": ["code-quality"],
+    "architecture": ["architecture"],
+    "reliability": ["reliability"],
+    "data": ["data"],
+    "testing": ["testing"],
+    "ai-learning": ["ai-learning"],
+}
 
 
 class ActivityType(Enum):
@@ -68,11 +88,50 @@ class PreActionGovernanceEngine:
     guidance from Neural Forge's 63 engineering tokens.
     """
     
-    def __init__(self):
+    def __init__(
+        self,
+        token_loader: Optional[TokenLoader] = None,
+        tags_dir: Optional[Path | str] = None,
+        cache_ttl: float = 60.0,
+    ):
         self.activity_patterns = self._initialize_activity_patterns()
         self.domain_mappings = self._initialize_domain_mappings()
-        self.rule_cache = {}
+        self._token_loader: TokenLoader = token_loader or fetch_tokens
+        self._cache_ttl = max(cache_ttl, 0.0)
+        base_tags_dir = tags_dir if tags_dir is not None else Path(__file__).resolve().parents[2] / "memory" / "tags"
+        self._tags_dir = Path(base_tags_dir).resolve()
+        self.rule_cache: Dict[str, Dict[str, Any]] = {}
         self.token_metrics_cache: Dict[str, Dict[str, Any]] = {}
+
+    def _compute_domain_snapshot(self, categories: List[str]) -> Dict[str, Any]:
+        """Capture filesystem metadata for a domain's backing token files."""
+        files: List[str] = []
+        latest_mtime = 0.0
+
+        if not categories:
+            return {"files": files, "latest_mtime": latest_mtime}
+
+        for category in categories:
+            category_dir = self._tags_dir / category
+            if not category_dir.exists() or not category_dir.is_dir():
+                continue
+            for root, _, filenames in os.walk(category_dir):
+                for filename in filenames:
+                    path = Path(root) / filename
+                    if not path.is_file():
+                        continue
+                    if path.suffix.lower() not in {".yml", ".yaml"}:
+                        continue
+                    try:
+                        stat = path.stat()
+                    except OSError:
+                        continue
+                    rel_path = str(path.relative_to(self._tags_dir))
+                    files.append(rel_path)
+                    latest_mtime = max(latest_mtime, stat.st_mtime)
+
+        files.sort()
+        return {"files": files, "latest_mtime": latest_mtime}
         
     def _initialize_activity_patterns(self) -> Dict[ActivityType, List[str]]:
         """Initialize regex patterns for detecting different AI activities"""
@@ -280,59 +339,58 @@ class PreActionGovernanceEngine:
     async def _load_domain_rules(self, domain: str) -> List[Dict[str, Any]]:
         """Load rules for a specific domain from Neural Forge memory"""
         try:
-            # Import Neural Forge clients to access real rule data
-            import os
-            import sys
-            sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
-            
-            from server.nf_client.tokens import fetch_tokens
-            
-            # Map domain names to Neural Forge categories
-            domain_mapping = {
-                "security": ["security"],
-                "performance": ["performance"], 
-                "code-quality": ["code-quality"],
-                "architecture": ["architecture"],
-                "reliability": ["reliability"],
-                "data": ["data"],
-                "testing": ["testing"],
-                "ai-learning": ["ai-learning"]
-            }
-            
-            rules = []
-            
-            # Get tokens for this domain
-            if domain in domain_mapping:
-                categories = domain_mapping[domain]
-                tokens_response = fetch_tokens("neural-forge", categories)
-                tokens_data = tokens_response.get("tokens", [])
-                metrics_overlay: Dict[str, Dict[str, Any]] = {}
-                if tokens_data:
-                    metrics_overlay = await self._load_metrics_for_tokens(tokens_data)
+            categories = DOMAIN_CATEGORY_MAPPING.get(domain)
+            if not categories:
+                return self._get_fallback_rules(domain)
 
-                for token in tokens_data:
-                    token_ref = self._token_metric_key(token)
-                    overlay = metrics_overlay.get(token_ref) or self.token_metrics_cache.get(token_ref)
-                    # Extract rule information from token structure
-                    rule = {
-                        "name": token.get("name", "Unknown"),
-                        "description": token.get("description", "No description available"),
-                        "priority": self._determine_priority(token),
-                        "triggers": self._extract_triggers(token),
-                        "category": token.get("kind", domain),  # Use 'kind' from token structure
-                        "rules": token.get("rules", []),
-                        "tokenRef": token_ref,
-                        "source": token.get("source"),
-                    }
-                    if overlay:
-                        rule["usageMetrics"] = overlay
-                        self.token_metrics_cache[token_ref] = overlay
-                    rules.append(rule)
+            now = time.time()
+            snapshot = self._compute_domain_snapshot(categories)
+            cached_entry = self.rule_cache.get(domain)
+
+            if cached_entry:
+                expired = now > cached_entry.get("expires_at", 0.0)
+                snapshot_changed = cached_entry.get("snapshot") != snapshot
+                if not expired and not snapshot_changed:
+                    return copy.deepcopy(cached_entry.get("rules", []))
+
+            tokens_response = self._token_loader("neural-forge", categories)
+            tokens_data = tokens_response.get("tokens", []) if isinstance(tokens_response, dict) else []
+            metrics_overlay: Dict[str, Dict[str, Any]] = {}
+            if tokens_data:
+                metrics_overlay = await self._load_metrics_for_tokens(tokens_data)
+
+            rules: List[Dict[str, Any]] = []
+            for token in tokens_data:
+                token_ref = self._token_metric_key(token)
+                overlay = metrics_overlay.get(token_ref) or self.token_metrics_cache.get(token_ref)
+                rule = {
+                    "name": token.get("name", "Unknown"),
+                    "description": token.get("description", "No description available"),
+                    "priority": self._determine_priority(token),
+                    "triggers": self._extract_triggers(token),
+                    "category": token.get("kind", domain),
+                    "rules": token.get("rules", []),
+                    "tokenRef": token_ref,
+                    "source": token.get("source"),
+                }
+                if overlay:
+                    rule["usageMetrics"] = overlay
+                    self.token_metrics_cache[token_ref] = overlay
+                rules.append(rule)
+
+            cached_rules = copy.deepcopy(rules)
+            updated_snapshot = self._compute_domain_snapshot(categories)
+            self.rule_cache[domain] = {
+                "rules": cached_rules,
+                "snapshot": updated_snapshot,
+                "expires_at": now + self._cache_ttl,
+            }
 
             return rules
 
         except Exception as e:
             logger.warning(f"Failed to load real Neural Forge rules for {domain}: {e}")
+            self.rule_cache.pop(domain, None)
             # Fallback to essential mock rules if real data fails
             return self._get_fallback_rules(domain)
 

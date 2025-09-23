@@ -92,12 +92,42 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Windsurf MCP Memory/Planning", lifespan=lifespan)
 
+def _extract_bearer_token(auth: str | None) -> str | None:
+    if not auth:
+        return None
+    parts = auth.split(" ", 1)
+    if len(parts) != 2:
+        return None
+    scheme, token = parts[0].strip(), parts[1].strip()
+    if scheme.lower() != "bearer":
+        return None
+    if not token:
+        return None
+    return token
+
+
 def require_auth(auth: str | None, request: Request | None = None):
-    supplied = None
-    if auth and auth.startswith("Bearer "):
-        supplied = auth.split(" ", 1)[1].strip()
-    elif request is not None:
-        supplied = request.query_params.get("token")
+    supplied = _extract_bearer_token(auth)
+    raw_query_token = None
+    if request is not None:
+        raw_query_token = request.query_params.get("token")
+
+    allow_query_tokens = _truthy(os.getenv("MCP_ALLOW_QUERY_TOKEN"))
+    if not supplied and raw_query_token is not None:
+        query_token = raw_query_token.strip() if raw_query_token else None
+        if allow_query_tokens and query_token:
+            supplied = query_token
+        elif not allow_query_tokens:
+            if request is not None:
+                try:
+                    path = request.url.path
+                except Exception:
+                    path = None
+            else:
+                path = None
+            log_json("warning", "auth.query_token_rejected", path=path)
+            raise HTTPException(status_code=401, detail="ERR.UNAUTHORIZED")
+
     if not supplied:
         raise HTTPException(status_code=401, detail="ERR.UNAUTHORIZED")
     if supplied != MCP_TOKEN:

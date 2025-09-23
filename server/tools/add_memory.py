@@ -51,7 +51,7 @@ async def handler(req: Dict[str, Any]):
         emb = None
         if is_semantic_enabled():
             try:
-                emb = compute_embedding(content)
+                emb = await compute_embedding(content)
             except Exception:
                 emb = None
         await add_memory_pg(

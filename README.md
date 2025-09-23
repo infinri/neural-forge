@@ -193,7 +193,7 @@ Add to your `~/.codeium/windsurf/mcp_config.json`:
 
 ```json
 {
-  "mcpServers": {
+"mcpServers": {
     "neural-forge": {
       "serverUrl": "http://127.0.0.1:8081/sse?token=<your-unique-token>"
     }
@@ -308,7 +308,7 @@ Health includes tracing and DB status:
 
 ### Admin Endpoints (Diagnostics)
 
-Secure endpoints for observability. Require `Authorization: Bearer <MCP_TOKEN>` (or `?token=`)
+Secure endpoints for observability. Require `Authorization: Bearer <MCP_TOKEN>`.
 
 - `GET /admin/stats`
   - Optional: `projectId`
