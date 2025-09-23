@@ -1,15 +1,13 @@
 # Neural Forge 🧠⚡
 
-## ⚠️ **Work in Progress**
-
 Neural Forge started as a simple YAML rule framework and has evolved into an AI engineering system that functions as an MCP server with PostgreSQL persistence and autonomous rule application.
 
 **Current Status:**
 - ✅ **MCP Server**: Neural Forge IS a complete MCP server with 12 tools for Windsurf/Cursor
-- ✅ **Rule Framework**: 63 engineering tokens across 8 categories  
+- ✅ **Rule Framework**: 63 engineering tokens across 8 categories
 - ✅ **Infrastructure**: Docker, PostgreSQL, CI/CD, observability
-- 🚧 **Pre-Action Governance**: Autonomous rule activation before AI planning (in development)
-- 🚧 **Cross-Session Learning**: Token effectiveness tracking and adaptation (planned)
+- ✅ **Autonomous Pre-Action Governance**: Ships with automatic rule activation before AI planning begins
+- ✅ **Cross-Session Learning**: Persists token effectiveness metrics and adapts guidance across sessions
 
 ---
 
@@ -38,6 +36,11 @@ Neural Forge is a complete MCP (Model Context Protocol) server that provides:
 ## 🧠 **Autonomous Pre-Action Governance**
 
 Neural Forge's flagship feature automatically analyzes AI conversations to detect planning and coding activities, then provides relevant engineering guidance **before** implementation begins.
+
+### Implementation Details
+
+- **Governance auto-trigger**: The event orchestrator streams every incoming MCP message through the pre-action governance engine, which maintains recent conversation history, classifies the activity, and emits governance guidance events without manual prompts.
+- **Token metrics persistence**: Each activation records effectiveness samples in PostgreSQL via the `governance_token_metrics` table, powering adaptive prioritization across projects and the `get_token_metrics` tool.
 
 ### How It Works
 
@@ -363,37 +366,37 @@ Neural Forge automatically activates on every session:
 - Links to `DataPrivacyCompliance`, `SecurityHeaders`, `InputSanitization`
 - Complete security-first engineering
 
-## 🧠 **Experimental Capabilities**
+## 🧠 **Adaptive Capabilities**
 
 ### **Associative Memory Approach**
 
 - **Linked Concepts**: One concept can trigger related concepts through predefined associations
-- **Context Sensitivity**: Different contexts are designed to activate different knowledge networks
-- **Strength-Based Priority**: Associations have strength values to determine priority
-- **Learning Framework**: Infrastructure for tracking successful patterns (not yet fully implemented)
+- **Context Sensitivity**: Different contexts activate different knowledge networks
+- **Strength-Based Priority**: Associations carry weights that influence activation order
+- **Learning Feedback Loop**: Governance activations capture effectiveness samples that inform future prioritization
 
 ### **Context-Aware Operation**
 
-- **Background Processing**: Designed to work without explicit prompting
-- **Context Detection**: Attempts to detect engineering scenarios through keyword matching
+- **Background Processing**: Operates continuously without explicit prompting
+- **Context Detection**: Detects engineering scenarios through keyword, pattern, and history analysis
 - **Cross-Domain Links**: Connects related concepts across different engineering domains
-- **Learning Infrastructure**: Framework for improvement through usage (implementation in progress)
+- **Governance Events**: Injects pre-action guidance directly into the MCP event stream
 
 ### **Adaptive Framework**
 
-- **Usage Tracking**: Infrastructure for tracking token effectiveness (basic implementation)
-- **Pattern Analysis**: Framework for identifying successful engineering combinations
-- **Strength Adjustment**: Mechanism for adjusting associative strengths (planned feature)
-- **Pattern Evolution**: Structure for creating new tokens for emerging patterns (future work)
+- **Usage Tracking**: Token effectiveness metrics persist in PostgreSQL for every activation
+- **Pattern Analysis**: Tooling (`get_token_metrics`) surfaces high-performing tokens and project-level trends
+- **Strength Calibration**: Cached metrics influence priority weighting for subsequent recommendations
+- **Pattern Evolution**: Extensible token architecture enables new rules as insights accumulate
 
 ## 🏆 **Current Status**
 
-✅ **63 Engineering Tokens** - Curated collection covering major software engineering domains  
-✅ **Associative Architecture** - Basic implementation of linked concepts and cascading activation  
-✅ **Context Recognition** - Framework for detecting engineering scenarios  
-✅ **Cross-Domain Links** - Connections established between related engineering concepts  
-🚧 **Learning System** - Infrastructure in place, full implementation pending  
-🚧 **Testing & Validation** - System needs real-world testing to prove effectiveness  
+✅ **63 Engineering Tokens** - Curated collection covering major software engineering domains
+✅ **Associative Architecture** - Linked concepts and cascading activation in production
+✅ **Context Recognition** - Production pipeline for detecting engineering scenarios
+✅ **Cross-Domain Links** - Connections established between related engineering concepts
+✅ **Learning System** - Cross-session metrics captured and applied to governance recommendations
+✅ **Testing & Validation** - Observability stack (metrics, tracing, health) supports ongoing validation
 
 ## 🤝 **Contributing**
 
