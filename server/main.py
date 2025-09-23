@@ -854,13 +854,13 @@ from .tools import (
     get_memory,
     get_next_task,
     get_rules,
+    get_token_metrics,
     ingest_event,
     list_recent,
     log_error,
     save_diff,
     search_memory,
     update_task_status,
-    get_token_metrics,
 )
 
 TOOLS.update({
