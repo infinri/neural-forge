@@ -2,6 +2,7 @@ import asyncio
 import uuid as uuidlib
 
 from server.core.events import Event, EventBus
+from server.core.orchestrator import GOVERNANCE_GUIDANCE, Orchestrator
 from server.tools import ingest_event
 
 
@@ -93,3 +94,33 @@ def test_ingest_event_role_normalization(monkeypatch):
 
     assert len(seen) == 1
     assert seen[0].payload["role"] == "user"
+
+
+def test_conversation_event_emits_governance_guidance(monkeypatch):
+    bus = EventBus()
+    orch = Orchestrator(bus)
+    monkeypatch.setattr(ingest_event, "bus", bus)
+
+    governance_seen = asyncio.run(_capture(bus, GOVERNANCE_GUIDANCE))
+    asyncio.run(orch.start())
+
+    req = {
+        "type": "conversation.message",
+        "projectId": "p1",
+        "role": "user",
+        "content": "I want to build a secure REST API with authentication",
+    }
+    resp = asyncio.run(ingest_event.handler(req))
+
+    assert resp["status"] == "ok"
+    assert len(governance_seen) == 1
+
+    evt = governance_seen[0]
+    assert evt.type == GOVERNANCE_GUIDANCE
+    assert evt.project_id == "p1"
+    payload = evt.payload
+    assert isinstance(payload, dict)
+    assert payload.get("content")
+    assert payload.get("source", {}).get("request_id") == resp["requestId"]
+
+    asyncio.run(orch.stop())
