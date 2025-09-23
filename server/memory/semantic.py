@@ -1,3 +1,4 @@
+import asyncio
 import hashlib
 import os
 from typing import Callable, Optional
@@ -43,6 +44,10 @@ def _mock_embed(text: str) -> list[float]:
     return [v / norm for v in vals]
 
 
+# Mark the mock embedder so async wrapper can keep it inline for determinism
+setattr(_mock_embed, "_semantic_offload", False)
+
+
 def get_embedder() -> Optional[Callable[[str], list[float]]]:
     global _embedder
     if _embedder is not None:
@@ -70,14 +75,24 @@ def get_embedder() -> Optional[Callable[[str], list[float]]]:
             vec = st_model.encode([t])[0]
             return [float(x) for x in vec]
 
+        # Mark that this embedder should be executed off-thread
+        setattr(_st_embed, "_semantic_offload", True)
         _embedder = _st_embed
         return _embedder
     # Unknown model
     raise RuntimeError(f"Unsupported SEMANTIC_MODEL={model}")
 
 
-def compute_embedding(text: str) -> Optional[list[float]]:
+async def compute_embedding(text: str) -> Optional[list[float]]:
     emb = get_embedder()
     if emb is None:
         return None
-    return emb(text or "")
+
+    normalized = text or ""
+    if getattr(emb, "_semantic_offload", False):
+        try:
+            return await asyncio.to_thread(emb, normalized)
+        except AttributeError:
+            loop = asyncio.get_running_loop()
+            return await loop.run_in_executor(None, emb, normalized)
+    return emb(normalized)

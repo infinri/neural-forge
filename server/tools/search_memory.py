@@ -1,5 +1,5 @@
 import uuid
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 from server.db.engine import get_async_engine
 from server.db.repo import search_memory_pg, semantic_search_memory_pg
@@ -90,10 +90,18 @@ async def handler(req: Dict[str, Any]):
                 merged.append(it)
         return merged[: max(limit, k)]
 
+    async def compute_query_embedding_safe() -> Optional[list[float]]:
+        if not isinstance(query, str):
+            return None
+        try:
+            return await compute_embedding(query)
+        except Exception:
+            return None
+
     # Execute according to mode
     if mode == "semantic" and is_semantic_enabled():
         # Semantic only; fallback to keyword if embedding unavailable
-        qemb = compute_embedding(query) if isinstance(query, str) else None
+        qemb = await compute_query_embedding_safe()
         if qemb is not None:
             rows = await semantic_search_memory_pg(
                 engine,
@@ -107,7 +115,7 @@ async def handler(req: Dict[str, Any]):
             rows = await keyword_search()
     elif mode == "hybrid" and is_semantic_enabled():
         kw = await keyword_search()
-        qemb = compute_embedding(query) if isinstance(query, str) else None
+        qemb = await compute_query_embedding_safe()
         if qemb is not None:
             sem = await semantic_search_memory_pg(
                 engine,
