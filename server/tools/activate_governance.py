@@ -6,6 +6,7 @@ as an MCP tool that can be called by Windsurf/Cursor to automatically
 apply Neural Forge governance before AI planning and coding activities.
 """
 
+import uuid
 from typing import Any, Dict
 
 from server.governance.pre_action_engine import activate_pre_action_governance
@@ -31,6 +32,7 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
         Dictionary with governance recommendations or indication that no governance is needed
     """
     start_time = utc_now_iso_z()
+    request_id = str(uuid.uuid4())
     
     try:
         # Extract parameters
@@ -43,7 +45,8 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
             return {
                 "success": False,
                 "error": "user_message is required",
-                "timestamp": start_time
+                "timestamp": start_time,
+                "request_id": request_id,
             }
         
         # Activate pre-action governance
@@ -70,7 +73,8 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
                 "governance_activated": True,
                 "guidance": governance_output,
                 "message": "Neural Forge governance activated - apply these principles during planning and implementation",
-                "timestamp": start_time
+                "timestamp": start_time,
+                "request_id": request_id,
             }
         else:
             result = {
@@ -78,9 +82,10 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
                 "governance_activated": False,
                 "guidance": None,
                 "message": "No governance activation needed for this context",
-                "timestamp": start_time
+                "timestamp": start_time,
+                "request_id": request_id,
             }
-        
+
         # Log the tool call
         log_json("info", "activate_governance completed",
             endpoint="activate_governance",
@@ -88,7 +93,8 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
             start_time=start_time,
             governance_activated=result["governance_activated"],
             message_length=len(user_message),
-            history_length=len(conversation_history)
+            history_length=len(conversation_history),
+            request_id=request_id,
         )
         
         return result
@@ -98,14 +104,16 @@ async def activate_governance(args: Dict[str, Any]) -> Dict[str, Any]:
         
         # Log the error
         log_json("error", "activate_governance failed",
-            endpoint="activate_governance", 
+            endpoint="activate_governance",
             success=False,
             start_time=start_time,
-            error=error_msg
+            error=error_msg,
+            request_id=request_id,
         )
-        
+
         return {
             "success": False,
             "error": error_msg,
-            "timestamp": start_time
+            "timestamp": start_time,
+            "request_id": request_id,
         }
