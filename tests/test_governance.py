@@ -1,4 +1,5 @@
 import os
+import time
 
 import pytest
 from fastapi.testclient import TestClient
@@ -105,3 +106,54 @@ async def test_pre_action_engine_loads_security_rules_from_tokens():
     assert isinstance(rate_limit_rule["rules"], list)
     assert rate_limit_rule["rules"]
     assert rate_limit_rule.get("category") == "security"
+
+
+@pytest.mark.asyncio
+async def test_pre_action_engine_rule_cache_invalidation(tmp_path):
+    tags_dir = tmp_path / "tags"
+    security_dir = tags_dir / "security"
+    security_dir.mkdir(parents=True)
+    token_file = security_dir / "rate_limit.yaml"
+    token_file.write_text("initial description", encoding="utf-8")
+
+    loader_calls = 0
+
+    def loader(project_id, kinds):
+        nonlocal loader_calls
+        loader_calls += 1
+        tokens = []
+        for kind in kinds:
+            kind_dir = tags_dir / kind
+            if not kind_dir.is_dir():
+                continue
+            for path in sorted(kind_dir.glob("*.yaml")):
+                tokens.append(
+                    {
+                        "kind": kind,
+                        "name": path.stem,
+                        "description": path.read_text(encoding="utf-8"),
+                        "rules": [f"rule::{path.stem}"],
+                        "source": str(path),
+                    }
+                )
+        return {"tokens": tokens}
+
+    engine = PreActionGovernanceEngine(
+        token_loader=loader,
+        tags_dir=tags_dir,
+        cache_ttl=3600,
+    )
+
+    first_rules = await engine._load_domain_rules("security")
+    assert loader_calls == 1
+    second_rules = await engine._load_domain_rules("security")
+    assert loader_calls == 1
+    assert second_rules == first_rules
+
+    token_file.write_text("updated description", encoding="utf-8")
+    ts = time.time() + 5
+    os.utime(token_file, (ts, ts))
+
+    refreshed_rules = await engine._load_domain_rules("security")
+    assert loader_calls == 2
+    assert any(rule["description"] == "updated description" for rule in refreshed_rules)
