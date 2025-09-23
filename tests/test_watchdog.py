@@ -1,6 +1,7 @@
 import os
 import uuid
 
+import psycopg
 import pytest
 from sqlalchemy import text
 
@@ -10,6 +11,22 @@ from server.db.repo import (
     watchdog_fail_stale_inprogress_pg,
     watchdog_requeue_stale_inprogress_pg,
 )
+
+
+def _sync_dsn() -> str:
+    url = os.environ.get("DATABASE_URL", "postgresql+asyncpg://forge:forge@127.0.0.1:5432/neural_forge")
+    if url.startswith("postgresql+asyncpg://"):
+        url = url.replace("postgresql+asyncpg://", "postgresql://", 1)
+    if url.startswith("postgresql+psycopg://"):
+        url = url.replace("postgresql+psycopg://", "postgresql://", 1)
+    return url
+
+
+try:
+    with psycopg.connect(_sync_dsn()):
+        pass
+except psycopg.OperationalError:
+    pytest.skip("Postgres is required for watchdog tests", allow_module_level=True)
 
 
 @pytest.mark.asyncio

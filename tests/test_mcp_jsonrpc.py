@@ -3,16 +3,19 @@ import os
 from fastapi.testclient import TestClient
 
 
+TOKEN = os.environ["MCP_TOKEN"]
+
+
 def _client():
     os.environ["ENV"] = "dev"
-    os.environ["MCP_TOKEN"] = "dev"
+    os.environ["MCP_TOKEN"] = TOKEN
     from server.main import app
     return TestClient(app)
 
 
 def test_initialize_envelope():
     with _client() as c:
-        r = c.post("/sse", headers={"Authorization": "Bearer dev"}, json={
+        r = c.post("/sse", headers={"Authorization": f"Bearer {TOKEN}"}, json={
             "jsonrpc": "2.0",
             "id": 1,
             "method": "initialize",
@@ -28,7 +31,7 @@ def test_initialize_envelope():
 
 def test_tools_list_envelope_contains_known_tools():
     with _client() as c:
-        r = c.post("/sse", headers={"Authorization": "Bearer dev"}, json={
+        r = c.post("/sse", headers={"Authorization": f"Bearer {TOKEN}"}, json={
             "jsonrpc": "2.0",
             "id": 2,
             "method": "tools/list",

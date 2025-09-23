@@ -34,7 +34,8 @@ from server.observability.tracing import (
 from server.utils.logger import log_json
 from server.utils.time import utc_now_iso_z
 
-MCP_TOKEN = os.getenv("MCP_TOKEN", "change-me")
+_PLACEHOLDER_TOKENS = {"change-me", "dev"}
+MCP_TOKEN = (os.getenv("MCP_TOKEN") or "").strip()
 TOOLS: Dict[str, Any] = {}
 SERVER_VERSION = "1.3.0"
 
@@ -50,11 +51,25 @@ def _truthy(v: str | None) -> bool:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Prod-safety: disallow default token when not in dev
-    env = os.getenv("ENV", "dev").strip().lower()
-    if env != "dev" and MCP_TOKEN == "change-me":
-        log_json("error", "startup.invalid_token_in_prod", env=env)
-        raise RuntimeError("MCP_TOKEN must not be 'change-me' when ENV != dev")
+    # Prod-safety: disallow placeholder or missing token unless explicitly overridden
+    allow_insecure_dev = _truthy(os.getenv("ALLOW_INSECURE_DEV"))
+    normalized_token = MCP_TOKEN.lower()
+    if not MCP_TOKEN:
+        log_json("error", "startup.mcp_token_missing", allow_insecure_dev=allow_insecure_dev)
+        raise RuntimeError("MCP_TOKEN environment variable is required")
+    if normalized_token in _PLACEHOLDER_TOKENS:
+        if allow_insecure_dev:
+            log_json(
+                "warning",
+                "startup.using_placeholder_token",
+                allow_insecure_dev=True,
+                placeholder_token=True,
+            )
+        else:
+            log_json("error", "startup.placeholder_token_blocked", placeholder_token=True)
+            raise RuntimeError(
+                "MCP_TOKEN must be set to a unique value (set ALLOW_INSECURE_DEV=true to override)"
+            )
     # Tracing init (optional)
     try:
         if is_tracing_enabled():

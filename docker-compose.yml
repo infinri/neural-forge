@@ -3,7 +3,7 @@ services:
     build: .
     container_name: nf-mcp-server
     environment:
-      - MCP_TOKEN=dev
+      - MCP_TOKEN=${MCP_TOKEN:?Set MCP_TOKEN to a secure token before starting Compose}
       - POSTGRES_DB=${POSTGRES_DB:-neural_forge}
       - POSTGRES_USER=${POSTGRES_USER:-forge}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-forge}

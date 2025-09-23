@@ -1,10 +1,30 @@
 import os
 
+import psycopg
+import pytest
 from fastapi.testclient import TestClient
 
 # Ensure env before importing app
-os.environ.setdefault("MCP_TOKEN", "dev")
+os.environ.setdefault("MCP_TOKEN", "test-token")
 os.environ.setdefault("DATABASE_URL", "postgresql+asyncpg://forge:forge@127.0.0.1:5432/neural_forge")
+
+TOKEN = os.environ["MCP_TOKEN"]
+
+
+def _sync_dsn() -> str:
+    url = os.environ["DATABASE_URL"]
+    if url.startswith("postgresql+asyncpg://"):
+        url = url.replace("postgresql+asyncpg://", "postgresql://", 1)
+    if url.startswith("postgresql+psycopg://"):
+        url = url.replace("postgresql+psycopg://", "postgresql://", 1)
+    return url
+
+
+try:
+    with psycopg.connect(_sync_dsn()):
+        pass
+except psycopg.OperationalError:
+    pytest.skip("Postgres is required for E2E API tests", allow_module_level=True)
 
 
 def make_client_pg():
@@ -20,7 +40,7 @@ def test_capabilities_and_auth():
     assert r.status_code == 401
 
     # With auth
-    r = client.get("/get_capabilities", headers={"Authorization": "Bearer dev"})
+    r = client.get("/get_capabilities", headers={"Authorization": f"Bearer {TOKEN}"})
     assert r.status_code == 200
     data = r.json()
     assert data["serverVersion"].startswith("1.")
@@ -29,7 +49,7 @@ def test_capabilities_and_auth():
 
 def test_memory_lifecycle():
     client = make_client_pg()
-    H = {"Authorization": "Bearer dev"}
+    H = {"Authorization": f"Bearer {TOKEN}"}
 
     project = "nf_e2e"
     # add_memory
@@ -65,7 +85,7 @@ def test_memory_lifecycle():
 
 def test_task_and_diff_and_logging():
     client = make_client_pg()
-    H = {"Authorization": "Bearer dev"}
+    H = {"Authorization": f"Bearer {TOKEN}"}
 
     project = "nf_e2e"
     # enqueue_task

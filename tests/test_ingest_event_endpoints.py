@@ -2,11 +2,12 @@ import json
 import os
 
 from fastapi.testclient import TestClient
+TOKEN = os.environ["MCP_TOKEN"]
 
 
 def setup_env():
     os.environ["ENV"] = "dev"
-    os.environ["MCP_TOKEN"] = "dev"
+    os.environ["MCP_TOKEN"] = TOKEN
     os.environ["ORCHESTRATOR_ENABLED"] = "true"
 
 
@@ -25,7 +26,7 @@ def test_rest_tool_ingest_event_publishes_and_returns_ok():
         }
         r = c.post(
             "/tool/ingest_event",
-            headers={"Authorization": "Bearer dev"},
+            headers={"Authorization": f"Bearer {TOKEN}"},
             json=payload,
         )
         assert r.status_code == 200
@@ -59,7 +60,7 @@ def test_mcp_tools_call_ingest_event_success():
                 },
             },
         }
-        r = c.post("/sse", headers={"Authorization": "Bearer dev"}, json=message)
+        r = c.post("/sse", headers={"Authorization": f"Bearer {TOKEN}"}, json=message)
         assert r.status_code == 200
         data = r.json()
         assert data["jsonrpc"] == "2.0"
