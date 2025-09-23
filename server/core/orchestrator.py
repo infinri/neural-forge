@@ -16,7 +16,7 @@ from __future__ import annotations
 import asyncio
 import os
 import time
-from collections import defaultdict
+from collections import defaultdict, deque
 from typing import Any, DefaultDict, Dict
 
 from prometheus_client import Counter, Histogram
@@ -28,9 +28,12 @@ from server.db.repo import (
     watchdog_fail_stale_inprogress_pg,
     watchdog_requeue_stale_inprogress_pg,
 )
+from server.governance import activate_pre_action_governance
 from server.utils.logger import log_json
 
 CONV_MSG = "conversation.message"
+GOVERNANCE_GUIDANCE = "governance.guidance"
+_HISTORY_MAX_LEN = 5
 
 
 class Orchestrator:
@@ -43,6 +46,9 @@ class Orchestrator:
         # Metrics: Phase 1 in-memory
         self.events_handled_total: DefaultDict[str, int] = defaultdict(int)
         self.handler_errors_total: DefaultDict[str, int] = defaultdict(int)
+        self._recent_history: DefaultDict[str, deque[str]] = defaultdict(
+            lambda: deque(maxlen=_HISTORY_MAX_LEN)
+        )
 
     @property
     def is_running(self) -> bool:
@@ -330,6 +336,7 @@ class Orchestrator:
                 request_id=event.request_id,
                 content_len=content_len,
             )
+            await self._maybe_emit_governance(event, payload)
         except Exception as e:  # noqa: BLE001 - intended isolation for handlers
             self.handler_errors_total[event.type] += 1
             ORCH_HANDLER_ERRORS.labels(event.type).inc()
@@ -358,6 +365,71 @@ class Orchestrator:
                     _span_cm.__exit__(None, None, None)
                 except Exception:
                     pass
+
+    async def _maybe_emit_governance(self, event: Event, payload: Dict[str, Any]) -> None:
+        content = payload.get("content") if isinstance(payload, dict) else None
+        if not isinstance(content, str) or not content.strip():
+            return
+
+        history = self._recent_history[event.project_id]
+        history_snapshot = list(history)
+        guidance: str | None
+        try:
+            guidance = await activate_pre_action_governance(content, history_snapshot)
+        except Exception as exc:  # noqa: BLE001 - best-effort governance
+            guidance = None
+            try:
+                log_json(
+                    "error",
+                    "orchestrator.governance_error",
+                    project_id=event.project_id,
+                    request_id=event.request_id,
+                    error=str(exc),
+                )
+            except Exception:
+                pass
+        finally:
+            history.append(content)
+
+        if not guidance:
+            return
+
+        try:
+            log_json(
+                "info",
+                "orchestrator.governance_emitted",
+                project_id=event.project_id,
+                request_id=event.request_id,
+            )
+        except Exception:
+            pass
+
+        source = {
+            "type": event.type,
+            "request_id": event.request_id,
+            "role": payload.get("role") if isinstance(payload, dict) else None,
+        }
+        governance_event = Event(
+            type=GOVERNANCE_GUIDANCE,
+            project_id=event.project_id,
+            payload={"content": guidance, "source": source},
+            ts=time.time(),
+            request_id=event.request_id,
+            traceparent=event.traceparent,
+        )
+        try:
+            await self._bus.publish(governance_event)
+        except Exception as exc:  # noqa: BLE001 - avoid failing primary handler
+            try:
+                log_json(
+                    "error",
+                    "orchestrator.governance_publish_error",
+                    project_id=event.project_id,
+                    request_id=event.request_id,
+                    error=str(exc),
+                )
+            except Exception:
+                pass
 
 
 # Singleton orchestrator
