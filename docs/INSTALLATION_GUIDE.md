@@ -43,12 +43,14 @@ pip install -r requirements.txt
 scripts/bootstrap.sh
 
 # This will:
-# 1. Generate .env file with credentials
+# 1. Generate .env file with credentials (including Grafana admin password)
 # 2. Start Docker Compose stack (PostgreSQL, Prometheus, Grafana)
 # 3. Run Alembic database migrations inside the Docker network
 # 4. Start MCP server
-# 5. Print Windsurf configuration snippet
+# 5. Print Windsurf configuration snippet and Grafana login details
 ```
+
+> **Security tip:** The bootstrap script stores the generated Grafana password in `.env` and prints it once at the end. Rotate it if you plan to share the environment with others.
 
 ### **Step 4: Configure Windsurf**
 Add the printed configuration to `~/.codeium/windsurf/mcp_config.json`:
@@ -135,12 +137,20 @@ python -m server.main
 
 ### **Observability Stack (Optional)**
 ```bash
+# Required Grafana credentials
+export GF_SECURITY_ADMIN_USER=admin
+export GF_SECURITY_ADMIN_PASSWORD=$(openssl rand -hex 16)
+
+# Optional: enable anonymous access for local-only experiments
+# export GRAFANA_ENABLE_ANONYMOUS=true
+
 # Start Prometheus and Grafana
 docker compose up -d prometheus grafana
 
 # Access:
 # Prometheus: http://127.0.0.1:9090
-# Grafana: http://127.0.0.1:3000 (anonymous login)
+# Grafana: http://127.0.0.1:3000 (login with the credentials above)
+# ⚠️ Anonymous access is disabled by default; only enable it in isolated dev environments.
 ```
 
 ---
