@@ -70,14 +70,22 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 # Generate (or export) a token once per environment
 export MCP_TOKEN=$(openssl rand -hex 32)
 
+# Configure Grafana credentials (required)
+export GF_SECURITY_ADMIN_USER=admin
+export GF_SECURITY_ADMIN_PASSWORD=$(openssl rand -hex 16)
+
+# Optional: allow anonymous Grafana access for local-only dev
+# export GRAFANA_ENABLE_ANONYMOUS=true
+
 # Start PostgreSQL + MCP Server + Observability
 docker compose up -d
 
 # Services available:
 # - MCP Server: http://127.0.0.1:8081
-# - Prometheus: http://127.0.0.1:9090  
-# - Grafana: http://127.0.0.1:3000
+# - Prometheus: http://127.0.0.1:9090
+# - Grafana: http://127.0.0.1:3000 (login with the credentials above)
 ```
+> **Reminder:** Keep anonymous Grafana access disabled in shared environments. Enable it only when you are running everything locally and understand the risk.
 Migrations run automatically via the `migrate` service inside the Compose network. The `server` service waits until migrations complete successfully.
 
 ### **Server Only**
