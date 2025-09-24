@@ -57,17 +57,20 @@ Add the printed configuration to `~/.codeium/windsurf/mcp_config.json`:
 {
 "mcpServers": {
     "neural-forge": {
-      "serverUrl": "http://127.0.0.1:8081/sse?token=<your-unique-token>"
+      "serverUrl": "http://127.0.0.1:8081/sse",
+      "headers": {
+        "Authorization": "Bearer <your-unique-token>"
+      }
     }
   }
 }
 ```
-Use the token printed by the bootstrap script (or the value you exported as `MCP_TOKEN`).
+Use the token printed by the bootstrap script (or the value you exported as `MCP_TOKEN`). Query-string authentication is disabled unless you set `MCP_ALLOW_QUERY_TOKEN=true` for legacy clients, so keep the `Authorization` header in place.
 
 ### **Step 5: Verify Installation**
 ```bash
 # Test server
-curl "http://127.0.0.1:8081/sse?token=$MCP_TOKEN"
+curl -H "Authorization: Bearer $MCP_TOKEN" http://127.0.0.1:8081/sse
 
 # Should return: event: ready
 ```
@@ -205,7 +208,7 @@ make db-upgrade-docker
 
 **Windsurf Not Connecting**
 1. Verify MCP config syntax in `~/.codeium/windsurf/mcp_config.json`
-2. Check server is running: `curl "http://127.0.0.1:8081/sse?token=$MCP_TOKEN"`
+2. Check server is running: `curl -H "Authorization: Bearer $MCP_TOKEN" http://127.0.0.1:8081/sse`
 3. Restart Windsurf after config changes
 4. Check for duplicate server entries in config
 

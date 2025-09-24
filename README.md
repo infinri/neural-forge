@@ -193,20 +193,23 @@ Add to your `~/.codeium/windsurf/mcp_config.json`:
 
 ```json
 {
-"mcpServers": {
+  "mcpServers": {
     "neural-forge": {
-      "serverUrl": "http://127.0.0.1:8081/sse?token=<your-unique-token>"
+      "serverUrl": "http://127.0.0.1:8081/sse",
+      "headers": {
+        "Authorization": "Bearer <your-unique-token>"
+      }
     }
   }
 }
 ```
-Replace `<your-unique-token>` with the value you exported as `MCP_TOKEN` in the previous step.
+Replace `<your-unique-token>` with the value you exported as `MCP_TOKEN` in the previous step. Query-string authentication is disabled unless you explicitly set `MCP_ALLOW_QUERY_TOKEN=true` for legacy clients, so the `Authorization` header is required.
 
 ### **4. Verify Connection**
 
 ```bash
 # Test server
-curl "http://127.0.0.1:8081/sse?token=$MCP_TOKEN"
+curl -H "Authorization: Bearer $MCP_TOKEN" http://127.0.0.1:8081/sse
 
 # Test tools in Windsurf
 # All 12 Neural Forge tools should be available
