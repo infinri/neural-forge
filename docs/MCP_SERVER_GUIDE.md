@@ -267,20 +267,31 @@ make db-upgrade-docker
 ```
 
 ### **Direct HTTP API**
-All tools are also available as direct HTTP endpoints:
+Each tool is exposed over HTTP as `POST /tool/{name}`, using the same argument schema described in the [JSON-RPC `tools/call` example](#mcp-json-rpc-protocol) above.
+
 ```bash
 # Add memory
-curl -X POST http://127.0.0.1:8081/add_memory \
+curl -X POST http://127.0.0.1:8081/tool/add_memory \
   -H "Authorization: Bearer $MCP_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"content": "Memory content", "tags": ["tag1"]}'
+  -d '{
+        "projectId": "neural-forge",
+        "content": "Memory content",
+        "metadata": {"tags": ["tag1"]}
+      }'
 
 # Search memories
-curl -X POST http://127.0.0.1:8081/search_memory \
+curl -X POST http://127.0.0.1:8081/tool/search_memory \
   -H "Authorization: Bearer $MCP_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"query": "search terms", "limit": 10}'
+  -d '{
+        "projectId": "neural-forge",
+        "query": "search terms",
+        "limit": 10
+      }'
 ```
+
+All individual tool routes are multiplexed through `/tool/{name}`, so the server dispatches the request based on the tool name just like it does for [`tools/call`](#mcp-json-rpc-protocol) over JSON-RPC.
 
 #### Admin Endpoints (Diagnostics)
 
