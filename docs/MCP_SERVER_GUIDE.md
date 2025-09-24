@@ -46,7 +46,7 @@ DATABASE_URL=postgresql+asyncpg://forge:forge@localhost:55432/neural_forge
 # Alembic (sync driver) — used only when running migrations on host
 ALEMBIC_DATABASE_URL=postgresql+psycopg://forge:forge@localhost:55432/neural_forge
 
-# Legacy compatibility (off by default; enable only if older clients require `?token=` auth)
+# Legacy compatibility (off by default; enable only if older clients require query-string auth)
 # MCP_ALLOW_QUERY_TOKEN=false
 ```
 
@@ -57,11 +57,15 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 {
 "mcpServers": {
     "neural-forge": {
-      "serverUrl": "http://127.0.0.1:8081/sse?token=<your-unique-token>"
+      "serverUrl": "http://127.0.0.1:8081/sse",
+      "headers": {
+        "Authorization": "Bearer <your-unique-token>"
+      }
     }
   }
 }
 ```
+Query-string authentication is disabled unless you explicitly set `MCP_ALLOW_QUERY_TOKEN=true` for legacy clients, so keep the `Authorization` header in place when configuring MCP tooling.
 
 ## 🐳 **Docker Deployment**
 
@@ -201,7 +205,7 @@ make typecheck
 ### **Connection Issues**
 ```bash
 # Test server health
-curl "http://127.0.0.1:8081/sse?token=$MCP_TOKEN"
+curl -H "Authorization: Bearer $MCP_TOKEN" http://127.0.0.1:8081/sse
 
 # Check health endpoint (no auth required)
 curl http://127.0.0.1:8081/health
@@ -226,7 +230,7 @@ make db-upgrade-docker
 
 ### **Authentication Issues**
 - Ensure `MCP_TOKEN` matches between server and client config
-- Requests must include `Authorization: Bearer <token>` header (legacy `?token=` query auth is disabled by default; set `MCP_ALLOW_QUERY_TOKEN=true` only if you must support older clients)
+- Requests must include `Authorization: Bearer <token>` header (legacy query-string auth is disabled by default; set `MCP_ALLOW_QUERY_TOKEN=true` only if you must support older clients)
 
 ## 📚 **API Reference**
 
